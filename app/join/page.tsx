@@ -17,7 +17,7 @@ const formSchema = z.object({
   studentId: z.string().optional(),
   department: z.string().min(2, { message: "Department is required." }),
   role: z.enum(["student", "alumni", "faculty"], {
-    required_error: "Please select a role.",
+    message: "Please select a role.",
   }),
   message: z.string().optional(),
 });

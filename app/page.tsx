@@ -1,190 +1,189 @@
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Users, Lightbulb, Trophy, Target, Calendar } from 'lucide-react';
+import { ArrowRight, BookOpen, Users, Lightbulb, Calendar, Microscope } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 export default function Home() {
   return (
-    <div className="bg-white dark:bg-gray-950 min-h-screen transition-colors duration-300">
+    <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="bg-white dark:bg-gray-950 pt-32 pb-20 relative overflow-hidden">
-        {/* Minimal gradient blob */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-green-500/10 dark:bg-green-500/5 rounded-[100%] blur-3xl -z-10 pointer-events-none"></div>
-        
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <div className="animate-fade-in-up max-w-4xl mx-auto">
-            <h1 className="text-5xl md:text-7xl font-bold mb-8 text-gray-900 dark:text-gray-50 tracking-tight leading-tight">
-              Innovation starts <br className="hidden md:block" /> with <span className="text-green-700 dark:text-green-500">research.</span>
+      <section className="relative py-20 md:py-32 overflow-hidden bg-[#002800] dark:bg-[#002000] text-white">
+        <div className="container px-4 md:px-6 mx-auto relative z-10">
+          <div className="flex flex-col items-center text-center space-y-4 md:space-y-8 animate-in fade-in zoom-in duration-500">
+            <Badge variant="secondary" className="px-4 py-1.5 text-sm rounded-full bg-green-900/50 text-green-100 hover:bg-green-800 border-green-700">
+              Welcome to GURPC
+            </Badge>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white via-green-100 to-green-200">
+              Innovation Starts <br className="hidden sm:inline" /> With Research
             </h1>
-            <p className="text-lg md:text-xl mb-10 max-w-2xl mx-auto text-gray-600 dark:text-gray-400 font-normal leading-relaxed">
-              Join the Green University Research & Publication Community. Connect with mentors, collaborate on projects, and shape the future.
+            <p className="mx-auto max-w-[700px] text-green-100/80 md:text-xl leading-relaxed font-light">
+              Green University Research & Publication Community is dedicated to cultivating a culture of academic excellence, collaboration, and scientific discovery.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-6">
-              <Link 
-                href="/register" 
-                className="bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-8 py-4 rounded-full font-medium hover:bg-gray-800 dark:hover:bg-gray-100 transition shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
-              >
-                Join the Community <ArrowRight size={18} />
+            <div className="flex flex-col sm:flex-row gap-4 min-w-[300px] justify-center pt-4">
+              <Button asChild size="lg" className="bg-green-600 hover:bg-green-500 text-white rounded-full px-8 h-12 text-base shadow-lg hover:shadow-green-900/20 transition-all border border-transparent">
+                <Link href="/join">
+                  Join the Community <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="bg-transparent text-white border-green-400/30 hover:bg-green-900/30 hover:text-white rounded-full px-8 h-12 text-base font-medium">
+                <Link href="/about">Learn More</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+        
+        {/* Decorative Grid BG - Adjusted for dark theme */}
+        <div className="absolute inset-0 bg-grid-white/[0.05] -z-10 pointer-events-none" />
+        
+        {/* Ambient glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-green-500/20 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-12 bg-white dark:bg-slate-950 border-y border-slate-100 dark:border-slate-800">
+        <div className="container px-4 md:px-6 mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+            <div className="flex flex-col items-center space-y-2 p-4 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
+              <Users className="h-8 w-8 text-green-700 dark:text-green-500 mb-2" />
+              <h3 className="text-3xl font-bold tracking-tight">60+</h3>
+              <p className="text-muted-foreground text-sm uppercase tracking-wide font-medium">Active Members</p>
+            </div>
+            <div className="flex flex-col items-center space-y-2 p-4 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
+              <BookOpen className="h-8 w-8 text-green-700 dark:text-green-500 mb-2" />
+              <h3 className="text-3xl font-bold tracking-tight">15+</h3>
+              <p className="text-muted-foreground text-sm uppercase tracking-wide font-medium">Publications</p>
+            </div>
+            <div className="flex flex-col items-center space-y-2 p-4 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
+              <Lightbulb className="h-8 w-8 text-green-700 dark:text-green-500 mb-2" />
+              <h3 className="text-3xl font-bold tracking-tight">10+</h3>
+              <p className="text-muted-foreground text-sm uppercase tracking-wide font-medium">Ongoing Projects</p>
+            </div>
+            <div className="flex flex-col items-center space-y-2 p-4 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
+              <Microscope className="h-8 w-8 text-green-700 dark:text-green-500 mb-2" />
+              <h3 className="text-3xl font-bold tracking-tight">4+</h3>
+              <p className="text-muted-foreground text-sm uppercase tracking-wide font-medium">Research Labs</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Latest Events/News */}
+      <section className="py-16 md:py-24">
+        <div className="container px-4 md:px-6 mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+            <div>
+              <h2 className="text-3xl font-bold tracking-tight mb-2">Happening at GURPC</h2>
+              <p className="text-muted-foreground text-lg">Stay updated with our latest workshops, seminars, and news.</p>
+            </div>
+            <Button variant="ghost" asChild className="hidden md:inline-flex hover:bg-green-50 dark:hover:bg-green-900/20">
+              <Link href="/events" className="group text-primary font-semibold">
+                View all events <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
-              <Link 
-                href="/projects" 
-                className="bg-transparent border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 px-8 py-4 rounded-full font-medium hover:border-gray-900 dark:hover:border-gray-100 hover:text-gray-900 dark:hover:text-gray-100 transition"
-              >
-                Explore Projects
-              </Link>
-            </div>
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Mock Event 1 */}
+            <Card className="flex flex-col h-full hover:shadow-lg transition-all duration-300 border-muted">
+              <div className="h-48 w-full bg-slate-100 dark:bg-slate-800 relative rounded-t-lg overflow-hidden group">
+                <div className="absolute inset-0 flex items-center justify-center text-slate-400 bg-slate-200 dark:bg-slate-800 group-hover:scale-105 transition-transform duration-500">
+                  <Calendar className="h-12 w-12 opacity-50" />
+                </div>
+                <Badge className="absolute top-4 left-4 bg-primary text-white shadow-sm">Upcoming</Badge>
+              </div>
+              <CardHeader>
+                <div className="text-xs font-semibold text-primary mb-2 flex items-center gap-2 uppercase tracking-wide">
+                  <Calendar className="h-3 w-3" /> March 15, 2026
+                </div>
+                <CardTitle className="text-xl leading-tight">Research Methodology Workshop</CardTitle>
+              </CardHeader>
+              <CardContent className="flex-grow">
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  An intensive session on qualitative and quantitative research methods for beginners.
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Link href="/events" className="text-sm font-medium text-primary hover:underline flex items-center">
+                  Read Details <ArrowRight className="ml-1 h-3 w-3" />
+                </Link>
+              </CardFooter>
+            </Card>
+
+            {/* Mock Event 2 */}
+            <Card className="flex flex-col h-full hover:shadow-lg transition-all duration-300 border-muted">
+              <div className="h-48 w-full bg-slate-100 dark:bg-slate-800 relative rounded-t-lg overflow-hidden group">
+                <div className="absolute inset-0 flex items-center justify-center text-slate-400 bg-slate-200 dark:bg-slate-800 group-hover:scale-105 transition-transform duration-500">
+                   <Calendar className="h-12 w-12 opacity-50" />
+                </div>
+              </div>
+              <CardHeader>
+                <div className="text-xs font-semibold text-primary mb-2 flex items-center gap-2 uppercase tracking-wide">
+                  <Calendar className="h-3 w-3" /> April 2, 2026
+                </div>
+                <CardTitle className="text-xl leading-tight">Annual Research Symposium</CardTitle>
+              </CardHeader>
+              <CardContent className="flex-grow">
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Present your ongoing research and get feedback from industry experts and faculty.
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Link href="/events" className="text-sm font-medium text-primary hover:underline flex items-center">
+                  Read Details <ArrowRight className="ml-1 h-3 w-3" />
+                </Link>
+              </CardFooter>
+            </Card>
+
+             {/* Mock Event 3 */}
+             <Card className="flex flex-col h-full hover:shadow-lg transition-all duration-300 border-muted">
+              <div className="h-48 w-full bg-slate-100 dark:bg-slate-800 relative rounded-t-lg overflow-hidden group">
+                <div className="absolute inset-0 flex items-center justify-center text-slate-400 bg-slate-200 dark:bg-slate-800 group-hover:scale-105 transition-transform duration-500">
+                   <Lightbulb className="h-12 w-12 opacity-50" />
+                </div>
+                <Badge variant="secondary" className="absolute top-4 left-4 shadow-sm bg-white dark:bg-slate-900">News</Badge>
+              </div>
+              <CardHeader>
+                <div className="text-xs font-semibold text-primary mb-2 flex items-center gap-2 uppercase tracking-wide">
+                  <Calendar className="h-3 w-3" /> Feb 10, 2026
+                </div>
+                <CardTitle className="text-xl leading-tight">Call for Papers: GUB Journal</CardTitle>
+              </CardHeader>
+              <CardContent className="flex-grow">
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Submit your research papers for the upcoming issue of the Green University Journal of Science.
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Link href="/blog" className="text-sm font-medium text-primary hover:underline flex items-center">
+                  Read Details <ArrowRight className="ml-1 h-3 w-3" />
+                </Link>
+              </CardFooter>
+            </Card>
+          </div>
+          
+          <div className="mt-10 text-center md:hidden">
+             <Button variant="outline" asChild className="w-full">
+              <Link href="/events">View all events</Link>
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* Stats Section - Minimal */}
-      <section className="py-12 border-y border-gray-100 dark:border-gray-900 bg-gray-50/50 dark:bg-gray-900/50">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-wrap justify-center gap-12 md:gap-24 text-center">
-            <div>
-              <div className="text-3xl font-bold text-gray-900 dark:text-white mb-1">50+</div>
-              <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-widest">Researchers</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-gray-900 dark:text-white mb-1">12+</div>
-              <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-widest">Projects</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-gray-900 dark:text-white mb-1">5+</div>
-              <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-widest">Workshops</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-gray-900 dark:text-white mb-1">3</div>
-              <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-widest">Papers</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Mission Statement */}
-      <section className="py-24 bg-white dark:bg-gray-950">
-        <div className="container mx-auto px-4 max-w-3xl text-center">
-          <h2 className="text-xs font-bold text-green-600 dark:text-green-500 tracking-widest uppercase mb-6">Our Vision</h2>
-          <h3 className="text-3xl font-semibold text-gray-900 dark:text-white mb-8 leading-tight">
-            Bridging the gap between academic learning and real-world innovation.
-          </h3>
-          <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed font-light">
-            We aim to clear misconceptions about research, making it accessible for every student. By connecting curious minds with mentors and resources, we turn theoretical ideas into tangible impact.
+      {/* CTA Section */}
+      <section className="py-20 bg-primary text-primary-foreground relative overflow-hidden">
+         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        <div className="container px-4 md:px-6 mx-auto text-center relative z-10">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to start your research journey?</h2>
+          <p className="text-green-100 max-w-2xl mx-auto mb-10 text-lg leading-relaxed">
+            Join a community of passionate learners and innovators. Whether you are a student, alumni, or faculty member, there is a place for you.
           </p>
-        </div>
-      </section>
-
-      {/* Minimal Features */}
-      <section className="py-24 bg-gray-50 dark:bg-gray-900">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-10">
-            {/* Feature 1 */}
-            <div className="bg-transparent p-6">
-              <div className="w-12 h-12 bg-gray-200 dark:bg-gray-800 rounded-2xl flex items-center justify-center text-gray-700 dark:text-gray-300 mb-6 transition-colors">
-                <Users size={24} />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Community</h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">
-                Find teammates who share your passion. Connect with seniors, alumni, and faculty to guide your research journey.
-              </p>
-            </div>
-
-            {/* Feature 2 */}
-            <div className="bg-transparent p-6">
-              <div className="w-12 h-12 bg-gray-200 dark:bg-gray-800 rounded-2xl flex items-center justify-center text-gray-700 dark:text-gray-300 mb-6 transition-colors">
-                <BookOpen size={24} />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Resources</h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">
-                Access resources on academic writing, LaTeX, and publishing. Get your work featured.
-              </p>
-            </div>
-
-            {/* Feature 3 */}
-            <div className="bg-transparent p-6">
-              <div className="w-12 h-12 bg-gray-200 dark:bg-gray-800 rounded-2xl flex items-center justify-center text-gray-700 dark:text-gray-300 mb-6 transition-colors">
-                <Lightbulb size={24} />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Innovation</h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">
-                A dedicated space to brainstorm ideas, validate concepts, and turn theoretical knowledge into prototypes.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Latest Updates - Clean Cards */}
-      <section className="py-24 bg-white dark:bg-gray-950">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col sm:flex-row justify-between items-end mb-12 gap-4">
-             <div>
-                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">What's Happening</h2>
-                <p className="text-gray-500 dark:text-gray-400">Latest from the community</p>
-             </div>
-             <Link href="/events" className="text-green-700 dark:text-green-500 font-medium hover:underline text-sm">View all updates</Link>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Card 1 */}
-            <div className="group cursor-pointer">
-              <div className="h-64 bg-gray-100 dark:bg-gray-800 rounded-2xl mb-6 overflow-hidden relative">
-                 <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-400 dark:text-gray-500">
-                    <Calendar size={48} opacity={0.5}/>
-                 </div>
-                 <div className="absolute top-4 left-4 bg-white dark:bg-gray-900 px-3 py-1 rounded-full text-xs font-bold shadow-sm">
-                    UPCOMING WORKSHOP
-                 </div>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-green-700 dark:group-hover:text-green-500 transition-colors">
-                Research Methodology 101
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
-                 Join us for a comprehensive session on how to start your research journey, from literature review to selecting a topic.
-              </p>
-              <div className="text-sm text-gray-500 dark:text-gray-500 font-medium">
-                 Feb 28, 2026 • 10:00 AM
-              </div>
-            </div>
-
-             {/* Card 2 */}
-             <div className="group cursor-pointer">
-              <div className="h-64 bg-gray-100 dark:bg-gray-800 rounded-2xl mb-6 overflow-hidden relative">
-                 <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-400 dark:text-gray-500">
-                    <Trophy size={48} opacity={0.5}/>
-                 </div>
-                 <div className="absolute top-4 left-4 bg-white dark:bg-gray-900 px-3 py-1 rounded-full text-xs font-bold shadow-sm">
-                    FEATURED PROJECT
-                 </div>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-green-700 dark:group-hover:text-green-500 transition-colors">
-                Early Disease Detection via ML
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
-                 Developing a machine learning model to detect early signs of plant diseases using smartphone camera images.
-              </p>
-              <div className="text-sm text-gray-500 dark:text-gray-500 font-medium">
-                 Team Alpha • Ongoing
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-24 bg-gray-50 dark:bg-gray-900">
-        <div className="container mx-auto px-4 text-center max-w-2xl">
-          <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Ready to join?</h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-10 text-lg font-light">
-            Be part of a growing community of researchers and innovators at Green University.
-          </p>
-          <Link 
-            href="/register" 
-            className="inline-block bg-green-700 text-white px-10 py-4 rounded-full font-bold hover:bg-green-800 transition shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-200"
-          >
-            Become a Member
-          </Link>
+          <Button asChild size="lg" variant="secondary" className="font-bold rounded-full px-10 h-14 text-lg shadow-xl hover:bg-white hover:text-green-800 transition-colors">
+            <Link href="/join">Register Now</Link>
+          </Button>
         </div>
       </section>
     </div>
   );
 }
+

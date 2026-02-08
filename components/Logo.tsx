@@ -1,0 +1,93 @@
+'use client';
+
+import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { cn } from '@/lib/utils';
+import { useTheme } from '@/components/providers/ThemeProvider';
+
+interface LogoProps {
+  size?: 'small' | 'medium' | 'large';
+  className?: string;
+  showSubtitle?: boolean;
+}
+
+const Logo: React.FC<LogoProps> = ({ 
+  size = 'medium', 
+  className, 
+  showSubtitle = true 
+}) => {
+  const { theme } = useTheme();
+
+  // Size configurations
+  const sizes = {
+    small: {
+      img: 'h-8 w-8',
+      text: 'text-lg',
+      sub: 'text-[8px]'
+    },
+    medium: {
+      img: 'h-10 w-10 md:h-12 md:w-12',
+      text: 'text-xl md:text-2xl',
+      sub: 'text-[10px]'
+    },
+    large: {
+      img: 'h-16 w-16',
+      text: 'text-3xl',
+      sub: 'text-xs'
+    }
+  };
+
+  const { img, text, sub } = sizes[size];
+
+  return (
+    <Link 
+      href="/" 
+      className={cn(
+        "flex items-center gap-3 group select-none hover:opacity-95 transition-opacity", 
+        className
+      )}
+      aria-label="GURPC Home"
+    >
+      <div className={cn(
+        "relative shrink-0 overflow-hidden rounded-full border border-green-500/20 bg-white/5 transition-transform duration-300 group-hover:scale-105",
+        img
+      )}>
+        <Image
+          src="/images/logo.png"
+          alt="GURPC Logo"
+          fill
+          className="object-cover p-0.5"
+          sizes="(max-width: 768px) 100vw, 33vw"
+          priority
+          onError={(e) => {
+             e.currentTarget.style.display = 'none';
+          }}
+        />
+        {/* Fallback if image fails or is missing */}
+        <div className="absolute inset-0 flex items-center justify-center -z-10 bg-green-900">
+           <span className="font-bold text-white">G</span>
+        </div>
+      </div>
+      
+      <div className="flex flex-col justify-center leading-none">
+        <span className={cn(
+          "font-bold tracking-tight text-white group-hover:text-green-400 transition-colors",
+          text
+        )}>
+          GURPC
+        </span>
+        {showSubtitle && (
+          <span className={cn(
+            "font-semibold text-green-500 uppercase tracking-[0.15em] mt-0.5",
+            sub
+          )}>
+            Research & Publication
+          </span>
+        )}
+      </div>
+    </Link>
+  );
+};
+
+export default Logo;

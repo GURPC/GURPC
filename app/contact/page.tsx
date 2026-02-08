@@ -75,7 +75,7 @@ export default function ContactPage() {
                         <a href="https://www.facebook.com/GURPC.GUB" target="_blank" className="p-3 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-green-600 hover:text-white transition-colors">
                             <Facebook size={20} />
                         </a>
-                        <a href="https://www.linkedin.com/company/gurpc" target="_blank" className="p-3 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-green-600 hover:text-white transition-colors">
+                        <a href="https://www.linkedin.com/company/gurpc-gub/" target="_blank" className="p-3 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-green-600 hover:text-white transition-colors">
                             <Linkedin size={20} />
                         </a>
                     </div>

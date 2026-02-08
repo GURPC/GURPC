@@ -6,6 +6,9 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { useTheme } from '@/components/providers/ThemeProvider';
 
+// Use a reliable path relative to basePath for GitHub Pages
+const LOGO_SRC = '/GURPC/images/logo.png';
+
 interface LogoProps {
   size?: 'small' | 'medium' | 'large';
   className?: string;
@@ -54,15 +57,17 @@ const Logo: React.FC<LogoProps> = ({
         img
       )}>
         <Image
-          src="/images/logo.png"
+          src={LOGO_SRC}
           alt="GURPC Logo"
           fill
           className="object-cover p-0.5"
           sizes="(max-width: 768px) 100vw, 33vw"
           priority
           onError={(e) => {
+             // Fallback attempt without basepath just in case? Or hide.
              e.currentTarget.style.display = 'none';
           }}
+          unoptimized // Explicitly unoptimized for static export reliability
         />
         {/* Fallback if image fails or is missing */}
         <div className="absolute inset-0 flex items-center justify-center -z-10 bg-green-900">

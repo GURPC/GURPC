@@ -10,7 +10,9 @@ interface TeamCardProps {
 }
 
 const TeamCard: React.FC<TeamCardProps> = ({ member }) => {
-  const [imgSrc, setImgSrc] = useState(member.image || '/images/placeholder-avatar.svg');
+  // Use absolute path with repo name for GitHub Pages stability
+  const PLACEHOLDER_SRC = '/GURPC/images/placeholder-avatar.svg';
+  const [imgSrc, setImgSrc] = useState(member.image || PLACEHOLDER_SRC);
 
   return (
     <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col items-center p-6 text-center h-full group">
@@ -20,7 +22,14 @@ const TeamCard: React.FC<TeamCardProps> = ({ member }) => {
           alt={member.name}
           fill
           className="rounded-full object-cover border-4 border-gray-50 dark:border-gray-800 shadow-sm transition-opacity duration-300 group-hover:scale-105"
-          onError={() => setImgSrc('/images/placeholder-avatar.svg')}
+          onError={() => {
+             // If the current source isn't the placeholder, try the placeholder.
+             // If the placeholder also fails, we rely on the parent div/background or could try a generic fallback.
+             if (imgSrc !== PLACEHOLDER_SRC) {
+                setImgSrc(PLACEHOLDER_SRC);
+             }
+          }}
+          unoptimized // Explicitly unoptimized for static export
         />
         {/* Helper for layout stability on failure if using fill */}
       </div>

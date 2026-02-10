@@ -12,6 +12,18 @@ export const metadata: Metadata = {
 
 const events = [
   {
+    id: 5,
+    title: "PECCII 2026 International Conference",
+    date: "June 17-18, 2026",
+    time: "Submission Deadline: Feb 20, 2026",
+    location: "Pabna University of Science and Technology",
+    description: "Official call for submissions in Power, Electronics, AI, and Computing. GURPC provides support for abstracts and reviews.",
+    category: "Conference",
+    isUpcoming: true,
+    link: "https://peccii.pust.ac.bd/",
+    buttonText: "Visit Website"
+  },
+  {
     id: 1,
     title: "Research Methodology Workshop",
     date: "March 15, 2026",
@@ -126,9 +138,17 @@ function EventCard({ event, isPast }: { event: any, isPast?: boolean }) {
         </p>
       </CardContent>
       <CardFooter>
-        <Button className="w-full" variant={isPast ? "outline" : "default"} disabled={isPast}>
-            {isPast ? "Event Ended" : "Register Now"}
-        </Button>
+        {event.link && !isPast ? (
+          <Button className="w-full" variant="default" asChild>
+            <Link href={event.link} target="_blank" rel="noopener noreferrer">
+              {event.buttonText || "Register Now"}
+            </Link>
+          </Button>
+        ) : (
+          <Button className="w-full" variant={isPast ? "outline" : "default"} disabled={isPast}>
+            {isPast ? "Event Ended" : (event.buttonText || "Register Now")}
+          </Button>
+        )}
       </CardFooter>
     </Card>
   )

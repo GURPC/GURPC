@@ -30,6 +30,7 @@ const TeamCard: React.FC<TeamCardProps> = ({ member }) => {
              }
           }}
           unoptimized // Explicitly unoptimized for static export
+          referrerPolicy="no-referrer"
         />
         {/* Helper for layout stability on failure if using fill */}
       </div>

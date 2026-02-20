@@ -6,8 +6,8 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { useTheme } from '@/components/providers/ThemeProvider';
 
-// Use a reliable path relative to basePath for GitHub Pages
-const LOGO_SRC = '/GURPC/images/logo.png';
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+const LOGO_SRC = `${basePath}/images/logo.png`;
 
 interface LogoProps {
   size?: 'small' | 'medium' | 'large';

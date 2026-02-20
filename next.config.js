@@ -1,9 +1,14 @@
 /** @type {import('next').NextConfig} */
+
+const isGitHubPages = process.env.DEPLOY_TARGET === 'github-pages';
+
 const nextConfig = {
-  output: 'export',  // Required for GitHub Pages (Static Site Generation)
-  basePath: '/GURPC', // Required if your site is hosted at github.com/username/repo-name
+  ...(isGitHubPages && {
+    output: 'export',
+    basePath: '/GURPC',
+  }),
   images: {
-    unoptimized: true, // Required for static export (Next.js Image Optimization API doesn't work on static sites)
+    unoptimized: true,
     domains: ['drive.google.com', 'googleusercontent.com', 'lh3.googleusercontent.com'],
   },
 };

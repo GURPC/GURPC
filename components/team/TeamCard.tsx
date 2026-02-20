@@ -10,8 +10,8 @@ interface TeamCardProps {
 }
 
 const TeamCard: React.FC<TeamCardProps> = ({ member }) => {
-  // Use absolute path with repo name for GitHub Pages stability
-  const PLACEHOLDER_SRC = '/GURPC/images/placeholder-avatar.svg';
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  const PLACEHOLDER_SRC = `${basePath}/images/placeholder-avatar.svg`;
   const [imgSrc, setImgSrc] = useState(member.image || PLACEHOLDER_SRC);
 
   return (

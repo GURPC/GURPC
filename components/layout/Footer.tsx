@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Facebook, Linkedin, Mail, MapPin, Terminal, ChevronRight } from 'lucide-react';
+import { Facebook, Linkedin, Mail, MapPin, Phone, Terminal, ChevronRight, Youtube, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Logo from '@/components/Logo';
 
@@ -73,13 +73,21 @@ const Footer = () => {
                   gurpc.gub@gmail.com
                 </a>
               </li>
+              <li className="flex items-center gap-3 group">
+                <div className="p-2 rounded-lg bg-green-500/5 border border-green-500/10 group-hover:border-green-500/20 transition-all">
+                  <Phone size={16} className="text-green-500/60" />
+                </div>
+                <a href="tel:+8801531361741" className="text-slate-500 hover:text-green-600 dark:hover:text-green-400 transition-colors font-mono text-xs">
+                  +880 1531-361741
+                </a>
+              </li>
             </ul>
           </div>
 
           {/* Column 4: Follow Us & CTA */}
           <div className="space-y-6">
             <h3 className="font-mono text-sm text-green-600 dark:text-green-400 tracking-wider">// CONNECT</h3>
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-3">
               <a 
                 href="https://www.facebook.com/GURPC.GUB" 
                 target="_blank" 
@@ -98,6 +106,24 @@ const Footer = () => {
               >
                 <Linkedin size={18} />
               </a>
+              <a 
+                href="https://www.youtube.com/@gurpc-gub" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="p-3 rounded-lg bg-green-500/5 border border-green-200 dark:border-green-500/10 hover:border-green-400/30 hover:bg-green-500/10 transition-all text-slate-500 hover:text-green-600 dark:hover:text-green-400"
+                aria-label="YouTube"
+              >
+                <Youtube size={18} />
+              </a>
+              <a 
+                href="https://green.edu.bd" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="p-3 rounded-lg bg-green-500/5 border border-green-200 dark:border-green-500/10 hover:border-green-400/30 hover:bg-green-500/10 transition-all text-slate-500 hover:text-green-600 dark:hover:text-green-400"
+                aria-label="GUB Website"
+              >
+                <Globe size={18} />
+              </a>
             </div>
             
             <div className="pt-2">
@@ -114,8 +140,13 @@ const Footer = () => {
         </div>
         
         {/* Bottom Bar */}
-        <div className="border-t border-green-200 dark:border-green-500/10 mt-16 pt-8 flex flex-col md:flex-row justify-center items-center gap-4 text-xs text-slate-500 dark:text-slate-600 font-mono">
+        <div className="border-t border-green-200 dark:border-green-500/10 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500 dark:text-slate-600 font-mono">
           <p>© {new Date().getFullYear()} GURPC — Green University Research & Publication Community</p>
+          <div className="flex items-center gap-4">
+            <Link href="/privacy" className="hover:text-green-600 dark:hover:text-green-400 transition-colors">Privacy Policy</Link>
+            <span className="text-slate-300 dark:text-slate-700">|</span>
+            <Link href="/terms" className="hover:text-green-600 dark:hover:text-green-400 transition-colors">Terms of Service</Link>
+          </div>
         </div>
       </div>
     </footer>

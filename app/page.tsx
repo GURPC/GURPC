@@ -1,13 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Users, Lightbulb, Calendar, Microscope, Zap, Code, Binary, Shield, Terminal, Cpu, Quote, Video, BookMarked, Share2, Monitor, GraduationCap, Mic, Target, Library } from 'lucide-react';
+import { ArrowRight, BookOpen, Users, Lightbulb, Calendar, Microscope, Zap, Code, Binary, Shield, Terminal, Cpu, Quote, Video, BookMarked, Share2, Monitor, GraduationCap, Mic, Target, Library, Folder } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ParticleGrid from '@/components/effects/ParticleGrid';
 import GlowingOrb from '@/components/effects/GlowingOrb';
 import TypewriterText from '@/components/effects/TypewriterText';
 import CountUp from '@/components/effects/CountUp';
 import { useEffect, useRef, useState } from 'react';
+import { usePlatformStats } from '@/hooks/usePlatformStats';
 
 function useReveal() {
   const ref = useRef<HTMLDivElement>(null);
@@ -37,6 +38,8 @@ function RevealSection({ children, className = '', delay = '' }: { children: Rea
 }
 
 export default function Home() {
+  const { stats } = usePlatformStats();
+
   return (
     <div className="flex flex-col min-h-screen bg-grid-tech">
 
@@ -126,10 +129,10 @@ export default function Home() {
         <div className="container px-4 md:px-6 mx-auto relative z-10">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: Users, value: 60, suffix: '+', label: 'Active Members' },
-              { icon: BookOpen, value: 15, suffix: '+', label: 'Publications' },
-              { icon: Lightbulb, value: 10, suffix: '+', label: 'Ongoing Projects' },
-              { icon: Microscope, value: 4, suffix: '+', label: 'Research Labs' },
+              { icon: Users, value: stats.members, suffix: '+', label: 'Active Members' },
+              { icon: BookOpen, value: stats.papers, suffix: '+', label: 'Publications' },
+              { icon: Lightbulb, value: stats.projects, suffix: '+', label: 'Ongoing Projects' },
+              { icon: Folder, value: stats.groups, suffix: '+', label: 'Research Groups' },
             ].map((stat, i) => (
               <RevealSection key={stat.label} delay={`${i * 100}ms`}>
                 <div className="cyber-card rounded-xl p-6 text-center group cursor-default">

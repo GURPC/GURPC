@@ -8,10 +8,11 @@ export const metadata: Metadata = {
 };
 
 export default function TeamPage() {
+  const directors = teamMembers.filter(m => m.category === 'Director');
   const advisors = teamMembers.filter(m => m.category === 'Advisor');
   const moderators = teamMembers.filter(m => m.category === 'Moderation Board');
   // Use explicit filter for Executive Committee, or catch-all for remaining members
-  const executives = teamMembers.filter(m => m.category === 'Executive Committee' || (m.category !== 'Advisor' && m.category !== 'Moderation Board'));
+  const executives = teamMembers.filter(m => m.category === 'Executive Committee' || (m.category !== 'Advisor' && m.category !== 'Moderation Board' && m.category !== 'Director'));
 
   return (
     <div className="container px-4 py-12 mx-auto">
@@ -21,6 +22,18 @@ export default function TeamPage() {
           The passionate individuals leading the charge for research excellence at Green University.
         </p>
       </div>
+
+      {/* Directors Section */}
+      {directors.length > 0 && (
+        <section className="mb-20">
+          <h2 className="text-2xl font-bold mb-8 text-center border-b pb-4">Directors</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-6 justify-center max-w-2xl mx-auto">
+            {directors.map((member) => (
+              <TeamCard key={member.id} member={member} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Advisors Section */}
       <section className="mb-20">

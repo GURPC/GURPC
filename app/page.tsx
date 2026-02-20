@@ -1,186 +1,394 @@
+'use client';
+
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Users, Lightbulb, Calendar, Microscope } from 'lucide-react';
+import { ArrowRight, BookOpen, Users, Lightbulb, Calendar, Microscope, Zap, Code, Binary, Shield, Terminal, Cpu, Quote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import ParticleGrid from '@/components/effects/ParticleGrid';
+import GlowingOrb from '@/components/effects/GlowingOrb';
+import TypewriterText from '@/components/effects/TypewriterText';
+import CountUp from '@/components/effects/CountUp';
+import { useEffect, useRef, useState } from 'react';
+
+function useReveal() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [revealed, setRevealed] = useState(false);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setRevealed(true); },
+      { threshold: 0.15 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+  return { ref, revealed };
+}
+
+function RevealSection({ children, className = '', delay = '' }: { children: React.ReactNode; className?: string; delay?: string }) {
+  const { ref, revealed } = useReveal();
+  return (
+    <div
+      ref={ref}
+      className={`reveal-up ${revealed ? 'revealed' : ''} ${className}`}
+      style={{ transitionDelay: delay }}
+    >
+      {children}
+    </div>
+  );
+}
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Hero Section */}
-      <section className="relative py-20 md:py-32 overflow-hidden bg-[#002800] dark:bg-[#002000] text-white">
+    <div className="flex flex-col min-h-screen bg-grid-tech">
+
+      {/* ═══════════ HERO SECTION ═══════════ */}
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-green-50 to-white dark:from-[#020a04] dark:to-[#020a04] scanline">
+        {/* Particle Background */}
+        <ParticleGrid />
+        
+        {/* Glowing Orbs */}
+        <GlowingOrb color="bg-green-500" size="w-[600px] h-[600px]" position="top-[-200px] left-1/2 -translate-x-1/2" blur="blur-[150px]" opacity="opacity-20" />
+        <GlowingOrb color="bg-emerald-400" size="w-[300px] h-[300px]" position="bottom-[-100px] right-[-100px]" blur="blur-[100px]" opacity="opacity-15" />
+        <GlowingOrb color="bg-green-600" size="w-[200px] h-[200px]" position="top-[20%] left-[-50px]" blur="blur-[80px]" opacity="opacity-10" />
+
+        {/* Content */}
         <div className="container px-4 md:px-6 mx-auto relative z-10">
-          <div className="flex flex-col items-center text-center space-y-4 md:space-y-8 animate-in fade-in zoom-in duration-500">
-            <Badge variant="secondary" className="px-4 py-1.5 text-sm rounded-full bg-green-900/50 text-green-100 hover:bg-green-800 border-green-700">
-              Welcome to GURPC
-            </Badge>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white via-green-100 to-green-200">
-              Innovation Starts <br className="hidden sm:inline" /> With Research
+          <div className="flex flex-col items-center text-center space-y-6 md:space-y-8">
+            
+            {/* Tech Badge */}
+            <div className="tech-badge px-4 py-1.5 text-xs rounded-full flex items-center gap-2 animate-fade-in-up">
+              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+              <span className="font-mono tracking-wider">SYSTEM.INIT // GURPC v2.0</span>
+            </div>
+
+            {/* Main Title */}
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter max-w-4xl">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-800 via-green-700 to-green-600 dark:from-white dark:via-green-100 dark:to-green-300 neon-text">
+                Innovation Starts
+              </span>
+              <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-emerald-400 to-green-300">
+                With Research
+              </span>
             </h1>
-            <p className="mx-auto max-w-[700px] text-green-100/80 md:text-xl leading-relaxed font-light">
-              Green University Research & Publication Community is dedicated to cultivating a culture of academic excellence, collaboration, and scientific discovery.
+
+            {/* Typewriter */}
+            <div className="h-8 flex items-center">
+              <span className="font-mono text-green-400/70 text-sm md:text-base mr-2">&gt;_</span>
+              <TypewriterText
+                words={[
+                  'Building a research-centric Bangladesh',
+                  'Advancing scientific discovery',
+                  'Cultivating academic excellence',
+                  'Empowering future researchers',
+                ]}
+                className="font-mono text-green-300/80 text-sm md:text-base"
+              />
+            </div>
+
+            {/* Description */}
+            <p className="mx-auto max-w-[650px] text-slate-600 dark:text-slate-400 md:text-lg leading-relaxed">
+              Green University Research &amp; Publication Community — where cutting-edge research meets collaborative innovation.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 min-w-[300px] justify-center pt-4">
-              <Button asChild size="lg" className="bg-green-600 hover:bg-green-500 text-white rounded-full px-8 h-12 text-base shadow-lg hover:shadow-green-900/20 transition-all border border-transparent">
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <Button asChild size="lg" className="bg-green-600 hover:bg-green-500 text-white rounded-lg px-8 h-12 text-base shadow-lg shadow-green-900/30 hover:shadow-green-500/20 transition-all border border-green-500/20 group">
                 <Link href="/join">
-                  Join the Community <ArrowRight className="ml-2 h-4 w-4" />
+                  <Terminal className="mr-2 h-4 w-4" />
+                  Join the Community 
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="bg-transparent text-white border-green-400/30 hover:bg-green-900/30 hover:text-white rounded-full px-8 h-12 text-base font-medium">
-                <Link href="/about">Learn More</Link>
+              <Button asChild variant="outline" size="lg" className="bg-transparent text-green-700 border-green-300 hover:bg-green-50 hover:text-green-800 hover:border-green-400 dark:text-green-300 dark:border-green-500/20 dark:hover:bg-green-900/20 dark:hover:text-green-200 dark:hover:border-green-400/40 rounded-lg px-8 h-12 text-base font-medium transition-all">
+                <Link href="/about">
+                  <Code className="mr-2 h-4 w-4" />
+                  Learn More
+                </Link>
               </Button>
+            </div>
+
+            {/* Scroll Indicator */}
+            <div className="pt-12 animate-bounce">
+              <div className="w-6 h-10 rounded-full border-2 border-green-400/40 dark:border-green-500/30 flex items-start justify-center p-1.5">
+                <div className="w-1 h-2 rounded-full bg-green-400 animate-pulse" />
+              </div>
             </div>
           </div>
         </div>
-        
-        {/* Decorative Grid BG - Adjusted for dark theme */}
-        <div className="absolute inset-0 bg-grid-white/[0.05] -z-10 pointer-events-none" />
-        
-        {/* Ambient glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-green-500/20 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
+
+        {/* Bottom gradient fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white dark:from-[#020a04] to-transparent pointer-events-none z-20" />
       </section>
 
-      {/* Stats Section */}
-      <section className="py-12 bg-white dark:bg-slate-950 border-y border-slate-100 dark:border-slate-800">
-        <div className="container px-4 md:px-6 mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-            <div className="flex flex-col items-center space-y-2 p-4 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
-              <Users className="h-8 w-8 text-green-700 dark:text-green-500 mb-2" />
-              <h3 className="text-3xl font-bold tracking-tight">60+</h3>
-              <p className="text-muted-foreground text-sm uppercase tracking-wide font-medium">Active Members</p>
-            </div>
-            <div className="flex flex-col items-center space-y-2 p-4 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
-              <BookOpen className="h-8 w-8 text-green-700 dark:text-green-500 mb-2" />
-              <h3 className="text-3xl font-bold tracking-tight">15+</h3>
-              <p className="text-muted-foreground text-sm uppercase tracking-wide font-medium">Publications</p>
-            </div>
-            <div className="flex flex-col items-center space-y-2 p-4 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
-              <Lightbulb className="h-8 w-8 text-green-700 dark:text-green-500 mb-2" />
-              <h3 className="text-3xl font-bold tracking-tight">10+</h3>
-              <p className="text-muted-foreground text-sm uppercase tracking-wide font-medium">Ongoing Projects</p>
-            </div>
-            <div className="flex flex-col items-center space-y-2 p-4 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
-              <Microscope className="h-8 w-8 text-green-700 dark:text-green-500 mb-2" />
-              <h3 className="text-3xl font-bold tracking-tight">4+</h3>
-              <p className="text-muted-foreground text-sm uppercase tracking-wide font-medium">Research Labs</p>
-            </div>
+      {/* ═══════════ STATS SECTION ═══════════ */}
+      <section className="relative py-16 bg-slate-50 dark:bg-[#020a04] border-y border-green-200 dark:border-green-900/20 overflow-hidden">
+        <div className="absolute inset-0 hex-pattern" />
+        <div className="container px-4 md:px-6 mx-auto relative z-10">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { icon: Users, value: 60, suffix: '+', label: 'Active Members' },
+              { icon: BookOpen, value: 15, suffix: '+', label: 'Publications' },
+              { icon: Lightbulb, value: 10, suffix: '+', label: 'Ongoing Projects' },
+              { icon: Microscope, value: 4, suffix: '+', label: 'Research Labs' },
+            ].map((stat, i) => (
+              <RevealSection key={stat.label} delay={`${i * 100}ms`}>
+                <div className="cyber-card rounded-xl p-6 text-center group cursor-default">
+                  <stat.icon className="h-8 w-8 text-green-500 mx-auto mb-3 group-hover:text-green-400 transition-colors animate-float" style={{ animationDelay: `${i * 0.5}s` }} />
+                  <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 dark:text-white mb-1">
+                    <CountUp end={stat.value} suffix={stat.suffix} />
+                  </h3>
+                  <p className="text-slate-500 text-xs uppercase tracking-widest font-mono">{stat.label}</p>
+                </div>
+              </RevealSection>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Latest Events/News */}
-      <section className="py-16 md:py-24">
-        <div className="container px-4 md:px-6 mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
-            <div>
-              <h2 className="text-3xl font-bold tracking-tight mb-2">Happening at GURPC</h2>
-              <p className="text-muted-foreground text-lg">Stay updated with our latest workshops, seminars, and news.</p>
+      {/* ═══════════ DIRECTOR'S MESSAGE ═══════════ */}
+      <section className="relative py-20 md:py-28 bg-white dark:bg-[#010803] overflow-hidden">
+        <GlowingOrb color="bg-green-500" size="w-[400px] h-[400px]" position="top-[-100px] right-[-100px]" blur="blur-[120px]" opacity="opacity-8" />
+        <GlowingOrb color="bg-emerald-600" size="w-[300px] h-[300px]" position="bottom-[-80px] left-[-80px]" blur="blur-[100px]" opacity="opacity-6" />
+        
+        <div className="container px-4 md:px-6 mx-auto relative z-10">
+          <RevealSection>
+            <div className="text-center mb-12">
+              <span className="tech-badge inline-flex items-center px-3 py-1 rounded-full text-xs mb-4 gap-2">
+                <Quote className="h-3 w-3" /> LEADERSHIP
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 dark:text-white mb-4">
+                Messages from <span className="text-green-600 dark:text-green-400">Our Leaders</span>
+              </h2>
             </div>
-            <Button variant="ghost" asChild className="hidden md:inline-flex hover:bg-green-50 dark:hover:bg-green-900/20">
-              <Link href="/events" className="group text-primary font-semibold">
-                View all events <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </Button>
+          </RevealSection>
+
+          <RevealSection delay="100ms">
+            <div className="max-w-4xl mx-auto cyber-card rounded-2xl p-8 md:p-12 relative">
+              {/* Decorative quote marks */}
+              <div className="absolute top-6 left-6 text-green-500/10 text-8xl font-serif leading-none select-none">&ldquo;</div>
+              
+              <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
+                {/* Director Photo */}
+                <div className="shrink-0">
+                  <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl bg-gradient-to-br from-green-500/20 to-emerald-600/10 border border-green-500/20 flex items-center justify-center overflow-hidden">
+                    <div className="text-center">
+                      <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl bg-green-500/10 border border-green-500/15 flex items-center justify-center mx-auto">
+                        <span className="text-3xl md:text-4xl font-bold text-green-400/60 font-mono">AS</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-center mt-4">
+                    <h3 className="text-slate-900 dark:text-white font-semibold text-sm">Prof. Dr. ASM Shihavuddin</h3>
+                    <p className="text-green-600/70 dark:text-green-400/70 text-xs font-mono mt-1">Director, CRIT &amp; CETL</p>
+                  </div>
+                </div>
+
+                {/* Message */}
+                <div className="flex-1 relative z-10">
+                  <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-sm md:text-base mb-4">
+                    Research is the cornerstone of academic excellence and societal progress. At GURPC, we are committed to fostering a vibrant research culture among students at Green University of Bangladesh.
+                  </p>
+                  <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-sm md:text-base mb-4">
+                    Our mission is to empower young minds with the skills and knowledge needed to contribute meaningfully to the global research community. Through collaborative projects, mentorship programs, and publication support, we strive to bridge the gap between classroom learning and real-world innovation.
+                  </p>
+                  <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-sm md:text-base">
+                    I invite all students, faculty, and researchers to join us in this journey of discovery and excellence. Together, we can build a research-centric Bangladesh.
+                  </p>
+                  
+                  <div className="mt-6 pt-4 border-t border-green-500/10 flex items-center gap-3">
+                    <div className="w-8 h-[2px] bg-gradient-to-r from-green-500 to-transparent" />
+                    <span className="text-green-400/60 font-mono text-xs">Prof. Dr. ASM Shihavuddin</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Decorative closing quote */}
+              <div className="absolute bottom-6 right-8 text-green-500/10 text-8xl font-serif leading-none select-none">&rdquo;</div>
+            </div>
+          </RevealSection>
+
+          {/* Assistant Director Message */}
+          <RevealSection delay="200ms">
+            <div className="max-w-4xl mx-auto cyber-card rounded-2xl p-8 md:p-12 relative mt-8">
+              {/* Decorative quote marks */}
+              <div className="absolute top-6 left-6 text-green-500/10 text-8xl font-serif leading-none select-none">&ldquo;</div>
+              
+              <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
+                {/* Assistant Director Photo */}
+                <div className="shrink-0">
+                  <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-green-600/10 border border-green-500/20 flex items-center justify-center overflow-hidden">
+                    <div className="text-center">
+                      <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl bg-green-500/10 border border-green-500/15 flex items-center justify-center mx-auto">
+                        <span className="text-3xl md:text-4xl font-bold text-green-400/60 font-mono">FA</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-center mt-4">
+                    <h3 className="text-slate-900 dark:text-white font-semibold text-sm">Ms. Farhana Akter Sunny</h3>
+                    <p className="text-green-600/70 dark:text-green-400/70 text-xs font-mono mt-1">Asst. Director, CRIT</p>
+                  </div>
+                </div>
+
+                {/* Message */}
+                <div className="flex-1 relative z-10">
+                  <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-sm md:text-base mb-4">
+                    GURPC represents a unique platform where curiosity meets opportunity. As the Assistant Director of CRIT, I am deeply passionate about nurturing research talent and creating pathways for students to excel in academic publishing.
+                  </p>
+                  <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-sm md:text-base mb-4">
+                    Our community thrives on collaboration and the shared belief that every student has the potential to contribute to meaningful research. We provide the tools, guidance, and support system needed to turn ideas into impactful publications.
+                  </p>
+                  <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-sm md:text-base">
+                    I encourage every aspiring researcher to take the first step — join GURPC, engage with our workshops, and let us help you shape the future through the power of research.
+                  </p>
+                  
+                  <div className="mt-6 pt-4 border-t border-green-500/10 flex items-center gap-3">
+                    <div className="w-8 h-[2px] bg-gradient-to-r from-green-500 to-transparent" />
+                    <span className="text-green-400/60 font-mono text-xs">Ms. Farhana Akter Sunny</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Decorative closing quote */}
+              <div className="absolute bottom-6 right-8 text-green-500/10 text-8xl font-serif leading-none select-none">&rdquo;</div>
+            </div>
+          </RevealSection>
+        </div>
+      </section>
+
+      {/* ═══════════ FEATURES / WHAT WE DO ═══════════ */}
+      <section className="relative py-20 md:py-28 bg-slate-50 dark:bg-[#020a04] overflow-hidden">
+        <GlowingOrb color="bg-green-500" size="w-[500px] h-[500px]" position="top-[50%] left-[-200px] -translate-y-1/2" blur="blur-[150px]" opacity="opacity-10" />
+        
+        <div className="container px-4 md:px-6 mx-auto relative z-10">
+          <RevealSection>
+            <div className="text-center mb-16">
+              <span className="tech-badge inline-flex items-center px-3 py-1 rounded-full text-xs mb-4 gap-2">
+                <Cpu className="h-3 w-3" /> CORE MODULES
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 dark:text-white mb-4">
+                What We <span className="text-green-600 dark:text-green-400">Build</span>
+              </h2>
+              <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto">
+                Our community operates at the intersection of academic research and technological innovation.
+              </p>
+            </div>
+          </RevealSection>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { icon: BookOpen, title: 'Research Publications', desc: 'Publish papers in peer-reviewed journals with mentorship from experienced researchers and faculty.', tag: 'PUBLISH' },
+              { icon: Lightbulb, title: 'Innovation Labs', desc: 'Hands-on project labs where ideas transform into prototypes, papers, and real-world solutions.', tag: 'INNOVATE' },
+              { icon: Users, title: 'Collaborative Network', desc: 'Connect with researchers across departments and institutions for cross-disciplinary breakthroughs.', tag: 'CONNECT' },
+              { icon: Calendar, title: 'Workshops & Seminars', desc: 'Regular events on research methodology, data analysis, academic writing, and emerging technologies.', tag: 'LEARN' },
+              { icon: Shield, title: 'Mentorship Program', desc: 'One-on-one guidance from published researchers, professors, and industry professionals.', tag: 'MENTOR' },
+              { icon: Binary, title: 'Open Source Contributions', desc: 'Contribute to open-source research tools and datasets that benefit the global academic community.', tag: 'CONTRIBUTE' },
+            ].map((feature, i) => (
+              <RevealSection key={feature.title} delay={`${i * 80}ms`}>
+                <div className="cyber-card rounded-xl p-6 h-full group">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 rounded-lg bg-green-500/10 border border-green-500/20 group-hover:bg-green-500/20 group-hover:border-green-400/30 transition-all">
+                      <feature.icon className="h-5 w-5 text-green-400" />
+                    </div>
+                    <span className="font-mono text-[10px] text-green-500/60 tracking-widest">[{feature.tag}]</span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2 group-hover:text-green-600 dark:group-hover:text-green-300 transition-colors">{feature.title}</h3>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">{feature.desc}</p>
+                </div>
+              </RevealSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════ EVENTS SECTION ═══════════ */}
+      <section className="relative py-20 md:py-28 bg-white dark:bg-[#010803] overflow-hidden">
+        <GlowingOrb color="bg-emerald-500" size="w-[400px] h-[400px]" position="top-0 right-[-150px]" blur="blur-[120px]" opacity="opacity-10" />
+        
+        <div className="container px-4 md:px-6 mx-auto relative z-10">
+          <RevealSection>
+            <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-4">
+              <div>
+                <span className="tech-badge inline-flex items-center px-3 py-1 rounded-full text-xs mb-4 gap-2">
+                  <Zap className="h-3 w-3" /> LIVE FEED
+                </span>
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 dark:text-white mb-2">
+                  Upcoming <span className="text-green-600 dark:text-green-400">Events</span>
+                </h2>
+                <p className="text-slate-500 dark:text-slate-400">Stay synced with our latest workshops, seminars, and news.</p>
+              </div>
+              <Button variant="ghost" asChild className="hidden md:inline-flex text-green-600 hover:text-green-700 hover:bg-green-50 dark:text-green-400 dark:hover:text-green-300 dark:hover:bg-green-900/20 border border-green-300 dark:border-green-500/20">
+                <Link href="/events" className="group font-mono text-sm">
+                  view_all() <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </Button>
+            </div>
+          </RevealSection>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { date: 'Mar 15, 2026', title: 'Research Methodology Workshop', desc: 'An intensive session on qualitative and quantitative research methods for beginners.', badge: 'UPCOMING', color: 'bg-green-500' },
+              { date: 'Apr 2, 2026', title: 'Annual Research Symposium', desc: 'Present your ongoing research and get feedback from industry experts and faculty.', badge: 'REGISTER', color: 'bg-emerald-500' },
+              { date: 'Feb 10, 2026', title: 'Call for Papers: GUB Journal', desc: 'Submit your research papers for the upcoming issue of the Green University Journal of Science.', badge: 'OPEN', color: 'bg-teal-500' },
+            ].map((event, i) => (
+              <RevealSection key={event.title} delay={`${i * 100}ms`}>
+                <div className="cyber-card rounded-xl overflow-hidden h-full group">
+                  {/* Top accent */}
+                  <div className="h-1 w-full bg-gradient-to-r from-transparent via-green-500 to-transparent data-flow" />
+                  
+                  <div className="p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="font-mono text-xs text-slate-500">{event.date}</span>
+                      <span className="tech-badge px-2 py-0.5 rounded text-[10px] font-mono">{event.badge}</span>
+                    </div>
+                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-3 group-hover:text-green-600 dark:group-hover:text-green-300 transition-colors">{event.title}</h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4">{event.desc}</p>
+                    <Link href="/events" className="inline-flex items-center text-sm font-mono text-green-400 hover:text-green-300 transition-colors group/link">
+                      details() <ArrowRight className="ml-1 h-3 w-3 group-hover/link:translate-x-1 transition-transform" />
+                    </Link>
+                  </div>
+                </div>
+              </RevealSection>
+            ))}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Mock Event 1 */}
-            <Card className="flex flex-col h-full hover:shadow-lg transition-all duration-300 border-muted">
-              <div className="h-48 w-full bg-slate-100 dark:bg-slate-800 relative rounded-t-lg overflow-hidden group">
-                <div className="absolute inset-0 flex items-center justify-center text-slate-400 bg-slate-200 dark:bg-slate-800 group-hover:scale-105 transition-transform duration-500">
-                  <Calendar className="h-12 w-12 opacity-50" />
-                </div>
-                <Badge className="absolute top-4 left-4 bg-primary text-white shadow-sm">Upcoming</Badge>
-              </div>
-              <CardHeader>
-                <div className="text-xs font-semibold text-primary mb-2 flex items-center gap-2 uppercase tracking-wide">
-                  <Calendar className="h-3 w-3" /> March 15, 2026
-                </div>
-                <CardTitle className="text-xl leading-tight">Research Methodology Workshop</CardTitle>
-              </CardHeader>
-              <CardContent className="flex-grow">
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  An intensive session on qualitative and quantitative research methods for beginners.
-                </p>
-              </CardContent>
-              <CardFooter>
-                <Link href="/events" className="text-sm font-medium text-primary hover:underline flex items-center">
-                  Read Details <ArrowRight className="ml-1 h-3 w-3" />
-                </Link>
-              </CardFooter>
-            </Card>
-
-            {/* Mock Event 2 */}
-            <Card className="flex flex-col h-full hover:shadow-lg transition-all duration-300 border-muted">
-              <div className="h-48 w-full bg-slate-100 dark:bg-slate-800 relative rounded-t-lg overflow-hidden group">
-                <div className="absolute inset-0 flex items-center justify-center text-slate-400 bg-slate-200 dark:bg-slate-800 group-hover:scale-105 transition-transform duration-500">
-                   <Calendar className="h-12 w-12 opacity-50" />
-                </div>
-              </div>
-              <CardHeader>
-                <div className="text-xs font-semibold text-primary mb-2 flex items-center gap-2 uppercase tracking-wide">
-                  <Calendar className="h-3 w-3" /> April 2, 2026
-                </div>
-                <CardTitle className="text-xl leading-tight">Annual Research Symposium</CardTitle>
-              </CardHeader>
-              <CardContent className="flex-grow">
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Present your ongoing research and get feedback from industry experts and faculty.
-                </p>
-              </CardContent>
-              <CardFooter>
-                <Link href="/events" className="text-sm font-medium text-primary hover:underline flex items-center">
-                  Read Details <ArrowRight className="ml-1 h-3 w-3" />
-                </Link>
-              </CardFooter>
-            </Card>
-
-             {/* Mock Event 3 */}
-             <Card className="flex flex-col h-full hover:shadow-lg transition-all duration-300 border-muted">
-              <div className="h-48 w-full bg-slate-100 dark:bg-slate-800 relative rounded-t-lg overflow-hidden group">
-                <div className="absolute inset-0 flex items-center justify-center text-slate-400 bg-slate-200 dark:bg-slate-800 group-hover:scale-105 transition-transform duration-500">
-                   <Lightbulb className="h-12 w-12 opacity-50" />
-                </div>
-                <Badge variant="secondary" className="absolute top-4 left-4 shadow-sm bg-white dark:bg-slate-900">News</Badge>
-              </div>
-              <CardHeader>
-                <div className="text-xs font-semibold text-primary mb-2 flex items-center gap-2 uppercase tracking-wide">
-                  <Calendar className="h-3 w-3" /> Feb 10, 2026
-                </div>
-                <CardTitle className="text-xl leading-tight">Call for Papers: GUB Journal</CardTitle>
-              </CardHeader>
-              <CardContent className="flex-grow">
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Submit your research papers for the upcoming issue of the Green University Journal of Science.
-                </p>
-              </CardContent>
-              <CardFooter>
-                <Link href="/blog" className="text-sm font-medium text-primary hover:underline flex items-center">
-                  Read Details <ArrowRight className="ml-1 h-3 w-3" />
-                </Link>
-              </CardFooter>
-            </Card>
-          </div>
-          
-          <div className="mt-10 text-center md:hidden">
-             <Button variant="outline" asChild className="w-full">
+          <div className="mt-8 text-center md:hidden">
+            <Button variant="outline" asChild className="w-full border-green-300 text-green-600 hover:bg-green-50 dark:border-green-500/20 dark:text-green-400 dark:hover:bg-green-900/20">
               <Link href="/events">View all events</Link>
             </Button>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-primary text-primary-foreground relative overflow-hidden">
-         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-        <div className="container px-4 md:px-6 mx-auto text-center relative z-10">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to start your research journey?</h2>
-          <p className="text-green-100 max-w-2xl mx-auto mb-10 text-lg leading-relaxed">
-            Join a community of passionate learners and innovators. Whether you are a student, alumni, or faculty member, there is a place for you.
-          </p>
-          <Button asChild size="lg" variant="secondary" className="font-bold rounded-full px-10 h-14 text-lg shadow-xl hover:bg-white hover:text-green-800 transition-colors">
-            <Link href="/join">Register Now</Link>
-          </Button>
+      {/* ═══════════ CTA SECTION ═══════════ */}
+      <section className="relative py-24 overflow-hidden bg-slate-50 dark:bg-[#020a04]">
+        <GlowingOrb color="bg-green-500" size="w-[800px] h-[400px]" position="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" blur="blur-[150px]" opacity="opacity-15" />
+        
+        {/* Grid overlay */}
+        <div className="absolute inset-0 bg-grid-tech" />
+        
+        <div className="container px-4 md:px-6 mx-auto relative z-10">
+          <RevealSection>
+            <div className="text-center max-w-2xl mx-auto">
+              <div className="inline-flex items-center gap-2 tech-badge px-4 py-1.5 rounded-full text-xs mb-6">
+                <Terminal className="h-3 w-3" />
+                <span className="font-mono">READY TO DEPLOY</span>
+              </div>
+              <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 neon-text">
+                Start Your Research<br />
+                <span className="text-green-600 dark:text-green-400">Journey Today</span>
+              </h2>
+              <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed mb-10">
+                Join a community of passionate learners and innovators. Whether you&apos;re a student, alumni, or faculty member — your next breakthrough starts here.
+              </p>
+              <Button asChild size="lg" className="bg-green-600 hover:bg-green-500 text-white font-bold rounded-lg px-12 h-14 text-lg shadow-xl shadow-green-900/30 hover:shadow-green-500/20 transition-all border border-green-500/20 animate-glow-pulse group">
+                <Link href="/join">
+                  <Zap className="mr-2 h-5 w-5" />
+                  Register Now
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </Button>
+            </div>
+          </RevealSection>
         </div>
       </section>
     </div>

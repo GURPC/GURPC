@@ -50,12 +50,15 @@ const Navbar = () => {
         className={cn(
           "sticky top-0 z-50 w-full transition-all duration-300 border-b",
           scrolled 
-            ? "bg-[#0b1d12]/95 backdrop-blur-md border-green-900/30 shadow-lg py-2" 
-            : "bg-[#0b1d12] border-transparent py-4"
+            ? "bg-white/90 dark:bg-[#020a04]/90 backdrop-blur-xl border-green-200 dark:border-green-500/10 shadow-sm dark:shadow-[0_4px_30px_rgba(0,255,100,0.05)] py-2" 
+            : "bg-white/70 dark:bg-[#020a04]/70 backdrop-blur-md border-transparent py-4"
         )}
       >
+        {/* Top scanline accent */}
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-green-500/40 to-transparent" />
+        
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center text-white">
+          <div className="flex justify-between items-center text-slate-900 dark:text-white">
             {/* Logo Section */}
             <Logo size="medium" />
             
@@ -68,34 +71,39 @@ const Navbar = () => {
                     key={link.href}
                     href={link.href} 
                     className={cn(
-                      "relative px-3 py-2 text-sm font-medium transition-colors hover:text-green-400",
-                      isActive ? "text-green-400" : "text-slate-300"
+                      "relative px-3 py-2 text-sm font-mono tracking-wide transition-all hover:text-green-600 dark:hover:text-green-400 group",
+                      isActive ? "text-green-600 dark:text-green-400" : "text-slate-500 dark:text-slate-400 hover:text-green-600 dark:hover:text-green-300"
                     )}
                   >
-                    <span>{link.name}</span>
+                    <span className="relative z-10">{link.name}</span>
                     {isActive && (
-                      <span className="absolute bottom-0 left-0 h-[2px] w-full bg-green-500 rounded-full animate-in fade-in zoom-in-50 duration-300" />
+                      <span className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] w-4/5 bg-green-500 rounded-full shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
                     )}
+                    <span className="absolute inset-0 rounded-md bg-green-500/0 group-hover:bg-green-500/5 transition-colors" />
                   </Link>
                 );
               })}
             </div>
 
             {/* Right Actions */}
-            <div className="hidden lg:flex items-center gap-4">
+            <div className="hidden lg:flex items-center gap-3">
                <Button
                 variant="ghost"
                 size="icon"
                 onClick={toggleTheme}
                 aria-label="Toggle theme"
-                className="text-slate-300 hover:text-white hover:bg-white/10 rounded-full"
+                className="text-slate-500 dark:text-slate-400 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-500/10 rounded-lg border border-transparent hover:border-green-200 dark:hover:border-green-500/20 transition-all"
               >
-                <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
               </Button>
               
-              <Button asChild className="bg-green-600 hover:bg-green-700 text-white font-semibold rounded-full px-6 shadow-md hover:shadow-lg hover:scale-105 transition-all">
-                <Link href="/join">Join Now</Link>
+              <Button asChild className="bg-green-600/90 hover:bg-green-500 text-white font-mono text-sm rounded-lg px-5 shadow-lg shadow-green-900/20 hover:shadow-green-500/20 border border-green-500/20 hover:border-green-400/40 transition-all group">
+                <Link href="/join">
+                  <span className="mr-1 text-green-300/60">&gt;</span>
+                  Join Now
+                  <ChevronRight className="ml-1 h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
+                </Link>
               </Button>
             </div>
 
@@ -105,7 +113,7 @@ const Navbar = () => {
                 variant="ghost"
                 size="icon"
                 onClick={toggleTheme}
-                className="text-slate-300 hover:text-white hover:bg-white/10"
+                className="text-slate-500 dark:text-slate-300 hover:text-green-700 dark:hover:text-white hover:bg-green-50 dark:hover:bg-white/10"
               >
                  <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                  <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
@@ -114,7 +122,7 @@ const Navbar = () => {
                 variant="ghost" 
                 size="icon"
                 onClick={() => setIsOpen(true)}
-                className="text-white hover:bg-white/10"
+                className="text-slate-700 dark:text-white hover:bg-green-50 dark:hover:bg-white/10"
               >
                 <Menu className="h-7 w-7" />
               </Button>
@@ -135,19 +143,22 @@ const Navbar = () => {
       {/* Mobile Sidebar */}
       <div 
         className={cn(
-          "fixed inset-y-0 right-0 z-[70] w-[80vw] sm:w-[320px] bg-[#0b1d12] shadow-2xl transition-transform duration-300 ease-out lg:hidden border-l border-green-900/30 flex flex-col",
+          "fixed inset-y-0 right-0 z-[70] w-[80vw] sm:w-[320px] bg-white dark:bg-[#020a04] shadow-2xl transition-transform duration-300 ease-out lg:hidden border-l border-green-200 dark:border-green-500/10 flex flex-col",
           isOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
-         <div className="flex items-center justify-between p-6 border-b border-green-900/30">
-            <span className="font-bold text-xl text-white">Menu</span>
+         {/* Sidebar glow */}
+         <div className="absolute top-0 left-0 w-[1px] h-full bg-gradient-to-b from-green-500/30 via-green-500/10 to-transparent" />
+         
+         <div className="flex items-center justify-between p-6 border-b border-green-200 dark:border-green-500/10">
+            <span className="font-mono text-sm text-green-600 dark:text-green-400 tracking-wider">// NAVIGATION</span>
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(false)}
-              className="text-slate-400 hover:text-white hover:bg-white/10"
+              className="text-slate-500 hover:text-green-400 hover:bg-green-500/10 rounded-lg"
             >
-              <X className="h-6 w-6" />
+              <X className="h-5 w-5" />
             </Button>
          </div>
 
@@ -157,22 +168,28 @@ const Navbar = () => {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "flex items-center justify-between p-3 rounded-lg text-base font-medium transition-all",
+                  "flex items-center justify-between p-3 rounded-lg text-sm font-mono transition-all",
                   pathname === link.href 
-                    ? "bg-green-900/40 text-green-400" 
-                    : "text-slate-300 hover:bg-white/5 hover:text-white"
+                    ? "bg-green-50 dark:bg-green-500/10 text-green-600 dark:text-green-400 border border-green-200 dark:border-green-500/20" 
+                    : "text-slate-600 dark:text-slate-400 hover:bg-green-50 dark:hover:bg-green-500/5 hover:text-green-600 dark:hover:text-green-300 border border-transparent"
                 )}
                 onClick={() => setIsOpen(false)}
               >
-                {link.name}
-                {pathname === link.href && <ChevronRight className="h-4 w-4" />}
+                <span className="flex items-center gap-2">
+                  <span className="text-green-500/40 text-xs">&gt;</span>
+                  {link.name}
+                </span>
+                {pathname === link.href && <ChevronRight className="h-3 w-3" />}
               </Link>
             ))}
          </div>
 
-         <div className="p-6 border-t border-green-900/30 bg-black/20">
-            <Button asChild className="w-full bg-green-600 hover:bg-green-700 text-white h-11 rounded-full font-semibold shadow-lg">
-              <Link href="/join" onClick={() => setIsOpen(false)}>Join Now</Link>
+         <div className="p-6 border-t border-green-500/10">
+            <Button asChild className="w-full bg-green-600/90 hover:bg-green-500 text-white h-11 rounded-lg font-mono text-sm shadow-lg shadow-green-900/20 border border-green-500/20">
+              <Link href="/join" onClick={() => setIsOpen(false)}>
+                <span className="text-green-300/60 mr-1">&gt;</span>
+                Join Now
+              </Link>
             </Button>
          </div>
       </div>

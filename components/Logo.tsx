@@ -53,41 +53,36 @@ const Logo: React.FC<LogoProps> = ({
       aria-label="GURPC Home"
     >
       <div className={cn(
-        "relative shrink-0 overflow-hidden rounded-full border border-green-500/20 bg-white/5 transition-transform duration-300 group-hover:scale-105",
+        "relative shrink-0 transition-transform duration-300 group-hover:scale-105",
         img
       )}>
         <Image
           src={LOGO_SRC}
           alt="GURPC Logo"
           fill
-          className="object-cover p-0.5"
+          className="object-contain"
           sizes="(max-width: 768px) 100vw, 33vw"
           priority
           onError={(e) => {
-             // Fallback attempt without basepath just in case? Or hide.
              e.currentTarget.style.display = 'none';
           }}
-          unoptimized // Explicitly unoptimized for static export reliability
+          unoptimized
         />
-        {/* Fallback if image fails or is missing */}
-        <div className="absolute inset-0 flex items-center justify-center -z-10 bg-green-900">
-           <span className="font-bold text-white">G</span>
-        </div>
       </div>
       
       <div className="flex flex-col justify-center leading-none">
         <span className={cn(
-          "font-bold tracking-tight text-white group-hover:text-green-400 transition-colors",
+          "font-bold uppercase tracking-tight text-slate-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors",
           text
         )}>
-          GURPC
+          Green University
         </span>
         {showSubtitle && (
           <span className={cn(
             "font-semibold text-green-500 uppercase tracking-[0.15em] mt-0.5",
             sub
           )}>
-            Research & Publication
+            Research & Publication Community
           </span>
         )}
       </div>

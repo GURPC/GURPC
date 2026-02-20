@@ -1,6 +1,24 @@
 import { TeamMember } from "@/types";
 
 export const teamMembers: TeamMember[] = [
+  // Directors
+  {
+    id: "dir-1",
+    name: "Prof. Dr. ASM Shihavuddin",
+    role: "Director, CRIT & CETL",
+    category: "Director",
+    department: "Green University of Bangladesh",
+    image: ""
+  },
+  {
+    id: "dir-2",
+    name: "Ms. Farhana Akter Sunny",
+    role: "Assistant Director, CRIT",
+    category: "Director",
+    department: "Green University of Bangladesh",
+    image: ""
+  },
+
   // Advisors
   {
     id: "adv-1",

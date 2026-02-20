@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Users, Lightbulb, Calendar, Microscope, Zap, Code, Binary, Shield, Terminal, Cpu, Quote } from 'lucide-react';
+import { ArrowRight, BookOpen, Users, Lightbulb, Calendar, Microscope, Zap, Code, Binary, Shield, Terminal, Cpu, Quote, Video, BookMarked, Share2, Monitor, GraduationCap, Mic, Target, Library } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ParticleGrid from '@/components/effects/ParticleGrid';
 import GlowingOrb from '@/components/effects/GlowingOrb';
@@ -309,6 +309,66 @@ export default function Home() {
             <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-4">
               <div>
                 <span className="tech-badge inline-flex items-center px-3 py-1 rounded-full text-xs mb-4 gap-2">
+                  <Zap className="h-3 w-3" /> NEW INITIATIVES
+                </span>
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 dark:text-white mb-2">
+                  Meeting <span className="text-green-600 dark:text-green-400">Decisions</span>
+                </h2>
+                <p className="text-slate-500 dark:text-slate-400">Key initiatives from our latest meeting driving GURPC forward.</p>
+              </div>
+              <Button variant="ghost" asChild className="hidden md:inline-flex text-green-600 hover:text-green-700 hover:bg-green-50 dark:text-green-400 dark:hover:text-green-300 dark:hover:bg-green-900/20 border border-green-300 dark:border-green-500/20">
+                <Link href="/initiatives" className="group font-mono text-sm">
+                  view_all() <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </Button>
+            </div>
+          </RevealSection>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { icon: Video, title: 'Content Recording', desc: 'All sessions professionally recorded and archived for on-demand access.', tag: 'RECORD', href: '/initiatives' },
+              { icon: BookMarked, title: 'Paper Reading Team', desc: 'Dedicated team reviewing and discussing key research papers weekly.', tag: 'READ', href: '/initiatives' },
+              { icon: Share2, title: 'Resource Sharing', desc: 'Centralized system for datasets, software, and research materials.', tag: 'SHARE', href: '/resources' },
+              { icon: Monitor, title: 'Software Workshops', desc: 'Department-wise workshops: R, SPSS, MATLAB, Python, LaTeX.', tag: 'SOFTWARE', href: '/resources' },
+              { icon: GraduationCap, title: 'Training Ecosystem', desc: 'Structured membership with batch training and specialized groups.', tag: 'TRAIN', href: '/training' },
+              { icon: Mic, title: 'Research Talks', desc: 'Domain-based talks by faculty and alumni experts.', tag: 'TALK', href: '/events' },
+              { icon: Target, title: 'Paper Targets', desc: 'Ambitious publication targets with mentorship support.', tag: 'TARGET', href: '/initiatives' },
+              { icon: Library, title: 'Journal Directory', desc: 'Curated list of conferences and journals with deadlines.', tag: 'DIRECTORY', href: '/conferences' },
+            ].map((item, i) => (
+              <RevealSection key={item.title} delay={`${i * 60}ms`}>
+                <Link href={item.href} className="block h-full">
+                  <div className="cyber-card rounded-xl p-5 h-full group cursor-pointer">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="p-1.5 rounded-lg bg-green-500/10 border border-green-500/20 group-hover:bg-green-500/20 transition-colors">
+                        <item.icon className="h-4 w-4 text-green-500" />
+                      </div>
+                      <span className="font-mono text-[9px] text-green-500/60 tracking-widest">[{item.tag}]</span>
+                    </div>
+                    <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-1.5 group-hover:text-green-600 dark:group-hover:text-green-300 transition-colors">{item.title}</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{item.desc}</p>
+                  </div>
+                </Link>
+              </RevealSection>
+            ))}
+          </div>
+
+          <div className="mt-6 text-center md:hidden">
+            <Button variant="outline" asChild className="w-full border-green-300 text-green-600 hover:bg-green-50 dark:border-green-500/20 dark:text-green-400 dark:hover:bg-green-900/20">
+              <Link href="/initiatives">View all initiatives</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════ UPCOMING EVENTS SECTION ═══════════ */}
+      <section className="relative py-20 md:py-28 bg-slate-50 dark:bg-[#020a04] overflow-hidden">
+        <GlowingOrb color="bg-emerald-500" size="w-[400px] h-[400px]" position="top-0 right-[-150px]" blur="blur-[120px]" opacity="opacity-10" />
+        
+        <div className="container px-4 md:px-6 mx-auto relative z-10">
+          <RevealSection>
+            <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-4">
+              <div>
+                <span className="tech-badge inline-flex items-center px-3 py-1 rounded-full text-xs mb-4 gap-2">
                   <Zap className="h-3 w-3" /> LIVE FEED
                 </span>
                 <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 dark:text-white mb-2">
@@ -360,7 +420,7 @@ export default function Home() {
       </section>
 
       {/* ═══════════ CTA SECTION ═══════════ */}
-      <section className="relative py-24 overflow-hidden bg-slate-50 dark:bg-[#020a04]">
+      <section className="relative py-24 overflow-hidden bg-white dark:bg-[#010803]">
         <GlowingOrb color="bg-green-500" size="w-[800px] h-[400px]" position="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" blur="blur-[150px]" opacity="opacity-15" />
         
         {/* Grid overlay */}

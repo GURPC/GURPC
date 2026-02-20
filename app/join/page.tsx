@@ -8,7 +8,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { CheckCircle2, Loader2 } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle2, Loader2, ShieldCheck, Target, ClipboardList, Calendar, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+import { recruitmentCriteria } from '@/data/initiatives';
 
 // Form validation schema
 const formSchema = z.object({
@@ -72,6 +75,9 @@ export default function JoinPage() {
     <div className="container px-4 py-12 mx-auto">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-10">
+          <Badge variant="outline" className="mb-4 text-green-600 dark:text-green-400 border-green-300 dark:border-green-500/30">
+            Fixed Yearly Intake
+          </Badge>
           <h1 className="text-4xl font-bold tracking-tight mb-4">Join GURPC</h1>
           <p className="text-muted-foreground">
             Become a part of the most active research community at Green University.
@@ -149,6 +155,56 @@ export default function JoinPage() {
             </CardFooter>
           </form>
         </Card>
+      </div>
+
+      {/* ══════════ RECRUITMENT CRITERIA & BENCHMARKS ══════════ */}
+      <div className="max-w-4xl mx-auto mt-20">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold tracking-tight mb-3">Recruitment Criteria & Benchmarks</h2>
+          <p className="text-muted-foreground max-w-xl mx-auto">
+            GURPC follows a structured selection process with clear criteria to ensure quality membership and committed participants.
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          {recruitmentCriteria.map((criteria, i) => {
+            const icons = [ShieldCheck, Target, ClipboardList, Calendar];
+            const Icon = icons[i] || ShieldCheck;
+            return (
+              <Card key={criteria.id} className="border-green-100 dark:border-green-900/20 hover:border-green-300 dark:hover:border-green-500/30 transition-colors">
+                <CardHeader className="pb-3">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-green-500/10 border border-green-500/20">
+                      <Icon className="h-5 w-5 text-green-600 dark:text-green-400" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-lg">{criteria.title}</CardTitle>
+                      <p className="text-xs text-muted-foreground mt-0.5">{criteria.description}</p>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2">
+                    {criteria.requirements.map((req) => (
+                      <li key={req} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0 mt-0.5" />
+                        {req}
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+
+        {/* Training CTA */}
+        <div className="text-center mt-12">
+          <p className="text-muted-foreground mb-4">Selected members start with Foundation Research Training.</p>
+          <Button asChild variant="outline" className="border-green-300 dark:border-green-500/30">
+            <Link href="/training">View Training Programs <ArrowRight className="ml-2 h-4 w-4" /></Link>
+          </Button>
+        </div>
       </div>
     </div>
   );

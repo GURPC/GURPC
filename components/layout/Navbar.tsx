@@ -13,10 +13,12 @@ import Logo from '@/components/Logo';
 const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
+  { name: 'Initiatives', href: '/initiatives' },
+  { name: 'Training', href: '/training' },
+  { name: 'Conferences', href: '/conferences' },
   { name: 'Team', href: '/team' },
   { name: 'Events', href: '/events' },
   { name: 'Resources', href: '/resources' },
-  { name: 'Blog', href: '/blog' },
   { name: 'Contact', href: '/contact' },
 ];
 

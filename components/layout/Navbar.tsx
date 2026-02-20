@@ -2,10 +2,11 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
-import React, { useState, useEffect } from 'react';
-import { Moon, Sun, Menu, X, ChevronRight } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import React, { useState, useEffect, useRef } from 'react';
+import { Moon, Sun, Menu, X, ChevronRight, User, LogOut, LayoutDashboard, Settings } from 'lucide-react';
 import { useTheme } from '@/components/providers/ThemeProvider';
+import { useAuth } from '@/components/providers/AuthProvider';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import Logo from '@/components/Logo';
@@ -16,6 +17,7 @@ const navLinks = [
   { name: 'Initiatives', href: '/initiatives' },
   { name: 'Training', href: '/training' },
   { name: 'Conferences', href: '/conferences' },
+  { name: 'Groups', href: '/groups' },
   { name: 'Team', href: '/team' },
   { name: 'Events', href: '/events' },
   { name: 'Resources', href: '/resources' },
@@ -24,9 +26,13 @@ const navLinks = [
 
 const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
+  const { user, profile, loading: authLoading, signOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const router = useRouter();
 
   // Handle scroll effect for transparency/blur
   useEffect(() => {
@@ -45,6 +51,24 @@ const Navbar = () => {
       document.body.style.overflow = 'unset';
     }
   }, [isOpen]);
+
+  // Close user menu on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setUserMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleSignOut = async () => {
+    await signOut();
+    setUserMenuOpen(false);
+    router.push('/');
+    router.refresh();
+  };
 
   return (
     <>
@@ -99,14 +123,64 @@ const Navbar = () => {
                 <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                 <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
               </Button>
-              
-              <Button asChild className="bg-green-600/90 hover:bg-green-500 text-white font-mono text-sm rounded-lg px-5 shadow-lg shadow-green-900/20 hover:shadow-green-500/20 border border-green-500/20 hover:border-green-400/40 transition-all group">
-                <Link href="/join">
-                  <span className="mr-1 text-green-300/60">&gt;</span>
-                  Join Now
-                  <ChevronRight className="ml-1 h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
-                </Link>
-              </Button>
+
+              {authLoading ? (
+                <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse" />
+              ) : user ? (
+                /* Authenticated User Menu */
+                <div className="relative" ref={userMenuRef}>
+                  <button
+                    onClick={() => setUserMenuOpen(!userMenuOpen)}
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-green-200 dark:border-green-500/20 hover:border-green-400 dark:hover:border-green-500/40 bg-green-50/50 dark:bg-green-500/5 transition-all"
+                  >
+                    <div className="w-7 h-7 rounded-full bg-green-600 flex items-center justify-center text-white text-xs font-bold overflow-hidden">
+                      {profile?.photo_url ? (
+                        <img src={profile.photo_url} alt="" className="w-full h-full object-cover" />
+                      ) : (
+                        profile?.name?.charAt(0)?.toUpperCase() || <User className="w-4 h-4" />
+                      )}
+                    </div>
+                    <span className="text-sm font-mono text-slate-700 dark:text-slate-300 max-w-[100px] truncate">
+                      {profile?.name?.split(' ')[0] || 'User'}
+                    </span>
+                  </button>
+
+                  {/* Dropdown */}
+                  {userMenuOpen && (
+                    <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-gray-200 dark:border-gray-800 py-2 z-50">
+                      <div className="px-4 py-2 border-b border-gray-100 dark:border-gray-800">
+                        <p className="text-sm font-medium text-gray-900 dark:text-white truncate">{profile?.name}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{profile?.email}</p>
+                      </div>
+                      <Link href="/dashboard" onClick={() => setUserMenuOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-green-50 dark:hover:bg-green-500/10 transition-colors">
+                        <LayoutDashboard className="w-4 h-4" /> Dashboard
+                      </Link>
+                      <Link href="/profile" onClick={() => setUserMenuOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-green-50 dark:hover:bg-green-500/10 transition-colors">
+                        <Settings className="w-4 h-4" /> Edit Profile
+                      </Link>
+                      <div className="border-t border-gray-100 dark:border-gray-800 mt-1 pt-1">
+                        <button onClick={handleSignOut} className="flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors w-full">
+                          <LogOut className="w-4 h-4" /> Sign Out
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                /* Guest: Login + Join */
+                <>
+                  <Button asChild variant="ghost" className="text-slate-500 dark:text-slate-400 hover:text-green-600 dark:hover:text-green-400 font-mono text-sm">
+                    <Link href="/auth/login">Sign In</Link>
+                  </Button>
+                  <Button asChild className="bg-green-600/90 hover:bg-green-500 text-white font-mono text-sm rounded-lg px-5 shadow-lg shadow-green-900/20 hover:shadow-green-500/20 border border-green-500/20 hover:border-green-400/40 transition-all group">
+                    <Link href="/auth/signup">
+                      <span className="mr-1 text-green-300/60">&gt;</span>
+                      Join Now
+                      <ChevronRight className="ml-1 h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
+                    </Link>
+                  </Button>
+                </>
+              )}
             </div>
 
             {/* Mobile Menu Toggle */}
@@ -186,13 +260,36 @@ const Navbar = () => {
             ))}
          </div>
 
-         <div className="p-6 border-t border-green-500/10">
-            <Button asChild className="w-full bg-green-600/90 hover:bg-green-500 text-white h-11 rounded-lg font-mono text-sm shadow-lg shadow-green-900/20 border border-green-500/20">
-              <Link href="/join" onClick={() => setIsOpen(false)}>
-                <span className="text-green-300/60 mr-1">&gt;</span>
-                Join Now
-              </Link>
-            </Button>
+         <div className="p-6 border-t border-green-500/10 space-y-2">
+            {user ? (
+              <>
+                <Button asChild variant="outline" className="w-full h-11 rounded-lg font-mono text-sm border-green-200 dark:border-green-500/20 text-green-700 dark:text-green-400">
+                  <Link href="/dashboard" onClick={() => setIsOpen(false)}>
+                    <LayoutDashboard className="w-4 h-4 mr-2" /> Dashboard
+                  </Link>
+                </Button>
+                <button
+                  onClick={() => { handleSignOut(); setIsOpen(false); }}
+                  className="w-full h-11 rounded-lg font-mono text-sm text-red-600 dark:text-red-400 border border-red-200 dark:border-red-500/20 hover:bg-red-50 dark:hover:bg-red-500/10 flex items-center justify-center gap-2 transition-colors"
+                >
+                  <LogOut className="w-4 h-4" /> Sign Out
+                </button>
+              </>
+            ) : (
+              <>
+                <Button asChild variant="outline" className="w-full h-11 rounded-lg font-mono text-sm border-green-200 dark:border-green-500/20">
+                  <Link href="/auth/login" onClick={() => setIsOpen(false)}>
+                    Sign In
+                  </Link>
+                </Button>
+                <Button asChild className="w-full bg-green-600/90 hover:bg-green-500 text-white h-11 rounded-lg font-mono text-sm shadow-lg shadow-green-900/20 border border-green-500/20">
+                  <Link href="/auth/signup" onClick={() => setIsOpen(false)}>
+                    <span className="text-green-300/60 mr-1">&gt;</span>
+                    Join Now
+                  </Link>
+                </Button>
+              </>
+            )}
          </div>
       </div>
     </>

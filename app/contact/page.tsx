@@ -50,7 +50,7 @@ export default function ContactPage() {
                             <div>
                                 <h3 className="font-semibold">Email Us</h3>
                                 <p className="text-sm text-slate-600 dark:text-slate-400">
-                                    gurpcmn@gmail.com
+                                    gurpc.gub@gmail.com
                                 </p>
                             </div>
                         </div>
@@ -62,7 +62,7 @@ export default function ContactPage() {
                             <div>
                                 <h3 className="font-semibold">Call Us</h3>
                                 <p className="text-sm text-slate-600 dark:text-slate-400">
-                                    +880 1234-567890 (Coordinator)
+                                    +880 1531-361741 (Applied Research Coordinator)
                                 </p>
                             </div>
                         </div>

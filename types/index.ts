@@ -11,7 +11,7 @@ export interface TeamMember {
   id: string;
   name: string;
   role: string;
-  category: 'Advisor' | 'Moderation Board' | 'Executive Committee';
+  category: 'Director' | 'Advisor' | 'Moderation Board' | 'Executive Committee';
   department?: string;
   image?: string;
   email?: string;

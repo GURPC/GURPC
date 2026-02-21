@@ -14,7 +14,6 @@ import Logo from '@/components/Logo';
 const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
-  { name: 'Initiatives', href: '/initiatives' },
   { name: 'Training', href: '/training' },
   { name: 'Conferences', href: '/conferences' },
   { name: 'Team', href: '/team' },
@@ -25,6 +24,7 @@ const navLinks = [
 
 // Auth-only nav links visible after login
 const authNavLinks = [
+  { name: 'Meeting Decisions', href: '/initiatives' },
   { name: 'Groups', href: '/groups' },
 ];
 

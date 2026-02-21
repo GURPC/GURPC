@@ -37,8 +37,9 @@ const Footer = () => {
               {[
                 { name: 'About Us', href: '/about' },
                 { name: 'Conferences & Journals', href: '/conferences' },
-                { name: 'Events', href: '/events' },
-                { name: 'News & Blog', href: '/blog' },
+                { name: 'Events Calendar', href: '/calendar' },
+                { name: 'Success Stories', href: '/stories' },
+                { name: 'Submission Guidelines', href: '/guidelines' },
                 { name: 'Resources', href: '/resources' },
                 { name: 'Contact', href: '/contact' },
               ].map((link) => (

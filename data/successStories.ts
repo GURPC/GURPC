@@ -1,0 +1,100 @@
+export interface SuccessStory {
+  id: string;
+  name: string;
+  role: string;
+  department: string;
+  image?: string;
+  paperTitle: string;
+  journal: string;
+  year: number;
+  indexing: string[];
+  quote: string;
+  link?: string;
+  category: 'publication' | 'award' | 'achievement';
+}
+
+export const successStories: SuccessStory[] = [
+  {
+    id: 'story-1',
+    name: 'Md. Dulal Hossain',
+    role: 'Coordinator (Alumni), CSE',
+    department: 'CSE',
+    image: 'https://lh3.googleusercontent.com/d/1K9v0M0JqDRN_J8hJr9Phyq0GwqJxyIxL',
+    paperTitle: 'Machine Learning-Based Approach to Early Detection of Cardiovascular Disease',
+    journal: 'IEEE Access',
+    year: 2025,
+    indexing: ['Scopus', 'Web of Science', 'IEEE Xplore'],
+    quote: 'GURPC helped me refine my research methodology and connected me with faculty mentors who guided my first IEEE publication.',
+    link: '#',
+    category: 'publication',
+  },
+  {
+    id: 'story-2',
+    name: 'Md. Saklain Mostak',
+    role: 'Coordinator (Alumni), CSE',
+    department: 'CSE',
+    image: 'https://lh3.googleusercontent.com/d/1ERzhWzJukfmCfIiunLsmQ_kGJu_t2ysB',
+    paperTitle: 'Deep Learning Framework for Bangla Handwriting Recognition',
+    journal: 'Heliyon (Elsevier)',
+    year: 2025,
+    indexing: ['Scopus', 'Web of Science', 'PubMed'],
+    quote: 'The peer review sessions at GURPC were invaluable. I learned how to structure a research paper that meets international standards.',
+    link: '#',
+    category: 'publication',
+  },
+  {
+    id: 'story-3',
+    name: 'Md. Abu Rayhan Imran',
+    role: 'Coordinator, CSE',
+    department: 'CSE',
+    image: 'https://lh3.googleusercontent.com/d/1Vg_A4U0700wCZ4yphRsjHN4QuWUd6IqR',
+    paperTitle: 'IoT-Based Smart Campus Energy Management System',
+    journal: 'MDPI Sensors',
+    year: 2025,
+    indexing: ['Scopus', 'Web of Science'],
+    quote: 'From idea to publication in 8 months — GURPC\'s structured training program made it possible for an undergrad like me.',
+    link: '#',
+    category: 'publication',
+  },
+  {
+    id: 'story-4',
+    name: 'Md. Majharul Islam',
+    role: 'Applied Research Coordinator, EEE',
+    department: 'EEE',
+    image: 'https://lh3.googleusercontent.com/d/1Yp7L3nDiSlT4DGSqGOYiRHVRb9XlvBAJ',
+    paperTitle: 'Renewable Energy Forecasting Using Hybrid Neural Networks',
+    journal: 'Elsevier Energy Reports',
+    year: 2026,
+    indexing: ['Scopus', 'Web of Science'],
+    quote: 'GURPC gave me the confidence and the community to pursue research alongside my studies. The collaborative environment is unmatched.',
+    link: '#',
+    category: 'publication',
+  },
+  {
+    id: 'story-5',
+    name: 'Abdur Rahim',
+    role: 'Senior Member, CSE',
+    department: 'CSE',
+    image: '',
+    paperTitle: 'Best Paper Award — ICERIE 2025',
+    journal: 'ICERIE Conference (SUST)',
+    year: 2025,
+    indexing: ['Scopus'],
+    quote: 'Winning Best Paper at ICERIE was a dream come true. The mock presentation sessions at GURPC prepared me perfectly.',
+    category: 'award',
+  },
+  {
+    id: 'story-6',
+    name: 'Tasnia Rahman',
+    role: 'Research Member, CSE',
+    department: 'CSE',
+    image: '',
+    paperTitle: 'NLP-Driven Sentiment Analysis of Bangla Social Media Texts',
+    journal: 'GUB Journal of Science and Engineering',
+    year: 2025,
+    indexing: ['Google Scholar', 'DOAJ'],
+    quote: 'Publishing in the GUB Journal as an undergraduate gave me valuable experience. GURPC\'s writing workshops were the turning point.',
+    link: '#',
+    category: 'publication',
+  },
+];

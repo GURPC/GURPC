@@ -129,19 +129,21 @@ export default function Home() {
         <div className="container px-4 md:px-6 mx-auto relative z-10">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: Users, value: stats.members, suffix: '+', label: 'Active Members' },
-              { icon: BookOpen, value: stats.papers, suffix: '+', label: 'Publications' },
-              { icon: Lightbulb, value: stats.projects, suffix: '+', label: 'Ongoing Projects' },
-              { icon: Folder, value: stats.groups, suffix: '+', label: 'Research Groups' },
+              { icon: Users, value: stats.members, suffix: '+', label: 'Active Members', href: '/members' },
+              { icon: BookOpen, value: stats.papers, suffix: '+', label: 'Publications', href: '/publications' },
+              { icon: Lightbulb, value: stats.projects, suffix: '+', label: 'Ongoing Projects', href: '/projects' },
+              { icon: Folder, value: stats.groups, suffix: '+', label: 'Research Groups', href: '/groups' },
             ].map((stat, i) => (
               <RevealSection key={stat.label} delay={`${i * 100}ms`}>
-                <div className="cyber-card rounded-xl p-6 text-center group cursor-default">
-                  <stat.icon className="h-8 w-8 text-green-500 mx-auto mb-3 group-hover:text-green-400 transition-colors animate-float" style={{ animationDelay: `${i * 0.5}s` }} />
-                  <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 dark:text-white mb-1">
-                    <CountUp end={stat.value} suffix={stat.suffix} />
-                  </h3>
-                  <p className="text-slate-500 text-xs uppercase tracking-widest font-mono">{stat.label}</p>
-                </div>
+                <Link href={stat.href} className="block">
+                  <div className="cyber-card rounded-xl p-6 text-center group cursor-pointer hover:border-green-500/30 transition-all">
+                    <stat.icon className="h-8 w-8 text-green-500 mx-auto mb-3 group-hover:text-green-400 transition-colors animate-float" style={{ animationDelay: `${i * 0.5}s` }} />
+                    <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 dark:text-white mb-1">
+                      <CountUp end={stat.value} suffix={stat.suffix} />
+                    </h3>
+                    <p className="text-slate-500 text-xs uppercase tracking-widest font-mono">{stat.label}</p>
+                  </div>
+                </Link>
               </RevealSection>
             ))}
           </div>

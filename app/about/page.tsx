@@ -69,7 +69,7 @@ export default function AboutPage() {
         <section className="prose dark:prose-invert max-w-none">
           <h2 className="text-3xl font-bold mb-6">Our History</h2>
           <p>
-            The Green University Research & Publication Community (GURPC) was founded with the vision of bridging the gap between academic learning and practical research application. Starting as a small study group, it has grown into a vibrant community of over 200+ active members from various departments including CSE, EEE, and Textile Engineering.
+            The Green University Research & Publication Community (GURPC) was founded with the vision of bridging the gap between academic learning and practical research application. Starting as a small study group, it has grown into a vibrant community of over 200+ active members from various departments including CSE, Software Engineering, AI &amp; Data Science, EEE, Textile Engineering, English, Sociology &amp; Anthropology, Journalism &amp; Media Communication, BBA, and Law.
           </p>
           <p>
             Over the years, our members have published in reputable IEEE conferences, Scopus-indexed journals, and have won multiple innovation awards at national hackathons.

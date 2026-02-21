@@ -19,14 +19,15 @@ export default function SignUpPage() {
 
   const departments = [
     'Computer Science & Engineering (CSE)',
+    'Software Engineering (SWE)',
+    'Artificial Intelligence & Data Science (ADS)',
     'Electrical & Electronic Engineering (EEE)',
     'Textile Engineering',
-    'Mechanical Engineering',
-    'Business Administration',
     'English',
+    'Sociology & Anthropology',
+    'Journalism & Media Communication',
+    'Business Administration (BBA)',
     'Law',
-    'Sociology',
-    'Islamic Studies',
     'Other',
   ];
 

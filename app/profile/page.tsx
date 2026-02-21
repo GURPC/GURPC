@@ -165,12 +165,24 @@ export default function ProfilePage() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Department</label>
-                <input
-                  type="text"
+                <select
                   value={profile.department || ''}
                   onChange={(e) => setProfile({ ...profile, department: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
-                />
+                >
+                  <option value="">Select Department</option>
+                  <option value="Computer Science & Engineering (CSE)">Computer Science & Engineering (CSE)</option>
+                  <option value="Software Engineering (SWE)">Software Engineering (SWE)</option>
+                  <option value="Artificial Intelligence & Data Science (ADS)">Artificial Intelligence & Data Science</option>
+                  <option value="Electrical & Electronic Engineering (EEE)">Electrical & Electronic Engineering (EEE)</option>
+                  <option value="Textile Engineering">Textile Engineering</option>
+                  <option value="English">English</option>
+                  <option value="Sociology & Anthropology">Sociology & Anthropology</option>
+                  <option value="Journalism & Media Communication">Journalism & Media Communication</option>
+                  <option value="Business Administration (BBA)">Business Administration (BBA)</option>
+                  <option value="Law">Law</option>
+                  <option value="Other">Other</option>
+                </select>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Batch Year</label>

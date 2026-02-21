@@ -55,7 +55,7 @@ const journals = [
   {
     name: 'GUB Journal of Science and Engineering',
     publisher: 'Green University of Bangladesh',
-    scope: 'Multi-disciplinary — CSE, EEE, Engineering',
+    scope: 'Multi-disciplinary — CSE, SWE, AI & DS, EEE, Textile & more',
     indexing: ['Google Scholar', 'DOAJ'],
     link: '#',
     recommended: true,
@@ -68,7 +68,7 @@ const journals = [
     indexing: ['Scopus', 'Web of Science', 'IEEE Xplore'],
     link: 'https://ieeeaccess.ieee.org/',
     recommended: true,
-    note: 'Open-access, high impact factor (3.476). Good for CS/EEE papers.',
+    note: 'Open-access, high impact factor (3.476). Good for CSE/SWE/AI/EEE papers.',
   },
   {
     name: 'Heliyon (Cell Press / Elsevier)',

@@ -108,7 +108,24 @@ export default function JoinPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label htmlFor="department" className="text-sm font-medium">Department</label>
-                  <Input id="department" placeholder="CSE / EEE / Textile" {...register("department")} />
+                  <select
+                    id="department"
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    {...register("department")}
+                  >
+                    <option value="">Select Department</option>
+                    <option value="CSE">Computer Science & Engineering (CSE)</option>
+                    <option value="SWE">Software Engineering (SWE)</option>
+                    <option value="ADS">Artificial Intelligence & Data Science</option>
+                    <option value="EEE">Electrical & Electronic Engineering (EEE)</option>
+                    <option value="Textile">Textile Engineering</option>
+                    <option value="English">English</option>
+                    <option value="Sociology">Sociology & Anthropology</option>
+                    <option value="JMC">Journalism & Media Communication</option>
+                    <option value="BBA">Business Administration (BBA)</option>
+                    <option value="Law">Law</option>
+                    <option value="Other">Other</option>
+                  </select>
                   {errors.department && <p className="text-sm text-red-500">{errors.department.message}</p>}
                 </div>
                 <div className="space-y-2">

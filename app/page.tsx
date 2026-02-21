@@ -174,11 +174,11 @@ export default function Home() {
                 {/* Director Photo */}
                 <div className="shrink-0">
                   <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl bg-gradient-to-br from-green-500/20 to-emerald-600/10 border border-green-500/20 flex items-center justify-center overflow-hidden">
-                    <div className="text-center">
-                      <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl bg-green-500/10 border border-green-500/15 flex items-center justify-center mx-auto">
-                        <span className="text-3xl md:text-4xl font-bold text-green-400/60 font-mono">AS</span>
-                      </div>
-                    </div>
+                    <img
+                      src="https://lh3.googleusercontent.com/d/1kk5gbzQRCPB4UnulN6lAF2NsHL2yLZ8-"
+                      alt="Prof. Dr. ASM Shihavuddin"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <div className="text-center mt-4">
                     <h3 className="text-slate-900 dark:text-white font-semibold text-sm">Prof. Dr. ASM Shihavuddin</h3>
@@ -220,11 +220,11 @@ export default function Home() {
                 {/* Assistant Director Photo */}
                 <div className="shrink-0">
                   <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-green-600/10 border border-green-500/20 flex items-center justify-center overflow-hidden">
-                    <div className="text-center">
-                      <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl bg-green-500/10 border border-green-500/15 flex items-center justify-center mx-auto">
-                        <span className="text-3xl md:text-4xl font-bold text-green-400/60 font-mono">FA</span>
-                      </div>
-                    </div>
+                    <img
+                      src="https://lh3.googleusercontent.com/d/1GLqe0ITL2MJa2D4zbnb83z8DotBv8xb4"
+                      alt="Ms. Farhana Akter Sunny"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <div className="text-center mt-4">
                     <h3 className="text-slate-900 dark:text-white font-semibold text-sm">Ms. Farhana Akter Sunny</h3>

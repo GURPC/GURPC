@@ -8,7 +8,9 @@ export const teamMembers: TeamMember[] = [
     role: "Director, CRIT & CETL",
     category: "Director",
     department: "Green University of Bangladesh",
-    image: ""
+    image: "https://lh3.googleusercontent.com/d/1kk5gbzQRCPB4UnulN6lAF2NsHL2yLZ8-",
+    email: "shihav@eee.green.edu.bd",
+    linkedin: "https://bd.linkedin.com/in/shihav"
   },
   {
     id: "dir-2",
@@ -16,7 +18,8 @@ export const teamMembers: TeamMember[] = [
     role: "Assistant Director, CRIT",
     category: "Director",
     department: "Green University of Bangladesh",
-    image: ""
+    image: "https://lh3.googleusercontent.com/d/1GLqe0ITL2MJa2D4zbnb83z8DotBv8xb4",
+    email: "farhana@cse.green.edu.bd"
   },
 
   // Advisors

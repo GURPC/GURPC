@@ -128,11 +128,11 @@ export default function ContactPage() {
                                 <p className="text-xs text-gray-400">GURPC</p>
                             </div>
                         </a>
-                        <a href="https://www.youtube.com/@gurpc-gub" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 hover:border-green-300 dark:hover:border-green-700 transition-colors group">
+                        <a href="https://www.youtube.com/@GURPC_Official" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 hover:border-green-300 dark:hover:border-green-700 transition-colors group">
                             <Youtube size={18} className="text-gray-400 group-hover:text-red-600 transition-colors" />
                             <div>
                                 <p className="text-sm font-medium text-gray-900 dark:text-white">YouTube</p>
-                                <p className="text-xs text-gray-400">@gurpc-gub</p>
+                                <p className="text-xs text-gray-400">@GURPC_Official</p>
                             </div>
                         </a>
                         <a href="https://green.edu.bd" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 hover:border-green-300 dark:hover:border-green-700 transition-colors group">

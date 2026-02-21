@@ -36,6 +36,7 @@ const Footer = () => {
             <ul className="space-y-2 text-sm">
               {[
                 { name: 'About Us', href: '/about' },
+                { name: 'Conferences & Journals', href: '/conferences' },
                 { name: 'Events', href: '/events' },
                 { name: 'News & Blog', href: '/blog' },
                 { name: 'Resources', href: '/resources' },
@@ -107,7 +108,7 @@ const Footer = () => {
                 <Linkedin size={18} />
               </a>
               <a 
-                href="https://www.youtube.com/@gurpc-gub" 
+                href="https://www.youtube.com/@GURPC_Official" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="p-3 rounded-lg bg-green-500/5 border border-green-200 dark:border-green-500/10 hover:border-green-400/30 hover:bg-green-500/10 transition-all text-slate-500 hover:text-green-600 dark:hover:text-green-400"

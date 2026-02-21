@@ -17,11 +17,15 @@ const navLinks = [
   { name: 'Initiatives', href: '/initiatives' },
   { name: 'Training', href: '/training' },
   { name: 'Conferences', href: '/conferences' },
-  { name: 'Groups', href: '/groups' },
   { name: 'Team', href: '/team' },
   { name: 'Events', href: '/events' },
   { name: 'Resources', href: '/resources' },
   { name: 'Contact', href: '/contact' },
+];
+
+// Auth-only nav links visible after login
+const authNavLinks = [
+  { name: 'Groups', href: '/groups' },
 ];
 
 const Navbar = () => {
@@ -90,7 +94,7 @@ const Navbar = () => {
             
             {/* Desktop Menu */}
             <div className="hidden lg:flex items-center space-x-1">
-              {navLinks.map((link) => {
+              {[...navLinks, ...(user ? authNavLinks : [])].map((link) => {
                 const isActive = pathname === link.href;
                 return (
                   <Link 
@@ -239,7 +243,7 @@ const Navbar = () => {
          </div>
 
          <div className="flex-1 overflow-y-auto py-6 px-4 space-y-1">
-            {navLinks.map((link) => (
+            {[...navLinks, ...(user ? authNavLinks : [])].map((link) => (
               <Link
                 key={link.href}
                 href={link.href}

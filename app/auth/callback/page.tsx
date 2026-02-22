@@ -14,8 +14,23 @@ function CallbackHandler() {
 
     if (code) {
       const supabase = createClient();
-      supabase.auth.exchangeCodeForSession(code).then(({ error }) => {
-        if (!error) {
+      supabase.auth.exchangeCodeForSession(code).then(async ({ data, error }) => {
+        if (!error && data.user) {
+          // Auto-populate profile with signup metadata
+          const meta = data.user.user_metadata;
+          if (meta) {
+            const updates: Record<string, string> = {};
+            if (meta.name) updates.name = meta.name;
+            if (meta.department) updates.department = meta.department;
+            if (meta.batch_year) updates.batch_year = meta.batch_year;
+
+            if (Object.keys(updates).length > 0) {
+              await supabase
+                .from('profiles')
+                .update(updates)
+                .eq('id', data.user.id);
+            }
+          }
           router.replace(next);
         } else {
           router.replace('/auth/login?error=Could not authenticate');

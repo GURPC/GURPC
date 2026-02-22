@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Users, Search, Cpu, GraduationCap, BookOpen, Github, Globe, ExternalLink } from 'lucide-react';
 import type { Profile } from '@/lib/supabase/types';
 import GlowingOrb from '@/components/effects/GlowingOrb';
@@ -127,9 +128,10 @@ export default function MembersPage() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredMembers.map(member => (
-              <div
+              <Link
                 key={member.id}
-                className="cyber-card rounded-xl p-5 group hover:border-green-500/30 transition-all"
+                href={`/members/${member.id}`}
+                className="cyber-card rounded-xl p-5 group hover:border-green-500/30 transition-all block"
               >
                 <div className="flex items-start gap-4">
                   {/* Avatar */}
@@ -222,7 +224,7 @@ export default function MembersPage() {
                     </a>
                   )}
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}

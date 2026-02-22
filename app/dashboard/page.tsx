@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Terminal, FileText, Users, Folder, Trophy, ArrowRight, Plus, Activity, Zap, BookOpen, Code } from 'lucide-react';
+import { Terminal, FileText, Users, Folder, Trophy, ArrowRight, Plus, Activity, Zap, BookOpen, Code, Shield, UserCheck, BarChart3, Eye } from 'lucide-react';
 import type { Profile, Paper, ResearchGroup, Project } from '@/lib/supabase/types';
 import GlowingOrb from '@/components/effects/GlowingOrb';
 
@@ -14,8 +14,15 @@ export default function DashboardPage() {
   const [groups, setGroups] = useState<ResearchGroup[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  // Admin data
+  const [allMembersCount, setAllMembersCount] = useState(0);
+  const [pendingCount, setPendingCount] = useState(0);
+  const [allPapersCount, setAllPapersCount] = useState(0);
+  const [allGroupsCount, setAllGroupsCount] = useState(0);
   const supabase = createClient();
   const router = useRouter();
+
+  const isPrivileged = profile?.role && ['admin', 'executive', 'moderator', 'advisor'].includes(profile.role);
 
   const fetchData = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser();
@@ -31,10 +38,26 @@ export default function DashboardPage() {
       supabase.from('project_members').select('project_id, role, projects(*)').eq('user_id', user.id),
     ]);
 
-    setProfile(profileRes.data as Profile | null);
+    const prof = profileRes.data as Profile | null;
+    setProfile(prof);
     setPapers((papersRes.data || []) as Paper[]);
     setGroups((groupsRes.data || []).map((gm: Record<string, unknown>) => gm.research_groups as unknown as ResearchGroup).filter(Boolean));
     setProjects((projectsRes.data || []).map((pm: Record<string, unknown>) => pm.projects as unknown as Project).filter(Boolean));
+
+    // Fetch admin stats if user has a privileged role
+    if (prof?.role && ['admin', 'executive', 'moderator', 'advisor'].includes(prof.role)) {
+      const [membersRes, pendingRes, allPapersRes, allGroupsRes] = await Promise.all([
+        supabase.from('profiles').select('id', { count: 'exact', head: true }),
+        supabase.from('profiles').select('id', { count: 'exact', head: true }).eq('is_approved', false),
+        supabase.from('papers').select('id', { count: 'exact', head: true }),
+        supabase.from('research_groups').select('id', { count: 'exact', head: true }),
+      ]);
+      setAllMembersCount(membersRes.count || 0);
+      setPendingCount(pendingRes.count || 0);
+      setAllPapersCount(allPapersRes.count || 0);
+      setAllGroupsCount(allGroupsRes.count || 0);
+    }
+
     setLoading(false);
   }, [supabase, router]);
 
@@ -93,8 +116,13 @@ export default function DashboardPage() {
                 </h1>
               </div>
             </div>
-            <p className="text-slate-500 dark:text-slate-400 font-mono text-sm ml-[52px]">
+            <p className="text-slate-500 dark:text-slate-400 font-mono text-sm ml-[52px] flex items-center gap-2">
               {profile.department || 'GURPC Member'} {profile.batch_year ? `// Batch ${profile.batch_year}` : ''}
+              {profile.role && profile.role !== 'member' && (
+                <span className="px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400">
+                  {profile.role}
+                </span>
+              )}
             </p>
           </div>
           <Link
@@ -143,6 +171,66 @@ export default function DashboardPage() {
             );
           })}
         </div>
+
+        {/* Admin Panel - visible to privileged roles */}
+        {isPrivileged && (
+          <div className="cyber-card rounded-2xl p-6 mb-8 border-amber-500/20 dark:border-amber-500/20">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-500/20 to-orange-500/10 border border-amber-500/20 flex items-center justify-center">
+                <Shield className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Admin Panel</h2>
+                <span className="text-xs font-mono text-amber-600 dark:text-amber-400 uppercase">
+                  Role: {profile?.role}
+                </span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+              {[
+                { label: 'Total Members', count: allMembersCount, icon: Users, color: 'text-cyan-500', href: '/members' },
+                { label: 'Pending Approval', count: pendingCount, icon: UserCheck, color: 'text-amber-500', href: '/members' },
+                { label: 'All Papers', count: allPapersCount, icon: FileText, color: 'text-blue-500', href: '/publications' },
+                { label: 'All Groups', count: allGroupsCount, icon: BarChart3, color: 'text-purple-500', href: '/groups' },
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className="p-4 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-green-500/10 hover:border-amber-500/30 transition-all text-center"
+                  >
+                    <Icon className={`w-5 h-5 ${item.color} mx-auto mb-2`} />
+                    <div className="text-2xl font-bold text-slate-900 dark:text-white font-mono">{item.count}</div>
+                    <div className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-1">{item.label}</div>
+                  </Link>
+                );
+              })}
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href="/members"
+                className="px-4 py-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 text-sm font-mono hover:bg-amber-500/20 transition-all flex items-center gap-2"
+              >
+                <Eye className="w-4 h-4" /> View All Members
+              </Link>
+              <Link
+                href="/publications"
+                className="px-4 py-2 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-700 dark:text-blue-400 text-sm font-mono hover:bg-blue-500/20 transition-all flex items-center gap-2"
+              >
+                <FileText className="w-4 h-4" /> All Publications
+              </Link>
+              <Link
+                href="/groups"
+                className="px-4 py-2 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-700 dark:text-purple-400 text-sm font-mono hover:bg-purple-500/20 transition-all flex items-center gap-2"
+              >
+                <Users className="w-4 h-4" /> All Groups
+              </Link>
+            </div>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Papers Section */}

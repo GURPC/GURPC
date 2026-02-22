@@ -15,7 +15,7 @@ export default function TeamPage() {
   const executives = teamMembers.filter(m => m.category === 'Executive Committee' || (m.category !== 'Advisor' && m.category !== 'Moderation Board' && m.category !== 'Director'));
 
   return (
-    <div className="container px-4 py-12 mx-auto">
+    <div className="container px-4 pt-24 pb-12 mx-auto">
       <div className="text-center max-w-2xl mx-auto mb-16">
         <h1 className="text-4xl font-bold tracking-tight mb-4">Meet Our Team</h1>
         <p className="text-muted-foreground text-lg">

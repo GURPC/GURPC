@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useState, useEffect, useRef } from 'react';
-import { Moon, Sun, Menu, X, ChevronRight, User, LogOut, LayoutDashboard, Settings } from 'lucide-react';
+import { Moon, Sun, Menu, X, ChevronRight, ChevronDown, User, LogOut, LayoutDashboard, Settings, Newspaper } from 'lucide-react';
 import { useTheme } from '@/components/providers/ThemeProvider';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { Button } from '@/components/ui/button';
@@ -14,20 +14,33 @@ import Logo from '@/components/Logo';
 const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
-  { name: 'Training', href: '/training' },
-  { name: 'Conferences', href: '/conferences' },
-  { name: 'Calendar', href: '/calendar' },
-  { name: 'Stories', href: '/stories' },
-  { name: 'Team', href: '/team' },
-  { name: 'Events', href: '/events' },
-  { name: 'Resources', href: '/resources' },
+  {
+    name: 'Community',
+    children: [
+      { name: 'Team', href: '/team' },
+      { name: 'Members', href: '/members' },
+      { name: 'Events', href: '/events' },
+      { name: 'Stories', href: '/stories' },
+      { name: 'Calendar', href: '/calendar' },
+    ],
+  },
+  {
+    name: 'Research',
+    children: [
+      { name: 'Publications', href: '/publications' },
+      { name: 'Resources', href: '/resources' },
+      { name: 'Training', href: '/training' },
+      { name: 'Conferences', href: '/conferences' },
+    ],
+  },
   { name: 'Contact', href: '/contact' },
 ];
 
 // Auth-only nav links visible after login
 const authNavLinks = [
-  { name: 'Meeting Decisions', href: '/initiatives' },
+  { name: 'Newsfeed', href: '/newsfeed' },
   { name: 'Groups', href: '/groups' },
+  { name: 'Decisions', href: '/initiatives' },
 ];
 
 const Navbar = () => {
@@ -36,7 +49,10 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const userMenuRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -58,11 +74,14 @@ const Navbar = () => {
     }
   }, [isOpen]);
 
-  // Close user menu on outside click
+  // Close user menu and dropdowns on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
         setUserMenuOpen(false);
+      }
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setOpenDropdown(null);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -95,13 +114,57 @@ const Navbar = () => {
             <Logo size="medium" />
             
             {/* Desktop Menu */}
-            <div className="hidden lg:flex items-center space-x-1">
-              {[...navLinks, ...(user ? authNavLinks : [])].map((link) => {
-                const isActive = pathname === link.href;
+            <div className="hidden lg:flex items-center space-x-1" ref={dropdownRef}>
+              {[...navLinks, ...(user ? authNavLinks.map(l => ({ ...l })) : [])].map((link) => {
+                // Check if it's a dropdown
+                if ('children' in link && link.children) {
+                  const isChildActive = link.children.some((child: { href: string }) => pathname === child.href);
+                  const isDropdownOpen = openDropdown === link.name;
+                  return (
+                    <div key={link.name} className="relative">
+                      <button
+                        onClick={() => setOpenDropdown(isDropdownOpen ? null : link.name)}
+                        className={cn(
+                          "relative px-3 py-2 text-sm font-mono tracking-wide transition-all hover:text-green-600 dark:hover:text-green-400 group flex items-center gap-1",
+                          isChildActive ? "text-green-600 dark:text-green-400" : "text-slate-500 dark:text-slate-400"
+                        )}
+                      >
+                        <span className="relative z-10">{link.name}</span>
+                        <ChevronDown className={cn("w-3 h-3 transition-transform", isDropdownOpen && "rotate-180")} />
+                        {isChildActive && (
+                          <span className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] w-4/5 bg-green-500 rounded-full shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
+                        )}
+                        <span className="absolute inset-0 rounded-md bg-green-500/0 group-hover:bg-green-500/5 transition-colors" />
+                      </button>
+                      {isDropdownOpen && (
+                        <div className="absolute top-full left-0 mt-1 w-48 bg-white dark:bg-[#0a1a0f] rounded-xl shadow-xl border border-slate-200 dark:border-green-500/15 py-1.5 z-50">
+                          {link.children.map((child: { name: string; href: string }) => (
+                            <Link
+                              key={child.href}
+                              href={child.href}
+                              onClick={() => setOpenDropdown(null)}
+                              className={cn(
+                                "block px-4 py-2 text-sm font-mono transition-colors",
+                                pathname === child.href
+                                  ? "text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-500/10"
+                                  : "text-slate-600 dark:text-slate-400 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-500/5"
+                              )}
+                            >
+                              {child.name}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+
+                // Regular link
+                const isActive = pathname === (link as { href: string }).href;
                 return (
                   <Link 
-                    key={link.href}
-                    href={link.href} 
+                    key={(link as { href: string }).href}
+                    href={(link as { href: string }).href} 
                     className={cn(
                       "relative px-3 py-2 text-sm font-mono tracking-wide transition-all hover:text-green-600 dark:hover:text-green-400 group",
                       isActive ? "text-green-600 dark:text-green-400" : "text-slate-500 dark:text-slate-400 hover:text-green-600 dark:hover:text-green-300"
@@ -245,25 +308,71 @@ const Navbar = () => {
          </div>
 
          <div className="flex-1 overflow-y-auto py-6 px-4 space-y-1">
-            {[...navLinks, ...(user ? authNavLinks : [])].map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "flex items-center justify-between p-3 rounded-lg text-sm font-mono transition-all",
-                  pathname === link.href 
-                    ? "bg-green-50 dark:bg-green-500/10 text-green-600 dark:text-green-400 border border-green-200 dark:border-green-500/20" 
-                    : "text-slate-600 dark:text-slate-400 hover:bg-green-50 dark:hover:bg-green-500/5 hover:text-green-600 dark:hover:text-green-300 border border-transparent"
-                )}
-                onClick={() => setIsOpen(false)}
-              >
-                <span className="flex items-center gap-2">
-                  <span className="text-green-500/40 text-xs">&gt;</span>
-                  {link.name}
-                </span>
-                {pathname === link.href && <ChevronRight className="h-3 w-3" />}
-              </Link>
-            ))}
+            {[...navLinks, ...(user ? authNavLinks.map(l => ({ ...l })) : [])].map((link) => {
+              if ('children' in link && link.children) {
+                const isChildActive = link.children.some((child: { href: string }) => pathname === child.href);
+                const isExpanded = mobileExpanded === link.name;
+                return (
+                  <div key={link.name}>
+                    <button
+                      onClick={() => setMobileExpanded(isExpanded ? null : link.name)}
+                      className={cn(
+                        "flex items-center justify-between w-full p-3 rounded-lg text-sm font-mono transition-all",
+                        isChildActive
+                          ? "bg-green-50 dark:bg-green-500/10 text-green-600 dark:text-green-400 border border-green-200 dark:border-green-500/20"
+                          : "text-slate-600 dark:text-slate-400 hover:bg-green-50 dark:hover:bg-green-500/5 hover:text-green-600 dark:hover:text-green-300 border border-transparent"
+                      )}
+                    >
+                      <span className="flex items-center gap-2">
+                        <span className="text-green-500/40 text-xs">&gt;</span>
+                        {link.name}
+                      </span>
+                      <ChevronDown className={cn("w-3 h-3 transition-transform", isExpanded && "rotate-180")} />
+                    </button>
+                    {isExpanded && (
+                      <div className="ml-6 mt-1 space-y-0.5">
+                        {link.children.map((child: { name: string; href: string }) => (
+                          <Link
+                            key={child.href}
+                            href={child.href}
+                            className={cn(
+                              "block p-2.5 rounded-lg text-sm font-mono transition-all",
+                              pathname === child.href
+                                ? "text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-500/10"
+                                : "text-slate-500 dark:text-slate-500 hover:text-green-600 dark:hover:text-green-300"
+                            )}
+                            onClick={() => setIsOpen(false)}
+                          >
+                            {child.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
+              const href = (link as { href: string }).href;
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className={cn(
+                    "flex items-center justify-between p-3 rounded-lg text-sm font-mono transition-all",
+                    pathname === href
+                      ? "bg-green-50 dark:bg-green-500/10 text-green-600 dark:text-green-400 border border-green-200 dark:border-green-500/20"
+                      : "text-slate-600 dark:text-slate-400 hover:bg-green-50 dark:hover:bg-green-500/5 hover:text-green-600 dark:hover:text-green-300 border border-transparent"
+                  )}
+                  onClick={() => setIsOpen(false)}
+                >
+                  <span className="flex items-center gap-2">
+                    <span className="text-green-500/40 text-xs">&gt;</span>
+                    {link.name}
+                  </span>
+                  {pathname === href && <ChevronRight className="h-3 w-3" />}
+                </Link>
+              );
+            })}
          </div>
 
          <div className="p-6 border-t border-green-500/10 space-y-2">

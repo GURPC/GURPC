@@ -27,7 +27,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider>
           <AuthProvider>
-            <div className="flex flex-col min-h-screen bg-white dark:bg-gray-950 transition-colors duration-300">
+              <div className="flex flex-col min-h-screen bg-white dark:bg-[#020a04] transition-colors duration-300">
               <Navbar />
               <main className="flex-grow">{children}</main>
               <Footer />

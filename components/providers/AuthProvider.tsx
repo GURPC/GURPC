@@ -50,7 +50,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    try {
+      await supabase.auth.signOut();
+    } catch {
+      // SignOut may fail if token is already invalid — that's fine
+    }
     setUser(null);
     setProfile(null);
   };
@@ -62,7 +66,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const timeoutPromise = new Promise<null>((resolve) =>
           setTimeout(() => resolve(null), 5000)
         );
-        const sessionPromise = supabase.auth.getSession().then(res => res.data.session);
+        const sessionPromise = supabase.auth.getSession().then(res => {
+          // If there's an error with the refresh token, clear the session
+          if (res.error?.code === 'refresh_token_not_found' || res.error?.message?.includes('Refresh Token')) {
+            console.warn('Invalid refresh token detected, signing out...');
+            supabase.auth.signOut();
+            return null;
+          }
+          return res.data.session;
+        });
         const session = await Promise.race([sessionPromise, timeoutPromise]);
 
         setUser(session?.user ?? null);
@@ -85,6 +97,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const { data } = supabase.auth.onAuthStateChange(
         async (event, session) => {
+          // Handle token refresh failures by signing out cleanly
+          if (event === 'TOKEN_REFRESHED' && !session) {
+            console.warn('Token refresh failed, clearing session...');
+            setUser(null);
+            setProfile(null);
+            setLoading(false);
+            return;
+          }
+
           setUser(session?.user ?? null);
           if (session?.user) {
             await fetchProfile(session.user.id);

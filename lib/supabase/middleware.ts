@@ -29,10 +29,19 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  // Refresh session
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // Refresh session — catch invalid refresh token errors
+  let user = null;
+  try {
+    const { data, error } = await supabase.auth.getUser();
+    if (error && (error.message?.includes('Refresh Token') || (error as unknown as Record<string, unknown>).code === 'refresh_token_not_found')) {
+      // Invalid refresh token — clear auth cookies by signing out
+      await supabase.auth.signOut();
+    } else {
+      user = data?.user ?? null;
+    }
+  } catch {
+    // Auth check failed, treat as unauthenticated
+  }
 
   // Protected routes - redirect to login if not authenticated
   const protectedPaths = ['/dashboard', '/profile', '/groups/create', '/projects/create'];

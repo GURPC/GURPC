@@ -33,14 +33,23 @@ export async function updateSession(request: NextRequest) {
   let user = null;
   try {
     const { data, error } = await supabase.auth.getUser();
-    if (error && (error.message?.includes('Refresh Token') || (error as unknown as Record<string, unknown>).code === 'refresh_token_not_found')) {
-      // Invalid refresh token — clear auth cookies by signing out
-      await supabase.auth.signOut();
+    if (error && (error.message?.includes('Refresh Token') || error.message?.includes('refresh_token_not_found') || (error as unknown as Record<string, unknown>).code === 'refresh_token_not_found')) {
+      // Invalid refresh token — sign out locally (no API call) and nuke auth cookies
+      await supabase.auth.signOut({ scope: 'local' });
+      // Explicitly delete all Supabase auth cookies from the response
+      const cookiesToDelete = request.cookies.getAll().filter(c => c.name.startsWith('sb-'));
+      cookiesToDelete.forEach(c => {
+        supabaseResponse.cookies.set(c.name, '', { maxAge: 0, path: '/' });
+      });
     } else {
       user = data?.user ?? null;
     }
   } catch {
-    // Auth check failed, treat as unauthenticated
+    // Auth check failed — also clear any stale cookies
+    const cookiesToDelete = request.cookies.getAll().filter(c => c.name.startsWith('sb-'));
+    cookiesToDelete.forEach(c => {
+      supabaseResponse.cookies.set(c.name, '', { maxAge: 0, path: '/' });
+    });
   }
 
   // Protected routes - redirect to login if not authenticated

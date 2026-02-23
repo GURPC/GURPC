@@ -68,9 +68,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         );
         const sessionPromise = supabase.auth.getSession().then(res => {
           // If there's an error with the refresh token, clear the session
-          if (res.error?.code === 'refresh_token_not_found' || res.error?.message?.includes('Refresh Token')) {
-            console.warn('Invalid refresh token detected, signing out...');
-            supabase.auth.signOut();
+          if (res.error?.code === 'refresh_token_not_found' || res.error?.message?.includes('Refresh Token') || res.error?.message?.includes('refresh_token_not_found')) {
+            console.warn('Invalid refresh token detected, signing out locally...');
+            supabase.auth.signOut({ scope: 'local' });
             return null;
           }
           return res.data.session;
@@ -100,6 +100,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           // Handle token refresh failures by signing out cleanly
           if (event === 'TOKEN_REFRESHED' && !session) {
             console.warn('Token refresh failed, clearing session...');
+            await supabase.auth.signOut({ scope: 'local' });
+            setUser(null);
+            setProfile(null);
+            setLoading(false);
+            return;
+          }
+
+          // If signed out (e.g. from a failed refresh), clear state
+          if (event === 'SIGNED_OUT') {
             setUser(null);
             setProfile(null);
             setLoading(false);

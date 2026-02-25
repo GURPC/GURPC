@@ -22,6 +22,7 @@ const navLinks = [
       { name: 'Events', href: '/events' },
       { name: 'Stories', href: '/stories' },
       { name: 'Calendar', href: '/calendar' },
+      { name: 'Blog', href: '/blog' },
     ],
   },
   {

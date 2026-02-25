@@ -356,7 +356,8 @@ export const teamMembers: TeamMember[] = [
     email: "arefinkhan242@gmail.com",
     linkedin: "www.linkedin.com/in/md-arefin-khan-1936a3389"
   },
-  {
+  // position on hold, but keeping in data for now
+ /* {
     id: "exec-24",
     name: "MD. Sabbir Hossain",
     role: "Executive Member VI",
@@ -365,5 +366,5 @@ export const teamMembers: TeamMember[] = [
     studentId: "232002097",
     image: "https://lh3.googleusercontent.com/d/1JVWDd6mkAi4KObnN4zjqlejW9IYOqisM",
     email: "md1939295@gmail.com"
-  }
+  }*/
 ];

@@ -1,16 +1,15 @@
-import { blogPosts } from '@/data/blog';
+import { createClient } from '@/lib/supabase/server';
 import BlogPostClient from './BlogPostClient';
+import { notFound } from 'next/navigation';
 
-export function generateStaticParams() {
-  // Return all known slugs + a placeholder for GitHub Pages static export
-  return [
-    ...blogPosts.map((post) => ({ slug: post.slug })),
-    { slug: 'placeholder' },
-  ];
-}
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const supabase = createClient();
+  const { data: post } = await supabase
+    .from('blogs')
+    .select('*')
+    .eq('slug', params.slug)
+    .single();
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const post = blogPosts.find((p) => p.slug === params.slug);
   if (!post) {
     return { title: 'Post Not Found - GURPC' };
   }
@@ -20,6 +19,24 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   };
 }
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  return <BlogPostClient slug={params.slug} />;
+export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+  const supabase = createClient();
+  const { data: post, error } = await supabase
+    .from('blogs')
+    .select(`
+      *,
+      profiles:author_id (name, department)
+    `)
+    .eq('slug', params.slug)
+    .single();
+
+  if (error || !post) {
+    console.error('Error fetching post:', error);
+    notFound();
+  }
+
+  // Transform data to match client component expectations if needed, or update client component
+  // I will update the client component to handle the Supabase data structure
+  
+  return <BlogPostClient post={post} />;
 }

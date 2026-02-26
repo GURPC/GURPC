@@ -1,63 +1,63 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowLeft, Calendar, User, Tag, BookOpen, Share2, ExternalLink } from 'lucide-react';
-import { blogPosts } from '@/data/blog';
+import { ArrowLeft, Calendar, User, Tag, ExternalLink } from 'lucide-react';
 
-export default function BlogPostClient({ slug }: { slug: string }) {
-  const post = blogPosts.find((p) => p.slug === slug);
+interface BlogPostClientProps {
+  post: {
+    id: string;
+    title: string;
+    slug: string;
+    content: string;
+    excerpt: string | null;
+    image_url: string | null;
+    created_at: string;
+    profiles: {
+      name: string | null;
+      department: string | null;
+    } | null;
+  };
+}
 
-  if (!post) {
-    return (
-      <div className="min-h-screen bg-slate-50 dark:bg-[#020a04] pt-24 pb-12 px-4 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Post Not Found</h1>
-          <p className="text-slate-500 dark:text-slate-400 font-mono text-sm mb-6">
-            The blog post you&apos;re looking for doesn&apos;t exist.
-          </p>
-          <Link
-            href="/blog"
-            className="px-4 py-2 cyber-card rounded-lg text-sm font-mono text-green-600 dark:text-green-400 hover:border-green-500/30 transition-all inline-flex items-center gap-2"
-          >
-            <ArrowLeft className="w-4 h-4" /> Back to Blog
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
+export default function BlogPostClient({ post }: BlogPostClientProps) {
+  
   const categoryColors: Record<string, string> = {
     Resource: 'bg-blue-500/10 border-blue-500/20 text-blue-600 dark:text-blue-400',
     Achievement: 'bg-amber-500/10 border-amber-500/20 text-amber-600 dark:text-amber-400',
     Technical: 'bg-purple-500/10 border-purple-500/20 text-purple-600 dark:text-purple-400',
     Guide: 'bg-green-500/10 border-green-500/20 text-green-600 dark:text-green-400',
+    General: 'bg-gray-500/10 border-gray-500/20 text-gray-600 dark:text-gray-400',
   };
 
   // Simple markdown-to-JSX renderer for the content
+  // Re-using the logic from previous version but cleaned up
   const renderContent = (content: string) => {
+    if (!content) return null;
+    
+    // Split by newlines but keep code blocks together? 
+    // This simple parser is very fragile. 
+    // Ideally we should use 'react-markdown' or 'marked'.
+    // Given I can't install packages easily, I will try to make this slightly more robust
+    // or just stick to the previous implementation which handled basic markdown.
+    
     const lines = content.split('\n');
     const elements: React.ReactNode[] = [];
-    let listItems: string[] = [];
+    let listItems: React.ReactNode[] = [];
     let listType: 'ul' | 'ol' | null = null;
     let keyCounter = 0;
 
     const flushList = () => {
       if (listItems.length > 0 && listType) {
-        const items = listItems.map((item, i) => (
-          <li key={i} className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-            {renderInline(item)}
-          </li>
-        ));
         if (listType === 'ol') {
           elements.push(
-            <ol key={keyCounter++} className="list-decimal list-inside space-y-1.5 my-4 ml-2">
-              {items}
+            <ol key={`list-${keyCounter++}`} className="list-decimal list-inside space-y-1.5 my-4 ml-4 text-slate-700 dark:text-slate-300">
+              {listItems}
             </ol>
           );
         } else {
           elements.push(
-            <ul key={keyCounter++} className="list-disc list-inside space-y-1.5 my-4 ml-2">
-              {items}
+            <ul key={`list-${keyCounter++}`} className="list-disc list-inside space-y-1.5 my-4 ml-4 text-slate-700 dark:text-slate-300">
+              {listItems}
             </ul>
           );
         }
@@ -67,84 +67,82 @@ export default function BlogPostClient({ slug }: { slug: string }) {
     };
 
     const renderInline = (text: string): React.ReactNode => {
-      // Process bold, links, inline code
+      // Process bold, links, inline code - simple regex implementation
+      // Note: This does not handle nested formatted or complex markdown 
+      
       const parts: React.ReactNode[] = [];
       let remaining = text;
       let partKey = 0;
 
       while (remaining.length > 0) {
-        // Check for links [text](url)
+        // [text](url)
         const linkMatch = remaining.match(/\[([^\]]+)\]\(([^)]+)\)/);
-        // Check for bold **text**
+        // **bold**
         const boldMatch = remaining.match(/\*\*([^*]+)\*\*/);
-        // Check for inline code `text`
+        // `code`
         const codeMatch = remaining.match(/`([^`]+)`/);
 
-        // Find the earliest match
         const matches = [
           linkMatch ? { type: 'link', match: linkMatch, index: linkMatch.index! } : null,
           boldMatch ? { type: 'bold', match: boldMatch, index: boldMatch.index! } : null,
           codeMatch ? { type: 'code', match: codeMatch, index: codeMatch.index! } : null,
-        ].filter(Boolean).sort((a, b) => a!.index - b!.index);
+        ].filter((m): m is { type: string; match: RegExpMatchArray; index: number } => m !== null)
+         .sort((a, b) => a.index - b.index);
 
         if (matches.length === 0) {
           parts.push(remaining);
           break;
         }
 
-        const first = matches[0]!;
+        const first = matches[0];
+        
+        // Add text before match
         if (first.index > 0) {
           parts.push(remaining.substring(0, first.index));
         }
 
+        const m = first.match;
+        const fullMatch = m[0];
+        const content = m[1]; 
+        const url = m[2]; // only for link
+
         if (first.type === 'link') {
-          const m = first.match as RegExpMatchArray;
           parts.push(
-            <a key={partKey++} href={m[2]} target="_blank" rel="noopener noreferrer" className="text-green-600 dark:text-green-400 hover:underline inline-flex items-center gap-0.5">
-              {m[1]}
-              {m[2].startsWith('http') && <ExternalLink className="w-3 h-3 inline" />}
+            <a key={partKey++} href={url} target="_blank" rel="noopener noreferrer" className="text-green-600 dark:text-green-400 hover:underline inline-flex items-center gap-0.5">
+              {content}
+              {url.startsWith('http') && <ExternalLink className="w-3 h-3 inline ml-0.5" />}
             </a>
           );
-          remaining = remaining.substring(first.index + m[0].length);
         } else if (first.type === 'bold') {
-          const m = first.match as RegExpMatchArray;
-          parts.push(<strong key={partKey++} className="font-semibold text-slate-800 dark:text-white">{m[1]}</strong>);
-          remaining = remaining.substring(first.index + m[0].length);
+           parts.push(<strong key={partKey++} className="font-semibold text-slate-900 dark:text-white">{content}</strong>);
         } else if (first.type === 'code') {
-          const m = first.match as RegExpMatchArray;
-          parts.push(
-            <code key={partKey++} className="px-1.5 py-0.5 rounded bg-green-500/10 text-green-700 dark:text-green-300 text-xs font-mono">
-              {m[1]}
+           parts.push(
+            <code key={partKey++} className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-green-700 dark:text-green-400 text-xs font-mono border border-slate-200 dark:border-slate-700">
+              {content}
             </code>
           );
-          remaining = remaining.substring(first.index + m[0].length);
         }
+        
+        remaining = remaining.substring(first.index + fullMatch.length);
       }
 
-      return parts.length === 1 ? parts[0] : <>{parts}</>;
+      return <>{parts}</>;
     };
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
 
-      // Horizontal rule
-      if (line.trim() === '---') {
-        flushList();
-        elements.push(<hr key={keyCounter++} className="my-8 border-slate-200 dark:border-green-900/20" />);
-        continue;
-      }
-
-      // Headings
+      // Headers
       if (line.startsWith('# ')) {
         flushList();
-        // Skip H1 — we render the title separately
-        continue;
+        // Skip H1 as we render title separately, or render as H2
+        continue; 
       }
       if (line.startsWith('## ')) {
         flushList();
         elements.push(
-          <h2 key={keyCounter++} className="text-xl font-bold text-slate-900 dark:text-white mt-8 mb-4">
-            {line.replace(/^## /, '').replace(/^[📚✅💡] /, (m) => m)}
+          <h2 key={keyCounter++} className="text-2xl font-bold text-slate-900 dark:text-white mt-8 mb-4">
+            {line.replace(/^## /, '')}
           </h2>
         );
         continue;
@@ -152,80 +150,71 @@ export default function BlogPostClient({ slug }: { slug: string }) {
       if (line.startsWith('### ')) {
         flushList();
         elements.push(
-          <h3 key={keyCounter++} className="text-lg font-semibold text-slate-800 dark:text-slate-100 mt-6 mb-3">
+          <h3 key={keyCounter++} className="text-xl font-semibold text-slate-800 dark:text-slate-100 mt-6 mb-3">
             {line.replace(/^### /, '')}
           </h3>
         );
         continue;
       }
 
-      // Unordered list
-      if (line.match(/^- /)) {
-        if (listType !== 'ul') flushList();
-        listType = 'ul';
-        listItems.push(line.replace(/^- /, ''));
-        continue;
-      }
-
-      // Ordered list
-      if (line.match(/^\d+\. /)) {
-        if (listType !== 'ol') flushList();
-        listType = 'ol';
-        listItems.push(line.replace(/^\d+\. /, ''));
-        continue;
-      }
-
-      // Link line (starts with 🔗)
-      if (line.startsWith('🔗')) {
+      // HR
+      if (line.trim() === '---') {
         flushList();
-        const linkMatch = line.match(/\[([^\]]+)\]\(([^)]+)\)/);
-        if (linkMatch) {
-          elements.push(
-            <p key={keyCounter++} className="my-2">
-              <a
-                href={linkMatch[2]}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg cyber-card text-sm font-mono text-green-600 dark:text-green-400 hover:border-green-500/30 transition-all"
-              >
-                <ExternalLink className="w-4 h-4" />
-                {linkMatch[1]}
-              </a>
-            </p>
-          );
-        }
+        elements.push(<hr key={keyCounter++} className="my-8 border-slate-200 dark:border-slate-800" />);
         continue;
       }
 
-      // Empty line
+      // Lists
+      const ulMatch = line.match(/^[-*]\s+(.*)/);
+      if (ulMatch) {
+         if (listType !== 'ul') flushList();
+         listType = 'ul';
+         listItems.push(<li key={listItems.length}>{renderInline(ulMatch[1])}</li>);
+         continue;
+      }
+
+      const olMatch = line.match(/^(\d+)\.\s+(.*)/);
+      if (olMatch) {
+         if (listType !== 'ol') flushList();
+         listType = 'ol';
+         listItems.push(<li key={listItems.length}>{renderInline(olMatch[2])}</li>);
+         continue;
+      }
+
+      // Blockquotes
+      if (line.startsWith('> ')) {
+        flushList();
+        elements.push(
+          <blockquote key={keyCounter++} className="border-l-4 border-green-500/50 pl-4 py-1 my-4 italic text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-900/30 rounded-r">
+            {renderInline(line.replace(/^> /, ''))}
+          </blockquote>
+        );
+        continue;
+      }
+
+      // Empty lines
       if (line.trim() === '') {
         flushList();
         continue;
       }
 
-      // Italic / emphasis line (*text*)
-      if (line.startsWith('*') && line.endsWith('*') && !line.startsWith('**')) {
-        flushList();
-        elements.push(
-          <p key={keyCounter++} className="text-sm italic text-slate-500 dark:text-slate-400 my-4">
-            {line.replace(/^\*|\*$/g, '')}
-          </p>
-        );
-        continue;
-      }
-
-      // Regular paragraph
+      // Paragraphs
       flushList();
       elements.push(
-        <p key={keyCounter++} className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed my-3">
+        <p key={keyCounter++} className="text-base text-slate-600 dark:text-slate-300 leading-relaxed my-3 mb-4">
           {renderInline(line)}
         </p>
       );
     }
-
     flushList();
     return elements;
   };
+
+  const formattedDate = new Date(post.created_at).toLocaleDateString(undefined, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#020a04] pt-24 pb-12 px-4">
@@ -241,37 +230,58 @@ export default function BlogPostClient({ slug }: { slug: string }) {
         {/* Header */}
         <header className="mb-10">
           <div className="flex items-center gap-3 mb-4">
-            <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono uppercase border ${categoryColors[post.category] || categoryColors.Guide}`}>
-              {post.category}
+            <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono uppercase border ${post.excerpt?.toLowerCase().includes('guide') ? categoryColors.Guide : categoryColors.General}`}>
+              {post.excerpt?.toLowerCase().includes('guide') ? 'Guide' : 'Article'}
             </span>
             <span className="text-xs text-slate-400 dark:text-slate-500 font-mono flex items-center gap-1">
-              <Calendar className="w-3 h-3" /> {post.date}
+              <Calendar className="w-3 h-3" /> {formattedDate}
             </span>
           </div>
 
-          <h1 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white leading-tight mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white leading-tight mb-6">
             {post.title}
           </h1>
 
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-slate-500 dark:text-slate-400 font-mono flex items-center gap-1.5">
-              <User className="w-3.5 h-3.5" /> {post.author}
-            </span>
-            {post.tags && post.tags.length > 0 && (
-              <div className="flex items-center gap-1.5">
-                <Tag className="w-3 h-3 text-slate-400 dark:text-slate-500" />
-                {post.tags.map((tag) => (
-                  <span key={tag} className="text-[10px] px-1.5 py-0.5 rounded border border-slate-200 dark:border-green-900/30 text-slate-500 dark:text-slate-500 font-mono">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
+          <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-6">
+            <div className="flex items-center gap-3">
+               <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
+                  <User className="w-5 h-5 text-slate-500" />
+               </div>
+               <div>
+                  <p className="text-sm font-medium text-slate-900 dark:text-white">
+                    {post.profiles?.name || 'Unknown Author'}
+                  </p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    {post.profiles?.department || 'Member'}
+                  </p>
+               </div>
+            </div>
+            
+            <div className="flex gap-2">
+                <button 
+                  onClick={() => navigator.clipboard.writeText(window.location.href)}
+                  className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors"
+                  title="Copy Link"
+                >
+                   <ExternalLink className="w-4 h-4" />
+                </button>
+            </div>
           </div>
         </header>
 
+        {/* Featured Image */}
+        {post.image_url && (
+            <div className="mb-10 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm">
+                <img 
+                    src={post.image_url} 
+                    alt={post.title}
+                    className="w-full h-auto object-cover max-h-[500px]"
+                />
+            </div>
+        )}
+
         {/* Content */}
-        <div className="cyber-card rounded-2xl p-6 md:p-10">
+        <div className="cyber-card rounded-2xl p-6 md:p-10 bg-white dark:bg-slate-900/50">
           {renderContent(post.content)}
         </div>
 
@@ -284,9 +294,6 @@ export default function BlogPostClient({ slug }: { slug: string }) {
             >
               <ArrowLeft className="w-3.5 h-3.5" /> More Articles
             </Link>
-            <span className="text-xs text-slate-400 dark:text-slate-500 font-mono">
-              GURPC Blog // {post.date}
-            </span>
           </div>
         </footer>
       </article>

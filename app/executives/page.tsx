@@ -1,5 +1,5 @@
 import React from 'react';
-import { teamMembers } from '@/data/team';
+import { teamMembers } from '@/data/executive';
 import TeamCard from '@/components/team/TeamCard';
 
 const ExecutivesPage = () => {

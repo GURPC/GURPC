@@ -81,7 +81,7 @@ export const teamMembers: TeamMember[] = [
     name: "Md. Saklain Mostak",
     role: "Coordinator (Alumni)",
     category: "Moderation Board",
-    department: "CSE",
+    department: "EEE",
     studentId: "212001002",
     image: "https://lh3.googleusercontent.com/d/1ERzhWzJukfmCfIiunLsmQ_kGJu_t2ysB",
     email: "saklainmostak926@gmail.com",

@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { teamMembers } from '@/data/team';
+import { teamMembers } from '@/data/executive';
 import TeamCard from '@/components/team/TeamCard';
 
 export const metadata: Metadata = {

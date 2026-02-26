@@ -1,14 +1,17 @@
 import { createClient } from '@/lib/supabase/server';
 import BlogPostClient from './BlogPostClient';
 import { notFound } from 'next/navigation';
+import type { Blog } from '@/lib/supabase/types';
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const supabase = createClient();
-  const { data: post } = await supabase
+  const { data } = await supabase
     .from('blogs')
     .select('*')
     .eq('slug', params.slug)
     .single();
+
+  const post = data as Blog | null;
 
   if (!post) {
     return { title: 'Post Not Found - GURPC' };
@@ -21,7 +24,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
   const supabase = createClient();
-  const { data: post, error } = await supabase
+  const { data, error } = await supabase
     .from('blogs')
     .select(`
       *,
@@ -29,6 +32,8 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
     `)
     .eq('slug', params.slug)
     .single();
+
+  const post = data as (Blog & { profiles: { name: string | null; department: string | null } | null }) | null;
 
   if (error || !post) {
     console.error('Error fetching post:', error);

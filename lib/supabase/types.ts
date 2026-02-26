@@ -312,6 +312,50 @@ export interface Database {
           }
         ];
       };
+      blogs: {
+        Row: {
+          id: string;
+          title: string;
+          slug: string;
+          content: string;
+          excerpt: string | null;
+          image_url: string | null;
+          author_id: string;
+          published_at: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          title: string;
+          slug: string;
+          content: string;
+          excerpt?: string | null;
+          image_url?: string | null;
+          author_id: string;
+          published_at?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          title?: string;
+          slug?: string;
+          content?: string;
+          excerpt?: string | null;
+          image_url?: string | null;
+          published_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'blogs_author_id_fkey';
+            columns: ['author_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          }
+        ];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
@@ -328,3 +372,4 @@ export type GroupMember = Database['public']['Tables']['group_members']['Row'];
 export type Project = Database['public']['Tables']['projects']['Row'];
 export type ProjectMember = Database['public']['Tables']['project_members']['Row'];
 export type Milestone = Database['public']['Tables']['milestones']['Row'];
+export type Blog = Database['public']['Tables']['blogs']['Row'];

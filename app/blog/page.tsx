@@ -3,6 +3,9 @@ import Link from 'next/link';
 import { BookOpen, Calendar, User, ArrowRight, Plus } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
 import { Button } from '@/components/ui/button';
+import type { Blog } from '@/lib/supabase/types';
+
+type BlogWithProfile = Blog & { profiles: { name: string | null } | null };
 
 export const metadata: Metadata = {
   title: 'Blog - GURPC',
@@ -28,7 +31,7 @@ export default async function BlogPage() {
     console.error('Error fetching blogs:', error);
   }
 
-  const posts = blogs || [];
+  const posts = (blogs || []) as BlogWithProfile[];
 
   const categoryColors: Record<string, string> = {
     Resource: 'bg-blue-500/10 border-blue-500/20 text-blue-600 dark:text-blue-400',

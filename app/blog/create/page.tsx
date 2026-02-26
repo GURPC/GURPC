@@ -5,20 +5,11 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Loader2, Upload, Terminal } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
 import { useAuth } from '@/components/providers/AuthProvider';
 
 const formSchema = z.object({
@@ -33,6 +24,8 @@ const formSchema = z.object({
   }),
 });
 
+type FormValues = z.infer<typeof formSchema>;
+
 export default function CreateBlogPage() {
   const router = useRouter();
   const { user } = useAuth();
@@ -40,7 +33,11 @@ export default function CreateBlogPage() {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: '',
@@ -140,104 +137,79 @@ export default function CreateBlogPage() {
         <p className="text-muted-foreground">Share your thoughts with the community.</p>
       </div>
       
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Title</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter post title" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+        {/* Title */}
+        <div className="space-y-2">
+          <label htmlFor="title" className="text-sm font-medium leading-none">Title</label>
+          <Input id="title" placeholder="Enter post title" {...register('title')} />
+          {errors.title && <p className="text-sm font-medium text-red-500">{errors.title.message}</p>}
+        </div>
 
-          <div className="space-y-2">
-            <FormLabel>Featured Image</FormLabel>
-            <div className="flex flex-col gap-4">
-              <Input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="cursor-pointer"
-              />
-              {previewUrl && (
-                <div className="relative aspect-video w-full max-w-sm rounded-lg overflow-hidden border bg-muted">
-                  <img
-                    src={previewUrl}
-                    alt="Preview"
-                    className="object-cover w-full h-full"
-                  />
-                </div>
-              )}
-            </div>
-            <FormDescription>
-              Upload a cover image for your blog post.
-            </FormDescription>
+        {/* Featured Image */}
+        <div className="space-y-2">
+          <label className="text-sm font-medium leading-none">Featured Image</label>
+          <div className="flex flex-col gap-4">
+            <Input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="cursor-pointer"
+            />
+            {previewUrl && (
+              <div className="relative aspect-video w-full max-w-sm rounded-lg overflow-hidden border bg-muted">
+                <img
+                  src={previewUrl}
+                  alt="Preview"
+                  className="object-cover w-full h-full"
+                />
+              </div>
+            )}
           </div>
+          <p className="text-sm text-muted-foreground">Upload a cover image for your blog post.</p>
+        </div>
 
-          <FormField
-            control={form.control}
-            name="excerpt"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Excerpt</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Brief summary of your post..."
-                    className="resize-none h-24"
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  This will be shown in the blog list.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
+        {/* Excerpt */}
+        <div className="space-y-2">
+          <label htmlFor="excerpt" className="text-sm font-medium leading-none">Excerpt</label>
+          <Textarea
+            id="excerpt"
+            placeholder="Brief summary of your post..."
+            className="resize-none h-24"
+            {...register('excerpt')}
           />
+          <p className="text-sm text-muted-foreground">This will be shown in the blog list.</p>
+          {errors.excerpt && <p className="text-sm font-medium text-red-500">{errors.excerpt.message}</p>}
+        </div>
 
-          <FormField
-            control={form.control}
-            name="content"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Content</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Write your story here... (Markdown supported)"
-                    className="min-h-[400px] font-mono"
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  You can use Markdown for formatting.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
+        {/* Content */}
+        <div className="space-y-2">
+          <label htmlFor="content" className="text-sm font-medium leading-none">Content</label>
+          <Textarea
+            id="content"
+            placeholder="Write your story here... (Markdown supported)"
+            className="min-h-[400px] font-mono"
+            {...register('content')}
           />
+          <p className="text-sm text-muted-foreground">You can use Markdown for formatting.</p>
+          {errors.content && <p className="text-sm font-medium text-red-500">{errors.content.message}</p>}
+        </div>
 
-          <div className="flex justify-end gap-4">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => router.back()}
-              disabled={isLoading}
-            >
-              Cancel
-            </Button>
-            <Button type="submit" disabled={isLoading}>
-              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Publish Post
-            </Button>
-          </div>
-        </form>
-      </Form>
+        {/* Actions */}
+        <div className="flex justify-end gap-4">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => router.back()}
+            disabled={isLoading}
+          >
+            Cancel
+          </Button>
+          <Button type="submit" disabled={isLoading}>
+            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Publish Post
+          </Button>
+        </div>
+      </form>
     </div>
   );
 }

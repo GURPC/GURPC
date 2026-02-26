@@ -1,25 +1,84 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Calendar, User, Tag, ExternalLink } from 'lucide-react';
+import { ArrowLeft, Calendar, User, Tag, ExternalLink, Loader2 } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
 
-interface BlogPostClientProps {
-  post: {
-    id: string;
-    title: string;
-    slug: string;
-    content: string;
-    excerpt: string | null;
-    image_url: string | null;
-    created_at: string;
-    profiles: {
-      name: string | null;
-      department: string | null;
-    } | null;
-  };
+interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  excerpt: string | null;
+  image_url: string | null;
+  created_at: string;
+  profiles: {
+    name: string | null;
+    department: string | null;
+  } | null;
 }
 
-export default function BlogPostClient({ post }: BlogPostClientProps) {
+interface BlogPostClientProps {
+  slug: string;
+}
+
+export default function BlogPostClient({ slug }: BlogPostClientProps) {
+  const [post, setPost] = useState<BlogPost | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    async function fetchPost() {
+      try {
+        const supabase = createClient();
+        const { data, error: fetchError } = await supabase
+          .from('blogs')
+          .select(`
+            *,
+            profiles:author_id (name, department)
+          `)
+          .eq('slug', slug)
+          .single();
+
+        if (fetchError || !data) {
+          setError(true);
+          return;
+        }
+
+        const blogPost = data as unknown as BlogPost;
+        setPost(blogPost);
+        // Update page title
+        document.title = `${blogPost.title} - GURPC Blog`;
+      } catch {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchPost();
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-[#020a04]">
+        <Loader2 className="h-8 w-8 animate-spin text-green-600" />
+      </div>
+    );
+  }
+
+  if (error || !post) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 dark:bg-[#020a04] gap-4">
+        <h2 className="text-2xl font-bold">Post Not Found</h2>
+        <p className="text-muted-foreground">The blog post you&apos;re looking for doesn&apos;t exist.</p>
+        <Link href="/blog" className="text-green-600 dark:text-green-400 hover:underline font-mono text-sm">
+          &larr; Back to Blog
+        </Link>
+      </div>
+    );
+  }
   
   const categoryColors: Record<string, string> = {
     Resource: 'bg-blue-500/10 border-blue-500/20 text-blue-600 dark:text-blue-400',

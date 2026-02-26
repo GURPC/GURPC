@@ -9,7 +9,7 @@ import {
   BookOpen, Globe, Calendar, ExternalLink, Star, Award, Filter,
   ArrowRight, Search
 } from 'lucide-react';
-import { conferencesAndJournals } from '@/data/initiatives';
+import { conferencesAndJournals } from '@/data/conferences';
 
 export default function ConferencesPage() {
   const [filter, setFilter] = useState<'all' | 'conference' | 'journal'>('all');

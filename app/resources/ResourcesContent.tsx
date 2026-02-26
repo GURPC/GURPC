@@ -9,7 +9,7 @@ import {
   BookOpen, FileText, Download, ExternalLink, Monitor, Database,
   Wrench, Cloud, ArrowRight, Search, SlidersHorizontal, Layers
 } from 'lucide-react';
-import { softwareResources } from '@/data/initiatives';
+import { softwareResources } from '@/data/resources';
 import GlowingOrb from '@/components/effects/GlowingOrb';
 
 export default function ResourcesContent() {

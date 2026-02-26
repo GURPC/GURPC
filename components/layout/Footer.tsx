@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Facebook, Linkedin, Mail, MapPin, Phone, Terminal, ChevronRight, Youtube, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import Logo from '@/components/Logo';
+import Logo from '@/components/common/Logo';
 
 const Footer = () => {
   return (

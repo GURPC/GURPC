@@ -9,7 +9,7 @@ import { useTheme } from '@/components/providers/ThemeProvider';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import Logo from '@/components/Logo';
+import Logo from '@/components/common/Logo';
 
 const navLinks = [
   { name: 'Home', href: '/' },

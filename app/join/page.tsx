@@ -11,7 +11,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { CheckCircle2, Loader2, ShieldCheck, Target, ClipboardList, Calendar, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
-import { recruitmentCriteria } from '@/data/initiatives';
+import { recruitmentCriteria } from '@/data/recruitment';
 
 // Form validation schema
 const formSchema = z.object({

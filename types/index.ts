@@ -1,3 +1,6 @@
+// ─── Core Types ──────────────────────────────────────────────────────
+// Base application types used across components and pages.
+
 export interface User {
   id: string;
   name: string;
@@ -28,3 +31,15 @@ export interface Project {
   members: User[];
   createdAt: string;
 }
+
+// ─── Re-exports ──────────────────────────────────────────────────────
+// Centralized re-exports so consumers can import from '@/types'.
+
+export type {
+  Initiative,
+  ConferenceJournal,
+  SoftwareResource,
+  TrainingProgram,
+  RecruitmentCriteria,
+  SuccessStory,
+} from './content';

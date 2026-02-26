@@ -1,17 +1,4 @@
-export interface SuccessStory {
-  id: string;
-  name: string;
-  role: string;
-  department: string;
-  image?: string;
-  paperTitle: string;
-  journal: string;
-  year: number;
-  indexing: string[];
-  quote: string;
-  link?: string;
-  category: 'publication' | 'award' | 'achievement';
-}
+import type { SuccessStory } from '@/types';
 
 export const successStories: SuccessStory[] = [
   {

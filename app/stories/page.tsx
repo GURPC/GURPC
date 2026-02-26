@@ -8,7 +8,8 @@ import {
   Trophy, GraduationCap, Sparkles
 } from 'lucide-react';
 import Link from 'next/link';
-import { successStories, SuccessStory } from '@/data/successStories';
+import { successStories } from '@/data/successStories';
+import type { SuccessStory } from '@/types';
 
 export default function SuccessStoriesPage() {
   const [filter, setFilter] = useState<'all' | 'publication' | 'award' | 'achievement'>('all');

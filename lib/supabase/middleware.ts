@@ -30,13 +30,20 @@ export async function updateSession(request: NextRequest) {
   );
 
   // Refresh session — catch invalid refresh token errors
+  // Use a timeout to prevent hanging on slow/unresponsive auth servers
   let user = null;
   try {
-    const { data, error } = await supabase.auth.getUser();
-    if (error && (error.message?.includes('Refresh Token') || error.message?.includes('refresh_token_not_found') || (error as unknown as Record<string, unknown>).code === 'refresh_token_not_found')) {
-      // Invalid refresh token — sign out locally (no API call) and nuke auth cookies
-      await supabase.auth.signOut({ scope: 'local' });
-      // Explicitly delete all Supabase auth cookies from the response
+    const authPromise = supabase.auth.getUser();
+    const timeoutPromise = new Promise<{ data: { user: null }, error: { message: string } }>((resolve) =>
+      setTimeout(() => resolve({ data: { user: null }, error: { message: 'Auth check timeout' } }), 3000)
+    );
+    const { data, error } = await Promise.race([authPromise, timeoutPromise]);
+
+    if (error && (error.message?.includes('Refresh Token') || error.message?.includes('refresh_token_not_found') || error.message === 'Auth check timeout' || (error as unknown as Record<string, unknown>).code === 'refresh_token_not_found')) {
+      // Invalid refresh token or timeout — sign out locally and nuke auth cookies
+      if (error.message !== 'Auth check timeout') {
+        try { await supabase.auth.signOut({ scope: 'local' }); } catch {}
+      }
       const cookiesToDelete = request.cookies.getAll().filter(c => c.name.startsWith('sb-'));
       cookiesToDelete.forEach(c => {
         supabaseResponse.cookies.set(c.name, '', { maxAge: 0, path: '/' });

@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState, useRef, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import type { User } from '@supabase/supabase-js';
 import type { Profile } from '@/lib/supabase/types';
@@ -27,21 +27,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  const mountedRef = useRef(true);
   const supabase = createClient();
 
-  const fetchProfile = async (userId: string) => {
+  const fetchProfile = useCallback(async (userId: string) => {
     try {
       const { data } = await supabase
         .from('profiles')
         .select('*')
         .eq('id', userId)
         .single();
-      setProfile(data as Profile | null);
+      if (mountedRef.current) {
+        setProfile(data as Profile | null);
+      }
     } catch {
-      // Profile fetch failed, continue without profile
-      setProfile(null);
+      if (mountedRef.current) {
+        setProfile(null);
+      }
     }
-  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const refreshProfile = async () => {
     if (user) {
@@ -60,54 +65,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    // Get initial session with timeout to prevent infinite loading
-    const getSession = async () => {
-      try {
-        const timeoutPromise = new Promise<null>((resolve) =>
-          setTimeout(() => resolve(null), 5000)
-        );
-        const sessionPromise = supabase.auth.getSession().then(res => {
-          // If there's an error with the refresh token, clear the session
-          if (res.error?.code === 'refresh_token_not_found' || res.error?.message?.includes('Refresh Token') || res.error?.message?.includes('refresh_token_not_found')) {
-            console.warn('Invalid refresh token detected, signing out locally...');
-            supabase.auth.signOut({ scope: 'local' });
-            return null;
-          }
-          return res.data.session;
-        });
-        const session = await Promise.race([sessionPromise, timeoutPromise]);
+    mountedRef.current = true;
 
-        setUser(session?.user ?? null);
-        if (session?.user) {
-          await fetchProfile(session.user.id);
-        }
-      } catch {
-        // Auth check failed (e.g., placeholder URL), show guest UI
-        setUser(null);
-        setProfile(null);
-      } finally {
+    // Safety timeout — always resolve loading after 2.5s max
+    const safetyTimeout = setTimeout(() => {
+      if (mountedRef.current) {
         setLoading(false);
       }
-    };
+    }, 2500);
 
-    getSession();
-
-    // Listen for auth changes
+    // Use onAuthStateChange as the SINGLE source of truth.
+    // It fires INITIAL_SESSION on startup (replaces getSession() race).
     let subscription: { unsubscribe: () => void } | null = null;
     try {
       const { data } = supabase.auth.onAuthStateChange(
         async (event, session) => {
-          // Handle token refresh failures by signing out cleanly
+          if (!mountedRef.current) return;
+
+          // Handle token refresh failures
           if (event === 'TOKEN_REFRESHED' && !session) {
             console.warn('Token refresh failed, clearing session...');
-            await supabase.auth.signOut({ scope: 'local' });
+            try { await supabase.auth.signOut({ scope: 'local' }); } catch {}
             setUser(null);
             setProfile(null);
             setLoading(false);
             return;
           }
 
-          // If signed out (e.g. from a failed refresh), clear state
+          // Signed out — clear everything
           if (event === 'SIGNED_OUT') {
             setUser(null);
             setProfile(null);
@@ -115,21 +100,30 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             return;
           }
 
-          setUser(session?.user ?? null);
-          if (session?.user) {
-            await fetchProfile(session.user.id);
+          const currentUser = session?.user ?? null;
+          setUser(currentUser);
+
+          if (currentUser) {
+            // Fetch profile without blocking the loading state
+            setLoading(false);
+            fetchProfile(currentUser.id);
           } else {
             setProfile(null);
+            setLoading(false);
           }
-          setLoading(false);
         }
       );
       subscription = data.subscription;
     } catch {
-      // Auth listener setup failed
+      // Auth listener setup failed (e.g. placeholder URL) — show guest UI
+      setLoading(false);
     }
 
-    return () => subscription?.unsubscribe();
+    return () => {
+      mountedRef.current = false;
+      clearTimeout(safetyTimeout);
+      subscription?.unsubscribe();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

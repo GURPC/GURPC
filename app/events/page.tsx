@@ -12,6 +12,19 @@ export const metadata: Metadata = {
 
 const events = [
   {
+    id: 6,
+    title: "Inauguration Ceremony of GURPC",
+    date: "February 28, 2026",
+    time: "11:30 AM - 1:00 PM",
+    location: "Syndicate Hall (A-409), Green University",
+    description: "The official inauguration ceremony of the Green University Research & Publication Community (GURPC). Join us to mark the beginning of a platform dedicated to fostering research collaboration and academic excellence.",
+    category: "Ceremony",
+    isUpcoming: true,
+    link: "https://www.facebook.com/share/p/1R1UHtzrjC/",
+    buttonText: "View on Facebook",
+    image: "https://lh3.googleusercontent.com/d/1op_HwTCh2NPJqyFCfuuq3Epx1TplLejA",
+  },
+  {
     id: 5,
     title: "PECCII 2026 International Conference",
     date: "June 17-18, 2026",
@@ -110,7 +123,16 @@ export default function EventsPage() {
 
 function EventCard({ event, isPast }: { event: any, isPast?: boolean }) {
   return (
-    <Card className={`flex flex-col h-full ${isPast ? 'bg-slate-50 dark:bg-slate-900 border-slate-200' : 'border-primary/20 shadow-md'}`}>
+    <Card className={`flex flex-col h-full overflow-hidden ${isPast ? 'bg-slate-50 dark:bg-slate-900 border-slate-200' : 'border-primary/20 shadow-md'}`}>
+      {event.image && (
+        <div className="relative w-full aspect-[16/9] overflow-hidden">
+          <img
+            src={event.image}
+            alt={event.title}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      )}
       <CardHeader>
         <div className="flex justify-between items-start mb-2">
           <Badge variant={isPast ? "outline" : "default"} className={!isPast ? "bg-primary" : ""}>

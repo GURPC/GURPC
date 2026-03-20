@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import EidCard from '@/components/common/EidCard';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { AuthProvider } from '@/components/providers/AuthProvider';
 
@@ -29,6 +30,7 @@ export default function RootLayout({
           <AuthProvider>
               <div className="flex flex-col min-h-screen bg-white dark:bg-[#020a04] transition-colors duration-300">
               <Navbar />
+              <EidCard />
               <main className="flex-grow">{children}</main>
               <Footer />
             </div>

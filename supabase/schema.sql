@@ -116,20 +116,6 @@ CREATE TABLE IF NOT EXISTS milestones (
   created_at TIMESTAMPTZ DEFAULT now()
 );
 
--- ═══════════ BLOGS ═══════════
-CREATE TABLE IF NOT EXISTS blogs (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  title TEXT NOT NULL,
-  slug TEXT UNIQUE NOT NULL,
-  content TEXT NOT NULL,
-  excerpt TEXT,
-  image_url TEXT,
-  author_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
-  published_at TIMESTAMPTZ DEFAULT now(),
-  created_at TIMESTAMPTZ DEFAULT now(),
-  updated_at TIMESTAMPTZ DEFAULT now()
-);
-
 -- ══════════════════════════════════════════════════════════════
 -- ROW LEVEL SECURITY (RLS)
 -- ══════════════════════════════════════════════════════════════
@@ -141,20 +127,6 @@ ALTER TABLE group_members ENABLE ROW LEVEL SECURITY;
 ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
 ALTER TABLE project_members ENABLE ROW LEVEL SECURITY;
 ALTER TABLE milestones ENABLE ROW LEVEL SECURITY;
-ALTER TABLE blogs ENABLE ROW LEVEL SECURITY;
-
--- BLOGS: Public read, authenticated creation
-CREATE POLICY "Blogs are viewable by everyone" ON blogs
-  FOR SELECT USING (true);
-
-CREATE POLICY "Authenticated users can create blogs" ON blogs
-  FOR INSERT WITH CHECK (auth.uid() = author_id);
-
-CREATE POLICY "Users can update own blogs" ON blogs
-  FOR UPDATE USING (auth.uid() = author_id);
-
-CREATE POLICY "Users can delete own blogs" ON blogs
-  FOR DELETE USING (auth.uid() = author_id);
 
 -- PROFILES: Public read, own write
 CREATE POLICY "Public profiles are viewable by everyone" ON profiles
@@ -284,7 +256,6 @@ CREATE POLICY "Project admin can delete milestones" ON milestones
 -- Create storage buckets (run in SQL editor)
 INSERT INTO storage.buckets (id, name, public) VALUES ('avatars', 'avatars', true) ON CONFLICT DO NOTHING;
 INSERT INTO storage.buckets (id, name, public) VALUES ('papers', 'papers', false) ON CONFLICT DO NOTHING;
-INSERT INTO storage.buckets (id, name, public) VALUES ('blog-images', 'blog-images', true) ON CONFLICT DO NOTHING;
 
 -- Storage policies for avatars
 CREATE POLICY "Avatar images are publicly accessible" ON storage.objects
@@ -295,16 +266,6 @@ CREATE POLICY "Users can upload their own avatar" ON storage.objects
 
 CREATE POLICY "Users can update their own avatar" ON storage.objects
   FOR UPDATE USING (bucket_id = 'avatars' AND auth.uid()::text = (storage.foldername(name))[1]);
-
--- Storage policies for blog images
-CREATE POLICY "Blog images are publicly accessible" ON storage.objects
-  FOR SELECT USING (bucket_id = 'blog-images');
-
-CREATE POLICY "Users can upload their own blog images" ON storage.objects
-  FOR INSERT WITH CHECK (bucket_id = 'blog-images' AND auth.role() = 'authenticated');
-
-CREATE POLICY "Users can update their own blog images" ON storage.objects
-  FOR UPDATE USING (bucket_id = 'blog-images' AND auth.role() = 'authenticated');
 
 -- Storage policies for papers
 CREATE POLICY "Paper files accessible to authenticated users" ON storage.objects

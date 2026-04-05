@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { GraduationCap, Clock, Users, ArrowRight, CheckCircle2, Star, BookOpen, Layers } from 'lucide-react';
-import { trainingPrograms } from '@/data/training';
+import { trainingPrograms } from '@/data/initiatives';
 
 export const metadata: Metadata = {
   title: 'Training Programs - GURPC',

@@ -12,6 +12,18 @@ export const metadata: Metadata = {
 
 const events = [
   {
+    id: 7,
+    title: "A Road to Erasmus Mundus Joint Masters (EMJM) and Erasmus Mundus Scholarship",
+    date: "April 11, 2026",
+    time: "8:00 PM (BD Time)",
+    location: "Online (Zoom)",
+    description: "A special webinar under Symposium Series 2026 with Erasmus Mundus Association-Bangladesh, featuring Erasmus scholars and practical guidance on EMJM applications, scholarship strategy, and live Q&A.",
+    category: "Webinar",
+    isUpcoming: true,
+    link: "https://www.facebook.com/share/p/18UmAEmVi6/",
+    buttonText: "View on Facebook"
+  },
+  {
     id: 6,
     title: "Inauguration Ceremony of GURPC",
     date: "February 28, 2026",

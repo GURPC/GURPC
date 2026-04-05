@@ -1,11 +1,15 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import CourseReader from '@/components/training/CourseReader';
-import { getCourseBySlug } from '@/data/course-content';
+import { courses, getCourseBySlug } from '@/data/course-content';
 
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
+
+export function generateStaticParams() {
+  return courses.map((course) => ({ slug: course.slug }));
+}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;

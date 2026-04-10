@@ -10,6 +10,11 @@ import CountUp from '@/components/effects/CountUp';
 import { useEffect, useRef, useState } from 'react';
 import { usePlatformStats } from '@/hooks/usePlatformStats';
 
+const SURVEY_POST_URL = 'https://www.facebook.com/share/p/18EGFy4yyt/';
+const SURVEY_POSTER_URL = 'https://drive.google.com/file/d/1qr_yXSAHpwgiovhqigZsIbxyvowoamDt/view?usp=sharing';
+const SURVEY_POSTER_PREVIEW_URL = 'https://drive.google.com/file/d/1qr_yXSAHpwgiovhqigZsIbxyvowoamDt/preview';
+const SURVEY_FORM_URL = 'https://tally.so/r/lb7L7p';
+
 function useReveal() {
   const ref = useRef<HTMLDivElement>(null);
   const [revealed, setRevealed] = useState(false);
@@ -39,6 +44,19 @@ function RevealSection({ children, className = '', delay = '' }: { children: Rea
 
 export default function Home() {
   const { stats } = usePlatformStats();
+  const [showSurveyPopup, setShowSurveyPopup] = useState(false);
+
+  useEffect(() => {
+    const hasSeenSurveyPopup = window.localStorage.getItem('gurpc-survey-popup-seen');
+    if (hasSeenSurveyPopup !== 'true') {
+      setShowSurveyPopup(true);
+    }
+  }, []);
+
+  const closeSurveyPopup = () => {
+    setShowSurveyPopup(false);
+    window.localStorage.setItem('gurpc-survey-popup-seen', 'true');
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-grid-tech">
@@ -110,6 +128,36 @@ export default function Home() {
               </Button>
             </div>
 
+            {/* Survey Callout */}
+            <div className="max-w-3xl w-full mt-4 rounded-2xl border border-green-500/20 bg-white/80 dark:bg-[#07120a]/80 backdrop-blur-md shadow-lg shadow-green-900/10 px-5 py-4 text-left">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.24em] text-green-600 dark:text-green-400 font-mono mb-1">Research Interest Mapping 2026</p>
+                  <h2 className="text-lg md:text-xl font-semibold text-slate-900 dark:text-white">Fill the survey and help shape the next GURPC workshops</h2>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1 max-w-2xl">
+                    Tell us your research area, current progress, and the support you need so we can match workshops, mentors, and collaborations to your interests.
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-3 shrink-0">
+                  <Button asChild className="bg-green-600 hover:bg-green-500 text-white rounded-lg px-4 h-11 shadow-lg shadow-green-900/20">
+                    <Link href={SURVEY_FORM_URL} target="_blank" rel="noopener noreferrer">
+                      Fill Survey
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" className="rounded-lg px-4 h-11 border-green-300 text-green-700 hover:bg-green-50 dark:text-green-300 dark:border-green-500/20 dark:hover:bg-green-900/20">
+                    <Link href={SURVEY_POST_URL} target="_blank" rel="noopener noreferrer">
+                      View Post
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" className="rounded-lg px-4 h-11 border-green-300 text-green-700 hover:bg-green-50 dark:text-green-300 dark:border-green-500/20 dark:hover:bg-green-900/20">
+                    <Link href={SURVEY_POSTER_URL} target="_blank" rel="noopener noreferrer">
+                      View Poster
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+
             {/* Scroll Indicator */}
             <div className="pt-12 animate-bounce">
               <div className="w-6 h-10 rounded-full border-2 border-green-400/40 dark:border-green-500/30 flex items-start justify-center p-1.5">
@@ -122,6 +170,90 @@ export default function Home() {
         {/* Bottom gradient fade */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white dark:from-[#020a04] to-transparent pointer-events-none z-20" />
       </section>
+
+      {showSurveyPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 px-4 py-6">
+          <div className="w-full max-w-2xl rounded-3xl border border-green-500/20 bg-white dark:bg-[#061009] shadow-2xl shadow-green-950/30 overflow-hidden">
+            <div className="flex items-start justify-between gap-4 px-6 pt-6">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.24em] text-green-600 dark:text-green-400 font-mono">Community Survey</p>
+                <h3 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-2">Research Interest Mapping 2026</h3>
+              </div>
+              <button
+                type="button"
+                onClick={closeSurveyPopup}
+                className="rounded-full border border-slate-200 dark:border-green-900/30 px-3 py-1 text-xs font-mono text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+              >
+                Close
+              </button>
+            </div>
+
+            <div className="px-6 pb-6 pt-4 space-y-4">
+              <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-7">
+                Tell GURPC what you are working on, what you want to learn next, and what support would help you move faster.
+                This survey helps us plan the right workshops, mentors, and collaboration opportunities.
+              </p>
+
+              <div className="grid gap-3 sm:grid-cols-2 text-sm text-slate-600 dark:text-slate-300">
+                <div className="rounded-2xl border border-slate-200 dark:border-green-900/20 bg-slate-50 dark:bg-white/[0.02] p-4">
+                  <p className="font-semibold text-slate-900 dark:text-white mb-1">How to participate</p>
+                  <p>Open the survey, share your research area and current progress, and submit in about 1 minute.</p>
+                </div>
+                <div className="rounded-2xl border border-slate-200 dark:border-green-900/20 bg-slate-50 dark:bg-white/[0.02] p-4">
+                  <p className="font-semibold text-slate-900 dark:text-white mb-1">Need the poster?</p>
+                  <p>Use the poster link to view the official flyer shared with the announcement.</p>
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 dark:border-green-900/20 bg-slate-50 dark:bg-white/[0.02] p-3">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-xs font-mono uppercase tracking-wider text-green-600 dark:text-green-400">Poster Preview</p>
+                  <Link
+                    href={SURVEY_POSTER_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-mono text-green-600 dark:text-green-400 hover:underline"
+                  >
+                    Open Full Poster
+                  </Link>
+                </div>
+                <iframe
+                  src={SURVEY_POSTER_PREVIEW_URL}
+                  title="Research Interest Mapping 2026 Poster"
+                  className="w-full h-[320px] rounded-xl border border-slate-200 dark:border-green-900/20 bg-white"
+                  loading="lazy"
+                />
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                <Button asChild className="bg-green-600 hover:bg-green-500 text-white rounded-lg px-5 h-12">
+                  <Link href={SURVEY_FORM_URL} target="_blank" rel="noopener noreferrer" onClick={closeSurveyPopup}>
+                    Fill Survey Now
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" className="rounded-lg px-5 h-12 border-green-300 text-green-700 hover:bg-green-50 dark:text-green-300 dark:border-green-500/20 dark:hover:bg-green-900/20">
+                  <Link href={SURVEY_POST_URL} target="_blank" rel="noopener noreferrer">
+                    Open Facebook Post
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" className="rounded-lg px-5 h-12 border-green-300 text-green-700 hover:bg-green-50 dark:text-green-300 dark:border-green-500/20 dark:hover:bg-green-900/20">
+                  <Link href={SURVEY_POSTER_URL} target="_blank" rel="noopener noreferrer">
+                    Open Poster
+                  </Link>
+                </Button>
+              </div>
+
+              <button
+                type="button"
+                onClick={closeSurveyPopup}
+                className="text-xs font-mono text-slate-500 dark:text-slate-400 hover:text-green-600 dark:hover:text-green-400"
+              >
+                Not now
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ═══════════ STATS SECTION ═══════════ */}
       <section className="relative py-16 bg-slate-50 dark:bg-[#020a04] border-y border-green-200 dark:border-green-900/20 overflow-hidden">

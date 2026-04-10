@@ -33,6 +33,8 @@ export interface SoftwareResource {
   department: string[];
   type: 'software' | 'dataset' | 'tool' | 'template';
   link?: string;
+  posterLink?: string;
+  details?: string[];
   accessLevel: 'free' | 'university-licensed' | 'open-source';
 }
 

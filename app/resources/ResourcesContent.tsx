@@ -15,6 +15,7 @@ import GlowingOrb from '@/components/effects/GlowingOrb';
 export default function ResourcesContent() {
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedResource, setSelectedResource] = useState<(typeof softwareResources)[number] | null>(null);
 
   // Extract unique categories
   const categories = useMemo(() => {
@@ -212,20 +213,98 @@ export default function ResourcesContent() {
                       </span>
                     ))}
                   </div>
-                  {resource.link && resource.link !== '#' && (
-                    <Link
-                      href={resource.link}
-                      target="_blank"
-                      className="text-xs text-green-600 dark:text-green-400 font-mono flex items-center gap-1 hover:underline"
+                  {resource.details && (
+                    <button
+                      type="button"
+                      onClick={() => setSelectedResource(resource)}
+                      className="text-xs text-green-600 dark:text-green-400 font-mono flex items-center gap-1 hover:underline mb-3"
                     >
-                      Access <ExternalLink className="h-3 w-3" />
-                    </Link>
+                      View Details <ExternalLink className="h-3 w-3" />
+                    </button>
+                  )}
+                  {resource.link && resource.link !== '#' && (
+                    <div className="flex flex-wrap gap-3">
+                      <Link
+                        href={resource.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-green-600 dark:text-green-400 font-mono flex items-center gap-1 hover:underline"
+                      >
+                        Access Post <ExternalLink className="h-3 w-3" />
+                      </Link>
+                      {resource.posterLink && (
+                        <Link
+                          href={resource.posterLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-green-600 dark:text-green-400 font-mono flex items-center gap-1 hover:underline"
+                        >
+                          View Poster <ExternalLink className="h-3 w-3" />
+                        </Link>
+                      )}
+                    </div>
                   )}
                 </div>
               ))}
             </div>
           )}
         </section>
+
+        {selectedResource && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 px-4"
+            onClick={() => setSelectedResource(null)}
+          >
+            <div
+              className="w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl border border-green-500/20 bg-white dark:bg-[#07120a] p-6 shadow-2xl"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div className="flex items-start justify-between gap-4 mb-5">
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-green-600 dark:text-green-400 font-mono">Community Update</p>
+                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{selectedResource.name}</h3>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">{selectedResource.description}</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setSelectedResource(null)}
+                  className="rounded-full border border-slate-200 dark:border-green-900/30 px-3 py-1 text-xs font-mono text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                >
+                  Close
+                </button>
+              </div>
+
+              <div className="space-y-3 text-sm text-slate-700 dark:text-slate-300 leading-7">
+                {selectedResource.details?.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+
+              <div className="mt-6 flex flex-wrap gap-3">
+                {selectedResource.link && (
+                  <Link
+                    href={selectedResource.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 rounded-lg bg-green-500 px-4 py-2 text-sm font-mono text-white hover:bg-green-600"
+                  >
+                    Open Facebook Post <ExternalLink className="h-3.5 w-3.5" />
+                  </Link>
+                )}
+                {selectedResource.posterLink && (
+                  <Link
+                    href={selectedResource.posterLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 rounded-lg border border-green-500/20 px-4 py-2 text-sm font-mono text-green-600 dark:text-green-400 hover:border-green-500/40"
+                  >
+                    Open Poster <ExternalLink className="h-3.5 w-3.5" />
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* CTA */}
         <div className="text-center mt-16 cyber-card rounded-xl p-8">

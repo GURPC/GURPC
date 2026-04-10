@@ -295,7 +295,7 @@ const Navbar = () => {
          <div className="absolute top-0 left-0 w-[1px] h-full bg-gradient-to-b from-green-500/30 via-green-500/10 to-transparent" />
          
          <div className="flex items-center justify-between p-6 border-b border-green-200 dark:border-green-500/10">
-            <span className="font-mono text-sm text-green-600 dark:text-green-400 tracking-wider">// NAVIGATION</span>
+          <span className="font-mono text-sm text-green-600 dark:text-green-400 tracking-wider">[ NAVIGATION ]</span>
             <Button
               variant="ghost"
               size="icon"

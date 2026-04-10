@@ -32,7 +32,7 @@ const Footer = () => {
 
           {/* Column 2: Quick Links */}
           <div className="space-y-6">
-            <h3 className="font-mono text-sm text-green-600 dark:text-green-400 tracking-wider">// QUICK LINKS</h3>
+            <h3 className="font-mono text-sm text-green-600 dark:text-green-400 tracking-wider">[ QUICK LINKS ]</h3>
             <ul className="space-y-2 text-sm">
               {[
                 { name: 'About Us', href: '/about' },
@@ -55,7 +55,7 @@ const Footer = () => {
 
           {/* Column 3: Contact Info */}
           <div className="space-y-6">
-            <h3 className="font-mono text-sm text-green-600 dark:text-green-400 tracking-wider">// CONTACT</h3>
+            <h3 className="font-mono text-sm text-green-600 dark:text-green-400 tracking-wider">[ CONTACT ]</h3>
             <ul className="space-y-4 text-sm text-slate-500">
               <li className="flex items-start gap-3 group">
                 <div className="p-2 rounded-lg bg-green-500/5 border border-green-500/10 group-hover:border-green-500/20 transition-all mt-0.5">
@@ -88,7 +88,7 @@ const Footer = () => {
 
           {/* Column 4: Follow Us & CTA */}
           <div className="space-y-6">
-            <h3 className="font-mono text-sm text-green-600 dark:text-green-400 tracking-wider">// CONNECT</h3>
+            <h3 className="font-mono text-sm text-green-600 dark:text-green-400 tracking-wider">[ CONNECT ]</h3>
             <div className="flex flex-wrap gap-3">
               <a 
                 href="https://www.facebook.com/GURPC.GUB" 

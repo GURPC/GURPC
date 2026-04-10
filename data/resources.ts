@@ -101,4 +101,22 @@ export const softwareResources: SoftwareResource[] = [
     link: 'https://colab.research.google.com/',
     accessLevel: 'free',
   },
+  {
+    id: 'sw-11',
+    name: 'Research Interest Mapping 2026',
+    category: 'Community Updates',
+    description: 'Call for members to share research interests, current progress, and the workshops or mentoring support they need for 2026.',
+    department: ['All'],
+    type: 'template',
+    link: 'https://www.facebook.com/share/p/18EGFy4yyt/',
+    posterLink: 'https://drive.google.com/file/d/1qr_yXSAHpwgiovhqigZsIbxyvowoamDt/view?usp=sharing',
+    details: [
+      'Greetings everyone! 👋',
+      'Are you working on a groundbreaking paper, exploring a new thesis topic, or just curious about how to start your first research project? GURPC wants to hear from you!',
+      'We are launching our Research Interest Mapping 2026 to understand your passions and challenges. This is your opportunity to tell us what kind of workshops, mentors, and collaboration opportunities you need to succeed.',
+      'How to Participate: click the link, tell us your research area and current progress, and help shape the next big GURPC event.',
+      'If your field is not listed, select Other and let us know what you are passionate about.',
+    ],
+    accessLevel: 'free',
+  },
 ];

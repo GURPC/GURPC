@@ -1,9 +1,9 @@
 'use client';
 
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { createClient } from '@/lib/supabase/client';
+import { createClient, createImplicitClient } from '@/lib/supabase/client';
 
 function ResetPasswordForm() {
   const [password, setPassword] = useState('');
@@ -14,22 +14,40 @@ function ResetPasswordForm() {
   const [success, setSuccess] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
+  const authClientRef = useRef<ReturnType<typeof createClient> | ReturnType<typeof createImplicitClient> | null>(null);
 
   useEffect(() => {
-    const code = searchParams.get('code');
-    if (!code) {
-      setError('Reset link is invalid or expired. Please request a new one.');
-      return;
-    }
+    let isActive = true;
 
-    const supabase = createClient();
-    supabase.auth.exchangeCodeForSession(code).then(({ error: exchangeError }) => {
-      if (exchangeError) {
-        setError(exchangeError.message);
+    const initSession = async () => {
+      const code = searchParams.get('code');
+
+      if (code) {
+        const supabase = createClient();
+        authClientRef.current = supabase;
+        const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
+        if (!isActive) return;
+        if (exchangeError) {
+          setError(exchangeError.message);
+          return;
+        }
+        setReady(true);
+        return;
+      }
+
+      const supabase = createImplicitClient();
+      authClientRef.current = supabase;
+      const { data, error: sessionError } = await supabase.auth.getSessionFromUrl({ storeSession: true });
+      if (!isActive) return;
+      if (sessionError || !data?.session) {
+        setError('Reset link is invalid or expired. Please request a new one.');
         return;
       }
       setReady(true);
-    });
+    };
+
+    initSession();
+    return () => { isActive = false; };
   }, [searchParams]);
 
   const handleReset = async (e: React.FormEvent) => {
@@ -46,8 +64,13 @@ function ResetPasswordForm() {
       return;
     }
 
+    if (!ready) {
+      setError('Please wait while we verify your reset link.');
+      return;
+    }
+
     setLoading(true);
-    const supabase = createClient();
+    const supabase = authClientRef.current ?? createClient();
     const { error: updateError } = await supabase.auth.updateUser({ password });
 
     if (updateError) {

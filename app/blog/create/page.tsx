@@ -17,6 +17,7 @@ import {
   X,
   Sparkles,
 } from 'lucide-react';
+import Image from 'next/image';
 import { createClient } from '@/lib/supabase/client';
 import { useAuth } from '@/components/providers/AuthProvider';
 import GlowingOrb from '@/components/effects/GlowingOrb';
@@ -258,12 +259,14 @@ export default function CreateBlogPage() {
                   </div>
                 </button>
               ) : (
-                <div className="relative rounded-xl overflow-hidden border border-slate-200 dark:border-green-500/15">
-                  <img
-                    src={previewUrl}
-                    alt="Cover preview"
-                    className="w-full aspect-[2.4/1] object-cover"
-                  />
+                    <div className="relative rounded-xl overflow-hidden border border-slate-200 dark:border-green-500/15">
+                      <Image
+                        src={previewUrl}
+                        alt="Cover preview"
+                        fill
+                        sizes="100vw"
+                        className="object-cover"
+                      />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                   <button
                     type="button"

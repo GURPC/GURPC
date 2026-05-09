@@ -177,7 +177,7 @@ function formatDate(dateStr: string) {
 }
 
 export default function CalendarPage() {
-  const today = new Date();
+  const today = useMemo(() => new Date(), []);
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
   const [categoryFilter, setCategoryFilter] = useState<string>('all');

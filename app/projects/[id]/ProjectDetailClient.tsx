@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Project, Profile, Milestone } from '@/lib/supabase/types';
 
 interface ProjectMemberWithProfile {
@@ -288,9 +289,15 @@ export default function ProjectDetailClient({ id }: { id: string }) {
             <div className="space-y-3">
               {members.map((member) => (
                 <div key={member.user_id} className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center flex-shrink-0 overflow-hidden relative">
                     {member.profiles?.photo_url ? (
-                      <img src={member.profiles.photo_url} alt="" className="w-full h-full rounded-full object-cover" />
+                      <Image
+                        src={member.profiles.photo_url}
+                        alt=""
+                        fill
+                        sizes="32px"
+                        className="object-cover"
+                      />
                     ) : (
                       <span className="text-xs font-bold text-gray-500 dark:text-gray-400">
                         {member.profiles?.name?.charAt(0)?.toUpperCase() || '?'}

@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Users, Search, Cpu, GraduationCap, BookOpen, Github, Globe, ExternalLink } from 'lucide-react';
 import type { Profile } from '@/lib/supabase/types';
 import GlowingOrb from '@/components/effects/GlowingOrb';
@@ -135,9 +136,15 @@ export default function MembersPage() {
               >
                 <div className="flex items-start gap-4">
                   {/* Avatar */}
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-green-500/20 to-emerald-500/10 border border-green-500/20 flex items-center justify-center shrink-0 overflow-hidden">
+                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-green-500/20 to-emerald-500/10 border border-green-500/20 flex items-center justify-center shrink-0 overflow-hidden relative">
                     {member.photo_url ? (
-                      <img src={member.photo_url} alt={member.name || ''} className="w-full h-full object-cover" />
+                      <Image
+                        src={member.photo_url}
+                        alt={member.name || ''}
+                        fill
+                        sizes="48px"
+                        className="object-cover"
+                      />
                     ) : (
                       <span className="text-green-400 font-bold text-lg">
                         {member.name?.charAt(0)?.toUpperCase() || '?'}

@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   ArrowLeft, Users, BookOpen, GraduationCap, Github, Globe, ExternalLink,
   Calendar, FileText, Cpu, Folder, Mail
@@ -130,9 +131,15 @@ export default function MemberProfilePage() {
         <div className="cyber-card rounded-2xl p-6 md:p-8 mb-6">
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
             {/* Avatar */}
-            <div className="w-24 h-24 md:w-32 md:h-32 rounded-2xl bg-gradient-to-br from-green-500/20 to-emerald-500/10 border border-green-500/20 flex items-center justify-center shrink-0 overflow-hidden">
+            <div className="w-24 h-24 md:w-32 md:h-32 rounded-2xl bg-gradient-to-br from-green-500/20 to-emerald-500/10 border border-green-500/20 flex items-center justify-center shrink-0 overflow-hidden relative">
               {member.photo_url ? (
-                <img src={member.photo_url} alt={member.name || ''} className="w-full h-full object-cover" />
+                <Image
+                  src={member.photo_url}
+                  alt={member.name || ''}
+                  fill
+                  sizes="128px"
+                  className="object-cover"
+                />
               ) : (
                 <span className="text-green-400 font-bold text-4xl md:text-5xl">
                   {member.name?.charAt(0)?.toUpperCase() || '?'}

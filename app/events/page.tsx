@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Calendar, MapPin, Clock } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Events - GURPC',
@@ -151,10 +152,12 @@ function EventCard({ event, isPast }: { event: any, isPast?: boolean }) {
     <Card className={`flex flex-col h-full overflow-hidden ${isPast ? 'bg-slate-50 dark:bg-slate-900 border-slate-200' : 'border-primary/20 shadow-md'}`}>
       {event.image && (
         <div className="relative w-full aspect-[16/9] overflow-hidden">
-          <img
+          <Image
             src={event.image}
             alt={event.title}
-            className="w-full h-full object-cover"
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+            className="object-cover"
           />
         </div>
       )}

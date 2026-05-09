@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeft, Users, Globe, Lock, Crown, UserPlus, UserMinus, Search, X, Mail, Folder, Plus, Cpu } from 'lucide-react';
 import type { ResearchGroup, Profile, Project } from '@/lib/supabase/types';
 import GlowingOrb from '@/components/effects/GlowingOrb';
@@ -269,9 +270,15 @@ export default function GroupDetailClient({ id }: { id: string }) {
             <div className="space-y-2">
               {members.map((member) => (
                 <div key={member.user_id} className="flex items-center gap-3 p-2.5 rounded-lg bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-green-500/10 group/member">
-                  <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-green-500/20 to-emerald-600/10 border border-green-500/20 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                  <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-green-500/20 to-emerald-600/10 border border-green-500/20 flex items-center justify-center flex-shrink-0 overflow-hidden relative">
                     {member.profiles?.photo_url ? (
-                      <img src={member.profiles.photo_url} alt="" className="w-full h-full object-cover" />
+                      <Image
+                        src={member.profiles.photo_url}
+                        alt=""
+                        fill
+                        sizes="36px"
+                        className="object-cover"
+                      />
                     ) : (
                       <span className="text-xs font-bold text-green-600 dark:text-green-400 font-mono">
                         {member.profiles?.name?.charAt(0)?.toUpperCase() || '?'}
@@ -424,9 +431,15 @@ export default function GroupDetailClient({ id }: { id: string }) {
                 <div className="space-y-2">
                   {searchResults.map((user) => (
                     <div key={user.id} className="flex items-center gap-3 p-3 rounded-lg border border-slate-200 dark:border-green-500/10 bg-slate-50 dark:bg-white/[0.02] hover:border-green-500/30 transition-all">
-                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500/20 to-emerald-600/10 border border-green-500/20 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500/20 to-emerald-600/10 border border-green-500/20 flex items-center justify-center flex-shrink-0 overflow-hidden relative">
                         {user.photo_url ? (
-                          <img src={user.photo_url} alt="" className="w-full h-full object-cover" />
+                          <Image
+                            src={user.photo_url}
+                            alt=""
+                            fill
+                            sizes="40px"
+                            className="object-cover"
+                          />
                         ) : (
                           <span className="text-sm font-bold text-green-600 dark:text-green-400 font-mono">
                             {user.name?.charAt(0)?.toUpperCase() || '?'}

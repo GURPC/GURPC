@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import type { Profile } from '@/lib/supabase/types';
 
@@ -122,9 +123,15 @@ export default function ProfilePage() {
           <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6">
             <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Profile Photo</h2>
             <div className="flex items-center gap-6">
-              <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 flex-shrink-0">
+              <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 flex-shrink-0 relative">
                 {profile.photo_url ? (
-                  <img src={profile.photo_url} alt="Avatar" className="w-full h-full object-cover" />
+                    <Image
+                      src={profile.photo_url}
+                      alt="Avatar"
+                      fill
+                      sizes="96px"
+                      className="object-cover"
+                    />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-3xl font-bold text-gray-400 dark:text-gray-500">
                     {profile.name?.charAt(0)?.toUpperCase() || '?'}

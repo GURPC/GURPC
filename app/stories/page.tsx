@@ -8,6 +8,7 @@ import {
   Trophy, GraduationCap, Sparkles
 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { successStories } from '@/data/successStories';
 import type { SuccessStory } from '@/types';
 
@@ -116,9 +117,15 @@ function StoryCard({ story }: { story: SuccessStory }) {
       <div className="p-6 space-y-4">
         {/* Header: Avatar + Name */}
         <div className="flex items-start gap-4">
-          <div className="w-14 h-14 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center overflow-hidden shrink-0 border-2 border-green-200 dark:border-green-500/20">
+          <div className="w-14 h-14 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center overflow-hidden shrink-0 border-2 border-green-200 dark:border-green-500/20 relative">
             {story.image ? (
-              <img src={story.image} alt={story.name} className="w-full h-full object-cover" />
+              <Image
+                src={story.image}
+                alt={story.name}
+                fill
+                sizes="56px"
+                className="object-cover"
+              />
             ) : (
               <User className="h-6 w-6 text-green-600 dark:text-green-400" />
             )}

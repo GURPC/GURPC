@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeft, Calendar, User, Tag, ExternalLink, Loader2 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 
@@ -330,13 +331,17 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
 
         {/* Featured Image */}
         {post.image_url && (
-            <div className="mb-10 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm">
-                <img 
-                    src={post.image_url} 
-                    alt={post.title}
-                    className="w-full h-auto object-cover max-h-[500px]"
-                />
-            </div>
+          <div className="mb-10 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm">
+            <Image
+              src={post.image_url}
+              alt={post.title}
+              width={1200}
+              height={630}
+              sizes="(min-width: 1024px) 900px, 100vw"
+              className="w-full h-auto object-cover max-h-[500px]"
+              priority
+            />
+          </div>
         )}
 
         {/* Content */}

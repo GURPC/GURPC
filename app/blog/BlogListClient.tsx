@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { BookOpen, Calendar, User, ArrowRight, Plus, Loader2 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -103,8 +104,15 @@ export default function BlogListClient() {
             <Link href={`/blog/${posts[0].slug}`} className="block mb-8">
               <div className="cyber-card rounded-2xl p-6 md:p-8 hover:border-green-500/30 transition-all group overflow-hidden relative">
                 {posts[0].image_url && (
-                  <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity">
-                    <img src={posts[0].image_url} alt="" className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity relative">
+                    <Image
+                      src={posts[0].image_url}
+                      alt=""
+                      fill
+                      sizes="100vw"
+                      className="object-cover"
+                      priority
+                    />
                   </div>
                 )}
                 <div className="relative z-10">
@@ -140,8 +148,14 @@ export default function BlogListClient() {
                 <Link key={post.id} href={`/blog/${post.slug}`} className="block">
                   <div className="cyber-card rounded-xl p-5 hover:border-green-500/30 transition-all h-full group flex flex-col relative overflow-hidden">
                     {post.image_url && (
-                      <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity">
-                        <img src={post.image_url} alt="" className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity relative">
+                        <Image
+                          src={post.image_url}
+                          alt=""
+                          fill
+                          sizes="100vw"
+                          className="object-cover"
+                        />
                       </div>
                     )}
                     <div className="relative z-10 flex flex-col h-full">

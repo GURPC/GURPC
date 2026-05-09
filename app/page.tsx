@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, BookOpen, Users, Lightbulb, Calendar, Microscope, Zap, Code, Binary, Shield, Terminal, Cpu, Quote, Video, BookMarked, Share2, Monitor, GraduationCap, Mic, Target, Library, Folder } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ParticleGrid from '@/components/effects/ParticleGrid';
@@ -307,11 +308,13 @@ export default function Home() {
               <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
                 {/* Director Photo */}
                 <div className="shrink-0">
-                  <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl bg-gradient-to-br from-green-500/20 to-emerald-600/10 border border-green-500/20 flex items-center justify-center overflow-hidden">
-                    <img
+                  <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl bg-gradient-to-br from-green-500/20 to-emerald-600/10 border border-green-500/20 flex items-center justify-center overflow-hidden relative">
+                    <Image
                       src="https://lh3.googleusercontent.com/d/1kk5gbzQRCPB4UnulN6lAF2NsHL2yLZ8-"
                       alt="Prof. Dr. ASM Shihavuddin"
-                      className="w-full h-full object-cover"
+                      fill
+                      sizes="160px"
+                      className="object-cover"
                     />
                   </div>
                   <div className="text-center mt-4">
@@ -353,11 +356,13 @@ export default function Home() {
               <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
                 {/* Assistant Director Photo */}
                 <div className="shrink-0">
-                  <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-green-600/10 border border-green-500/20 flex items-center justify-center overflow-hidden">
-                    <img
+                  <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-green-600/10 border border-green-500/20 flex items-center justify-center overflow-hidden relative">
+                    <Image
                       src="https://lh3.googleusercontent.com/d/1GLqe0ITL2MJa2D4zbnb83z8DotBv8xb4"
                       alt="Ms. Farhana Akter Sunny"
-                      className="w-full h-full object-cover"
+                      fill
+                      sizes="160px"
+                      className="object-cover"
                     />
                   </div>
                   <div className="text-center mt-4">

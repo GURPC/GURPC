@@ -201,9 +201,15 @@ const Navbar = () => {
                     onClick={() => setUserMenuOpen(!userMenuOpen)}
                     className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-green-200 dark:border-green-500/20 hover:border-green-400 dark:hover:border-green-500/40 bg-green-50/50 dark:bg-green-500/5 transition-all"
                   >
-                    <div className="w-7 h-7 rounded-full bg-green-600 flex items-center justify-center text-white text-xs font-bold overflow-hidden">
+                    <div className="w-7 h-7 rounded-full bg-green-600 flex items-center justify-center text-white text-xs font-bold overflow-hidden relative">
                       {profile?.photo_url ? (
-                        <img src={profile.photo_url} alt="" className="w-full h-full object-cover" />
+                        <Image
+                          src={profile.photo_url}
+                          alt=""
+                          fill
+                          sizes="28px"
+                          className="object-cover"
+                        />
                       ) : (
                         profile?.name?.charAt(0)?.toUpperCase() || <User className="w-4 h-4" />
                       )}

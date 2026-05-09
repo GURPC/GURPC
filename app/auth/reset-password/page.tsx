@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { createClient, createImplicitClient } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/client';
 
 function ResetPasswordForm() {
   const [password, setPassword] = useState('');
@@ -14,7 +14,7 @@ function ResetPasswordForm() {
   const [success, setSuccess] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
-  const authClientRef = useRef<ReturnType<typeof createClient> | ReturnType<typeof createImplicitClient> | null>(null);
+  const authClientRef = useRef<ReturnType<typeof createClient> | null>(null);
 
   useEffect(() => {
     let isActive = true;
@@ -35,13 +35,30 @@ function ResetPasswordForm() {
         return;
       }
 
-      const supabase = createImplicitClient();
-      authClientRef.current = supabase;
-      const { data, error: sessionError } = await supabase.auth.getSessionFromUrl({ storeSession: true });
-      if (!isActive) return;
-      if (sessionError || !data?.session) {
+      const hash = typeof window !== 'undefined' ? window.location.hash.replace(/^#/, '') : '';
+      const hashParams = new URLSearchParams(hash);
+      const accessToken = hashParams.get('access_token');
+      const refreshToken = hashParams.get('refresh_token');
+
+      if (!accessToken || !refreshToken) {
         setError('Reset link is invalid or expired. Please request a new one.');
         return;
+      }
+
+      const supabase = createClient();
+      authClientRef.current = supabase;
+      const { error: sessionError } = await supabase.auth.setSession({
+        access_token: accessToken,
+        refresh_token: refreshToken,
+      });
+      if (!isActive) return;
+      if (sessionError) {
+        setError(sessionError.message);
+        return;
+      }
+
+      if (typeof window !== 'undefined') {
+        window.history.replaceState(null, '', window.location.pathname + window.location.search);
       }
       setReady(true);
     };

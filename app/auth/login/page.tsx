@@ -87,6 +87,11 @@ function LoginForm() {
                 placeholder="••••••••"
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
               />
+              <div className="mt-2 text-right">
+                <Link href="/auth/forgot-password" className="text-sm text-emerald-600 dark:text-emerald-400 hover:underline">
+                  Forgot password?
+                </Link>
+              </div>
             </div>
 
             <button

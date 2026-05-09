@@ -17,7 +17,7 @@ interface CalendarEvent {
   time?: string;
   location: string;
   description: string;
-  category: 'workshop' | 'conference' | 'call-for-papers' | 'seminar' | 'deadline' | 'training';
+  category: 'workshop' | 'conference' | 'call-for-papers' | 'seminar' | 'deadline' | 'training' | 'webinar';
   link?: string;
   isExternal?: boolean;
 }
@@ -29,6 +29,7 @@ const categoryConfig: Record<string, { label: string; color: string; icon: any }
   'seminar': { label: 'Seminar', color: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-500/30', icon: Mic },
   'deadline': { label: 'Deadline', color: 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 border-red-200 dark:border-red-500/30', icon: Clock },
   'training': { label: 'Training', color: 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 border-green-200 dark:border-green-500/30', icon: Presentation },
+  'webinar': { label: 'Webinar', color: 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300 border-cyan-200 dark:border-cyan-500/30', icon: Mic },
 };
 
 const calendarEvents: CalendarEvent[] = [
@@ -147,6 +148,17 @@ const calendarEvents: CalendarEvent[] = [
     location: 'Green University, Seminar Hall',
     description: 'Understanding research ethics, avoiding plagiarism, and maintaining academic integrity in publications.',
     category: 'seminar',
+  },
+  {
+    id: 'ev-13',
+    title: 'The Mystery Unveiled: Session 01',
+    date: '2026-05-14',
+    time: '7:00 PM',
+    location: 'Online (Zoom)',
+    description: 'Research Genesis Session 01 on the basics of research, featuring Prof. Dr. ASM Shihavuddin. Register: https://forms.gle/VLkLqiHshrQP4EAZ9',
+    category: 'webinar',
+    link: 'https://www.facebook.com/share/1AwmDYPhTb/',
+    isExternal: true,
   },
 ];
 

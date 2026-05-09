@@ -12,6 +12,19 @@ export const metadata: Metadata = {
 
 const events = [
   {
+    id: 8,
+    title: "The Mystery Unveiled: Session 01",
+    date: "May 14, 2026",
+    time: "7:00 PM",
+    location: "Online (Zoom)",
+    description: "Research Genesis Session 01 on the basics of research, featuring Prof. Dr. ASM Shihavuddin. Register: https://forms.gle/VLkLqiHshrQP4EAZ9",
+    category: "Webinar",
+    isUpcoming: true,
+    link: "https://www.facebook.com/share/1AwmDYPhTb/",
+    buttonText: "View on Facebook",
+    image: "https://lh3.googleusercontent.com/d/14oHUykikXCfAOZQeolQrGwtCpzHODzX6"
+  },
+  {
     id: 7,
     title: "A Road to Erasmus Mundus Joint Masters (EMJM) and Erasmus Mundus Scholarship",
     date: "April 11, 2026",

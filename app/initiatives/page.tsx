@@ -29,12 +29,9 @@ export default function InitiativesPage() {
     <div className="container px-4 py-12 md:py-20 mx-auto">
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto mb-16">
-        <Badge variant="outline" className="mb-4 text-green-600 dark:text-green-400 border-green-300 dark:border-green-500/30">
-          Meeting Decisions — 2026
-        </Badge>
         <h1 className="text-4xl font-bold tracking-tight mb-4">Initiatives & Programs</h1>
         <p className="text-muted-foreground text-lg">
-          Our latest meeting has set the roadmap for GURPC&apos;s growth. Here are the key initiatives driving our community forward.
+          Explore the key initiatives driving our community forward.
         </p>
       </div>
 

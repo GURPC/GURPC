@@ -1,4 +1,4 @@
-// Data for GURPC initiatives based on meeting decisions
+// Data for GURPC initiatives
 import type { Initiative } from '@/types';
 
 export const initiatives: Initiative[] = [

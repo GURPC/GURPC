@@ -28,8 +28,8 @@ export default function ContactPage() {
               <Mail className="h-6 w-6 text-green-600 dark:text-green-400" />
             </div>
             <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Email</h3>
-            <a href="mailto:gurpc.gub@gmail.com" className="text-sm text-green-600 dark:text-green-400 hover:underline break-all">
-              gurpc.gub@gmail.com
+            <a href="mailto:gurpc@green.edu.bd" className="text-sm text-green-600 dark:text-green-400 hover:underline break-all">
+              gurpc@green.edu.bd
             </a>
           </div>
 
@@ -50,7 +50,7 @@ export default function ContactPage() {
             </div>
             <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Location</h3>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Green University of Bangladesh<br/>Purbachal, Dhaka
+              Green University of Bangladesh, Purbachal American City, Kanchan, Rupganj, Narayanganj-1461, Dhaka, Bangladesh
             </p>
           </div>
 
@@ -60,7 +60,7 @@ export default function ContactPage() {
             </div>
             <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Office Hours</h3>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Sun — Thu<br/>9:00 AM — 5:00 PM
+              Sat — Wed<br/>9:00 AM — 5:00 PM
             </p>
           </div>
         </div>
@@ -75,12 +75,12 @@ export default function ContactPage() {
                     </p>
                     
                     <div className="space-y-4">
-                        <a href="mailto:gurpc.gub@gmail.com" className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
+                        <a href="mailto:gurpc@green.edu.bd" className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
                             <div className="bg-green-100 dark:bg-green-900/30 p-2.5 rounded-lg text-green-600 dark:text-green-400">
                                 <Mail size={18} />
                             </div>
                             <div>
-                                <p className="text-sm font-medium text-gray-900 dark:text-white">gurpc.gub@gmail.com</p>
+                                <p className="text-sm font-medium text-gray-900 dark:text-white">gurpc@green.edu.bd</p>
                                 <p className="text-xs text-gray-400 dark:text-gray-500">General inquiries & collaboration</p>
                             </div>
                             <ExternalLink size={14} className="ml-auto text-gray-300 dark:text-gray-600 group-hover:text-green-500 transition-colors" />
@@ -104,7 +104,7 @@ export default function ContactPage() {
                             <div>
                                 <p className="text-sm font-medium text-gray-900 dark:text-white">Green University of Bangladesh</p>
                                 <p className="text-xs text-gray-400 dark:text-gray-500 leading-relaxed">
-                                    Purbachal American City, Kanchan,<br/>Rupganj, Narayanganj, Dhaka, Bangladesh
+                                    Purbachal American City, Kanchan,<br/>Rupganj, Narayanganj-1461, Dhaka, Bangladesh
                                 </p>
                             </div>
                         </div>

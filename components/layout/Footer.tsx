@@ -62,17 +62,15 @@ const Footer = () => {
                   <MapPin size={16} className="text-green-500/60" />
                 </div>
                 <span className="leading-relaxed text-slate-500">
-                  Purbachhal American City,<br/>
-                  Kanchan, Rupganj,<br/>
-                  Dhaka, Bangladesh
+                  Green University of Bangladesh<br/>Purbachal American City, Kanchan,<br/>Rupganj, Narayanganj-1461, Dhaka, Bangladesh
                 </span>
               </li>
               <li className="flex items-center gap-3 group">
                 <div className="p-2 rounded-lg bg-green-500/5 border border-green-500/10 group-hover:border-green-500/20 transition-all">
                   <Mail size={16} className="text-green-500/60" />
                 </div>
-                <a href="mailto:gurpc.gub@gmail.com" className="text-slate-500 hover:text-green-600 dark:hover:text-green-400 transition-colors font-mono text-xs">
-                  gurpc.gub@gmail.com
+                <a href="mailto:gurpc@green.edu.bd" className="text-slate-500 hover:text-green-600 dark:hover:text-green-400 transition-colors font-mono text-xs">
+                  gurpc@green.edu.bd
                 </a>
               </li>
               <li className="flex items-center gap-3 group">

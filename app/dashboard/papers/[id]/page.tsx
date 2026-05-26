@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import type { Database } from '@/lib/supabase/types';
+import type { Database, Paper } from '@/lib/supabase/types';
 
 type PaperStatus = Database['public']['Tables']['papers']['Row']['status'];
 
@@ -49,12 +49,13 @@ export default function EditPaperPage({ params }: PaperParams) {
         return;
       }
 
-      setTitle(data.title);
-      setDoiUrl(data.doi_url || '');
-      setYear(data.year ? data.year.toString() : '');
-      setCoAuthors(data.co_authors?.join(', ') || '');
-      setStatus(data.status);
-      setCurrentFileUrl(data.file_url);
+      const paper = data as Paper;
+      setTitle(paper.title);
+      setDoiUrl(paper.doi_url || '');
+      setYear(paper.year ? paper.year.toString() : '');
+      setCoAuthors(paper.co_authors?.join(', ') || '');
+      setStatus(paper.status);
+      setCurrentFileUrl(paper.file_url);
       setFetchLoading(false);
     };
 

@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Terminal, FileText, Users, Folder, Trophy, ArrowRight, Plus, Activity, Zap, BookOpen, Code, Shield, UserCheck, BarChart3, Eye } from 'lucide-react';
+import { Terminal, FileText, Users, Folder, Trophy, ArrowRight, Plus, Activity, Zap, BookOpen, Code, Shield, UserCheck, BarChart3, Eye, Edit2, Trash2 } from 'lucide-react';
 import type { Profile, Paper, ResearchGroup, Project } from '@/lib/supabase/types';
 import GlowingOrb from '@/components/effects/GlowingOrb';
 
@@ -260,13 +260,23 @@ export default function DashboardPage() {
             ) : (
               <div className="space-y-3">
                 {papers.slice(0, 5).map((paper) => (
-                  <div key={paper.id} className="p-3 rounded-lg bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-green-500/10 hover:border-green-500/30 transition-colors">
-                    <h3 className="font-medium text-slate-900 dark:text-white text-sm line-clamp-1">{paper.title}</h3>
-                    <div className="flex items-center gap-2 mt-2">
-                      <span className={`text-xs px-2 py-0.5 rounded-full font-mono border ${statusColors[paper.status || 'draft']}`}>
-                        {(paper.status || 'draft').replace('_', ' ')}
-                      </span>
-                      {paper.year && <span className="text-xs text-slate-400 font-mono">{paper.year}</span>}
+                  <div key={paper.id} className="p-3 rounded-lg bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-green-500/10 hover:border-green-500/30 transition-colors group">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-medium text-slate-900 dark:text-white text-sm line-clamp-1">{paper.title}</h3>
+                        <div className="flex items-center gap-2 mt-2">
+                          <span className={`text-xs px-2 py-0.5 rounded-full font-mono border ${statusColors[paper.status || 'draft']}`}>
+                            {(paper.status || 'draft').replace('_', ' ')}
+                          </span>
+                          {paper.year && <span className="text-xs text-slate-400 font-mono">{paper.year}</span>}
+                        </div>
+                      </div>
+                      <Link
+                        href={`/dashboard/papers/${paper.id}`}
+                        className="flex-shrink-0 p-1.5 rounded text-slate-400 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-500/10 transition-colors"
+                      >
+                        <Edit2 className="w-4 h-4" />
+                      </Link>
                     </div>
                   </div>
                 ))}

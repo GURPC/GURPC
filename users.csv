@@ -1,0 +1,3 @@
+email,password,name,department,batch_year
+user1@example.com,securepassword123,John Doe,Computer Science & Engineering (CSE),2023
+user2@example.com,securepassword456,Jane Smith,Software Engineering (SWE),2024

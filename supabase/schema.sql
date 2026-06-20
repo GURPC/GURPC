@@ -5,7 +5,8 @@
 
 -- ═══════════ PROFILES ═══════════
 CREATE TABLE IF NOT EXISTS profiles (
-  id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  -- Keep profiles import-friendly; app auth still uses the signed-in user's UUID.
+  id UUID PRIMARY KEY,
   name TEXT,
   email TEXT,
   department TEXT,
@@ -36,7 +37,12 @@ BEGIN
     COALESCE(NEW.raw_user_meta_data->>'name', split_part(NEW.email, '@', 1)),
     NEW.raw_user_meta_data->>'department',
     NEW.raw_user_meta_data->>'batch_year'
-  );
+  )
+  ON CONFLICT (id) DO UPDATE
+    SET email = EXCLUDED.email,
+        name = EXCLUDED.name,
+        department = EXCLUDED.department,
+        batch_year = EXCLUDED.batch_year;
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;

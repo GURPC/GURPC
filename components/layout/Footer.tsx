@@ -143,6 +143,8 @@ const Footer = () => {
         <div className="border-t border-green-200 dark:border-green-500/10 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500 dark:text-slate-600 font-mono">
           <p>© {new Date().getFullYear()} GURPC — Green University Research & Publication Community</p>
           <div className="flex items-center gap-4">
+            <Link href="/developer" className="hover:text-green-600 dark:hover:text-green-400 transition-colors">Developer</Link>
+             <span className="text-slate-300 dark:text-slate-700">|</span>
             <Link href="/privacy" className="hover:text-green-600 dark:hover:text-green-400 transition-colors">Privacy Policy</Link>
             <span className="text-slate-300 dark:text-slate-700">|</span>
             <Link href="/terms" className="hover:text-green-600 dark:hover:text-green-400 transition-colors">Terms of Service</Link>

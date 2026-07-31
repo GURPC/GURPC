@@ -1,0 +1,623 @@
+[
+{
+  "id": "65ce83f5-2f5f-4b44-a513-cec3376401a9",
+  "email": "202002003@green.ac.bd",
+  "banned_until": null,
+  "created_at": "2026-02-22 03:55:58.911189+00",
+  "confirmed_at": null,
+  "confirmation_sent_at": "2026-02-22 03:55:59.055668+00",
+  "is_anonymous": false,
+  "is_sso_user": false,
+  "invited_at": null,
+  "last_sign_in_at": null,
+  "phone": null,
+  "raw_app_meta_data": {
+    "provider": "email",
+    "providers": [
+      "email"
+    ]
+  },
+  "raw_user_meta_data": {
+    "sub": "65ce83f5-2f5f-4b44-a513-cec3376401a9",
+    "name": "Md. Montasir Rahman",
+    "email": "202002003@green.ac.bd",
+    "batch_year": "2020",
+    "department": "Computer Science & Engineering (CSE)",
+    "email_verified": false,
+    "phone_verified": false
+  },
+  "updated_at": "2026-02-22 03:55:59.485408+00",
+  "providers": [
+    "email"
+  ]
+}, {
+  "id": "e54ae036-75be-45de-b62c-837bf2377c80",
+  "email": "202002003@student.green.ac.bd",
+  "banned_until": null,
+  "created_at": "2026-02-22 04:00:38.021693+00",
+  "confirmed_at": "2026-02-22 17:52:38.312805+00",
+  "confirmation_sent_at": "2026-02-22 17:51:07.037907+00",
+  "is_anonymous": false,
+  "is_sso_user": false,
+  "invited_at": null,
+  "last_sign_in_at": "2026-03-10 08:10:48.510703+00",
+  "phone": null,
+  "raw_app_meta_data": {
+    "provider": "email",
+    "providers": [
+      "email"
+    ]
+  },
+  "raw_user_meta_data": {
+    "sub": "e54ae036-75be-45de-b62c-837bf2377c80",
+    "name": "Md. Montasir Rahman",
+    "email": "202002003@student.green.ac.bd",
+    "batch_year": "2020",
+    "department": "Computer Science & Engineering (CSE)",
+    "email_verified": true,
+    "phone_verified": false
+  },
+  "updated_at": "2026-05-30 05:38:00.048906+00",
+  "providers": [
+    "email"
+  ]
+},{
+  "id": "bb71ac5f-b270-4afd-85bb-cb46567fb588",
+  "email": "213902116@student.green.edu.bd",
+  "banned_until": null,
+  "created_at": "2026-02-28 06:48:52.807407+00",
+  "confirmed_at": "2026-03-02 11:39:01.919654+00",
+  "confirmation_sent_at": "2026-03-02 11:38:44.917773+00",
+  "is_anonymous": false,
+  "is_sso_user": false,
+  "invited_at": null,
+  "last_sign_in_at": "2026-03-02 11:39:03.355661+00",
+  "phone": null,
+  "raw_app_meta_data": {
+    "provider": "email",
+    "providers": [
+      "email"
+    ]
+  },
+  "raw_user_meta_data": {
+    "sub": "bb71ac5f-b270-4afd-85bb-cb46567fb588",
+    "name": "Md. Dulal Hossain ",
+    "email": "213902116@student.green.edu.bd",
+    "batch_year": "2021",
+    "department": "Computer Science & Engineering (CSE)",
+    "email_verified": true,
+    "phone_verified": false
+  },
+  "updated_at": "2026-03-02 11:39:03.403052+00",
+  "providers": [
+    "email"
+  ]
+},{
+  "id": "d548a92e-a78c-49c0-992a-d4de7df23f69",
+  "email": "2320002241@student.green.ac.bd",
+  "banned_until": null,
+  "created_at": "2026-02-26 18:01:49.303461+00",
+  "confirmed_at": null,
+  "confirmation_sent_at": "2026-02-26 18:01:49.372811+00",
+  "is_anonymous": false,
+  "is_sso_user": false,
+  "invited_at": null,
+  "last_sign_in_at": null,
+  "phone": null,
+  "raw_app_meta_data": {
+    "provider": "email",
+    "providers": [
+      "email"
+    ]
+  },
+  "raw_user_meta_data": {
+    "sub": "d548a92e-a78c-49c0-992a-d4de7df23f69",
+    "name": "Sonjoy",
+    "email": "2320002241@student.green.ac.bd",
+    "batch_year": "2023",
+    "department": "Computer Science & Engineering (CSE)",
+    "email_verified": false,
+    "phone_verified": false
+  },
+  "updated_at": "2026-02-26 18:01:50.240622+00",
+  "providers": [
+    "email"
+  ]
+},{
+  "id": "cc002c3b-fdb1-44fe-80ca-e520ee502250",
+  "email": "232002105@student.green.ac.bd",
+  "banned_until": null,
+  "created_at": "2026-02-28 08:04:38.090079+00",
+  "confirmed_at": "2026-02-28 08:06:45.136771+00",
+  "confirmation_sent_at": "2026-02-28 08:04:38.206077+00",
+  "is_anonymous": false,
+  "is_sso_user": false,
+  "invited_at": null,
+  "last_sign_in_at": "2026-02-28 08:07:21.504852+00",
+  "phone": null,
+  "raw_app_meta_data": {
+    "provider": "email",
+    "providers": [
+      "email"
+    ]
+  },
+  "raw_user_meta_data": {
+    "sub": "cc002c3b-fdb1-44fe-80ca-e520ee502250",
+    "name": "Taslim Ahmed Tamim",
+    "email": "232002105@student.green.ac.bd",
+    "batch_year": "232",
+    "department": "Computer Science & Engineering (CSE)",
+    "email_verified": true,
+    "phone_verified": false
+  },
+  "updated_at": "2026-02-28 08:07:21.543862+00",
+  "providers": [
+    "email"
+  ]
+},{
+  "id": "afd39c2a-5cc8-4538-8646-e199cebee538",
+  "email": "232002256@student.green.ac.bd",
+  "banned_until": null,
+  "created_at": "2026-02-21 02:23:15.159822+00",
+  "confirmed_at": "2026-02-21 02:24:53.501622+00",
+  "confirmation_sent_at": "2026-02-21 02:23:15.252461+00",
+  "is_anonymous": false,
+  "is_sso_user": false,
+  "invited_at": null,
+  "last_sign_in_at": "2026-05-26 10:00:57.418491+00",
+  "phone": null,
+  "raw_app_meta_data": {
+    "provider": "email",
+    "providers": [
+      "email"
+    ]
+  },
+  "raw_user_meta_data": {
+    "sub": "afd39c2a-5cc8-4538-8646-e199cebee538",
+    "name": "Majharul Islam ",
+    "email": "232002256@student.green.ac.bd",
+    "batch_year": "232",
+    "department": "Computer Science & Engineering (CSE)",
+    "email_verified": true,
+    "phone_verified": false
+  },
+  "updated_at": "2026-06-19 22:29:15.108531+00",
+  "providers": [
+    "email"
+  ]
+},{
+  "id": "528a465d-8951-4888-8e90-0a6de8681bb6",
+  "email": "242006070@student.green.ac.bd",
+  "banned_until": null,
+  "created_at": "2026-02-21 12:52:10.736585+00",
+  "confirmed_at": "2026-02-21 12:52:49.300037+00",
+  "confirmation_sent_at": "2026-02-21 12:52:10.836137+00",
+  "is_anonymous": false,
+  "is_sso_user": false,
+  "invited_at": null,
+  "last_sign_in_at": "2026-02-21 12:52:50.620374+00",
+  "phone": null,
+  "raw_app_meta_data": {
+    "provider": "email",
+    "providers": [
+      "email"
+    ]
+  },
+  "raw_user_meta_data": {
+    "sub": "528a465d-8951-4888-8e90-0a6de8681bb6",
+    "name": "Sinthia Ahmed ",
+    "email": "242006070@student.green.ac.bd",
+    "batch_year": "2024",
+    "department": "Business Administration (BBA)",
+    "email_verified": true,
+    "phone_verified": false
+  },
+  "updated_at": "2026-02-26 12:39:24.736195+00",
+  "providers": [
+    "email"
+  ]
+},{
+  "id": "fda05efc-5df8-4e5a-a789-ea30afa7cd2b",
+  "email": "aburayhan2550@gmail.com",
+  "banned_until": null,
+  "created_at": "2026-05-24 08:58:54.46184+00",
+  "confirmed_at": "2026-05-24 08:59:21.119022+00",
+  "confirmation_sent_at": "2026-05-24 08:58:54.540208+00",
+  "is_anonymous": false,
+  "is_sso_user": false,
+  "invited_at": null,
+  "last_sign_in_at": "2026-05-24 08:59:23.295094+00",
+  "phone": null,
+  "raw_app_meta_data": {
+    "provider": "email",
+    "providers": [
+      "email"
+    ]
+  },
+  "raw_user_meta_data": {
+    "sub": "fda05efc-5df8-4e5a-a789-ea30afa7cd2b",
+    "name": "MD ABU RAYHAN IMRAN",
+    "email": "aburayhan2550@gmail.com",
+    "batch_year": "2022",
+    "department": "Computer Science & Engineering (CSE)",
+    "email_verified": true,
+    "phone_verified": false
+  },
+  "updated_at": "2026-05-24 14:48:30.530233+00",
+  "providers": [
+    "email"
+  ]
+},{
+  "id": "e6ff4cc6-c133-4a22-b723-0797ded78f61",
+  "email": "dulal.md.cse@gmail.com",
+  "banned_until": null,
+  "created_at": "2026-03-02 14:08:02.107548+00",
+  "confirmed_at": "2026-03-02 14:08:24.072743+00",
+  "confirmation_sent_at": "2026-03-02 14:08:02.207273+00",
+  "is_anonymous": false,
+  "is_sso_user": false,
+  "invited_at": null,
+  "last_sign_in_at": "2026-03-13 23:22:10.474534+00",
+  "phone": null,
+  "raw_app_meta_data": {
+    "provider": "email",
+    "providers": [
+      "email"
+    ]
+  },
+  "raw_user_meta_data": {
+    "sub": "e6ff4cc6-c133-4a22-b723-0797ded78f61",
+    "name": "Md. Dulal Hossain",
+    "email": "dulal.md.cse@gmail.com",
+    "batch_year": "2021",
+    "department": "Computer Science & Engineering (CSE)",
+    "email_verified": true,
+    "phone_verified": false
+  },
+  "updated_at": "2026-04-19 15:28:52.624923+00",
+  "providers": [
+    "email"
+  ]
+},{
+  "id": "7b442c08-9b4e-4c14-aedb-09633a11cb42",
+  "email": "emuaktermim@gmail.com",
+  "banned_until": null,
+  "created_at": "2026-02-21 14:32:17.796998+00",
+  "confirmed_at": "2026-02-21 14:32:51.887253+00",
+  "confirmation_sent_at": "2026-02-21 14:32:17.902981+00",
+  "is_anonymous": false,
+  "is_sso_user": false,
+  "invited_at": null,
+  "last_sign_in_at": "2026-02-21 14:33:02.218415+00",
+  "phone": null,
+  "raw_app_meta_data": {
+    "provider": "email",
+    "providers": [
+      "email"
+    ]
+  },
+  "raw_user_meta_data": {
+    "sub": "7b442c08-9b4e-4c14-aedb-09633a11cb42",
+    "name": "Emu Akter Mim",
+    "email": "emuaktermim@gmail.com",
+    "batch_year": "2023",
+    "department": "Journalism & Media Communication",
+    "email_verified": true,
+    "phone_verified": false
+  },
+  "updated_at": "2026-02-25 23:02:42.983268+00",
+  "providers": [
+    "email"
+  ]
+},{
+  "id": "dbfb3c77-a52d-4c2b-a03b-8846f8d7c51d",
+  "email": "ha8604884@gmail.com",
+  "banned_until": null,
+  "created_at": "2026-02-21 12:45:39.956994+00",
+  "confirmed_at": "2026-02-21 12:45:59.87811+00",
+  "confirmation_sent_at": "2026-02-21 12:45:40.019472+00",
+  "is_anonymous": false,
+  "is_sso_user": false,
+  "invited_at": null,
+  "last_sign_in_at": "2026-02-22 17:41:57.141333+00",
+  "phone": null,
+  "raw_app_meta_data": {
+    "provider": "email",
+    "providers": [
+      "email"
+    ]
+  },
+  "raw_user_meta_data": {
+    "sub": "dbfb3c77-a52d-4c2b-a03b-8846f8d7c51d",
+    "name": "Nabiur Rahman zisan",
+    "email": "ha8604884@gmail.com",
+    "batch_year": "232",
+    "department": "Law",
+    "email_verified": true,
+    "phone_verified": false
+  },
+  "updated_at": "2026-03-07 17:40:32.128449+00",
+  "providers": [
+    "email"
+  ]
+},{
+  "id": "41a4c28c-b1d3-4f80-988d-b59b8d527dc7",
+  "email": "kazirh2015@gmail.com",
+  "banned_until": null,
+  "created_at": "2026-02-27 15:34:00.056649+00",
+  "confirmed_at": "2026-02-27 15:34:18.024748+00",
+  "confirmation_sent_at": "2026-02-27 15:34:00.184929+00",
+  "is_anonymous": false,
+  "is_sso_user": false,
+  "invited_at": null,
+  "last_sign_in_at": "2026-02-27 15:34:20.444598+00",
+  "phone": null,
+  "raw_app_meta_data": {
+    "provider": "email",
+    "providers": [
+      "email"
+    ]
+  },
+  "raw_user_meta_data": {
+    "sub": "41a4c28c-b1d3-4f80-988d-b59b8d527dc7",
+    "name": "Kazi Rakibul Hasan",
+    "email": "kazirh2015@gmail.com",
+    "batch_year": "2023",
+    "department": "Electrical & Electronic Engineering (EEE)",
+    "email_verified": true,
+    "phone_verified": false
+  },
+  "updated_at": "2026-02-28 18:11:34.82615+00",
+  "providers": [
+    "email"
+  ]
+},{
+  "id": "26342ec2-c222-42ea-9b53-6d76f9dc39f0",
+  "email": "mahmudaakternadia@gmail.com",
+  "banned_until": null,
+  "created_at": "2026-02-23 23:26:35.517435+00",
+  "confirmed_at": "2026-02-23 23:26:52.380861+00",
+  "confirmation_sent_at": "2026-02-23 23:26:35.635345+00",
+  "is_anonymous": false,
+  "is_sso_user": false,
+  "invited_at": null,
+  "last_sign_in_at": "2026-02-23 23:26:54.279572+00",
+  "phone": null,
+  "raw_app_meta_data": {
+    "provider": "email",
+    "providers": [
+      "email"
+    ]
+  },
+  "raw_user_meta_data": {
+    "sub": "26342ec2-c222-42ea-9b53-6d76f9dc39f0",
+    "name": "Mahmuda Akter Nadia",
+    "email": "mahmudaakternadia@gmail.com",
+    "batch_year": "2023",
+    "department": "Computer Science & Engineering (CSE)",
+    "email_verified": true,
+    "phone_verified": false
+  },
+  "updated_at": "2026-03-27 17:52:07.127872+00",
+  "providers": [
+    "email"
+  ]
+},{
+  "id": "15717698-97ab-4b5e-8a13-152565774604",
+  "email": "mahmudhasanhimon@gmail.com",
+  "banned_until": null,
+  "created_at": "2026-02-27 07:31:41.194396+00",
+  "confirmed_at": "2026-02-27 07:33:26.504538+00",
+  "confirmation_sent_at": "2026-02-27 07:31:41.315318+00",
+  "is_anonymous": false,
+  "is_sso_user": false,
+  "invited_at": null,
+  "last_sign_in_at": "2026-02-27 07:33:27.726127+00",
+  "phone": null,
+  "raw_app_meta_data": {
+    "provider": "email",
+    "providers": [
+      "email"
+    ]
+  },
+  "raw_user_meta_data": {
+    "sub": "15717698-97ab-4b5e-8a13-152565774604",
+    "name": "Himon Mia",
+    "email": "mahmudhasanhimon@gmail.com",
+    "batch_year": "2024",
+    "department": "Electrical & Electronic Engineering (EEE)",
+    "email_verified": true,
+    "phone_verified": false
+  },
+  "updated_at": "2026-02-27 23:09:05.910218+00",
+  "providers": [
+    "email"
+  ]
+},{
+  "id": "ea489fc3-dddf-4ae4-8ccb-3f84da378a22",
+  "email": "mdnahiduzzamandipu@gmail.com",
+  "banned_until": null,
+  "created_at": "2026-02-22 17:58:13.171368+00",
+  "confirmed_at": "2026-02-22 17:58:46.526314+00",
+  "confirmation_sent_at": "2026-02-22 17:58:13.218212+00",
+  "is_anonymous": false,
+  "is_sso_user": false,
+  "invited_at": null,
+  "last_sign_in_at": "2026-02-22 17:59:08.709561+00",
+  "phone": null,
+  "raw_app_meta_data": {
+    "provider": "email",
+    "providers": [
+      "email"
+    ]
+  },
+  "raw_user_meta_data": {
+    "sub": "ea489fc3-dddf-4ae4-8ccb-3f84da378a22",
+    "name": "MD NAHIDUZZAMAN DIPU",
+    "email": "mdnahiduzzamandipu@gmail.com",
+    "batch_year": "223",
+    "department": "Computer Science & Engineering (CSE)",
+    "email_verified": true,
+    "phone_verified": false
+  },
+  "updated_at": "2026-04-19 12:25:40.059825+00",
+  "providers": [
+    "email"
+  ]
+},{
+  "id": "e7049368-0890-469d-adbc-c00fa680e1cb",
+  "email": "mdsaimon3371@gmail.com",
+  "banned_until": null,
+  "created_at": "2026-03-05 20:44:08.134808+00",
+  "confirmed_at": "2026-03-05 20:44:53.626179+00",
+  "confirmation_sent_at": "2026-03-05 20:44:08.268201+00",
+  "is_anonymous": false,
+  "is_sso_user": false,
+  "invited_at": null,
+  "last_sign_in_at": "2026-03-05 20:44:55.232149+00",
+  "phone": null,
+  "raw_app_meta_data": {
+    "provider": "email",
+    "providers": [
+      "email"
+    ]
+  },
+  "raw_user_meta_data": {
+    "sub": "e7049368-0890-469d-adbc-c00fa680e1cb",
+    "name": "Joynal Abadin",
+    "email": "mdsaimon3371@gmail.com",
+    "batch_year": "2023",
+    "department": "Electrical & Electronic Engineering (EEE)",
+    "email_verified": true,
+    "phone_verified": false
+  },
+  "updated_at": "2026-03-06 00:06:41.944398+00",
+  "providers": [
+    "email"
+  ]
+},{
+  "id": "d517ca0f-785b-4607-a57b-0874b9b8a55a",
+  "email": "mehedi.ads.gub@gmail.com",
+  "banned_until": null,
+  "created_at": "2026-02-27 03:46:46.486308+00",
+  "confirmed_at": "2026-02-27 03:47:16.310363+00",
+  "confirmation_sent_at": "2026-02-27 03:46:46.625912+00",
+  "is_anonymous": false,
+  "is_sso_user": false,
+  "invited_at": null,
+  "last_sign_in_at": "2026-02-27 03:47:18.217184+00",
+  "phone": null,
+  "raw_app_meta_data": {
+    "provider": "email",
+    "providers": [
+      "email"
+    ]
+  },
+  "raw_user_meta_data": {
+    "sub": "d517ca0f-785b-4607-a57b-0874b9b8a55a",
+    "name": "Md. Mehedi Hasan",
+    "email": "mehedi.ads.gub@gmail.com",
+    "batch_year": "2025",
+    "department": "Artificial Intelligence & Data Science (ADS)",
+    "email_verified": true,
+    "phone_verified": false
+  },
+  "updated_at": "2026-06-18 10:12:37.769109+00",
+  "providers": [
+    "email"
+  ]
+},{
+  "id": "5734243d-03d9-4e2c-83a5-8dcd4feced36",
+  "email": "shihav@eee.green.edu.bd",
+  "banned_until": null,
+  "created_at": "2026-03-31 07:27:32.450737+00",
+  "confirmed_at": "2026-03-31 07:31:25.359988+00",
+  "confirmation_sent_at": "2026-03-31 07:27:32.554038+00",
+  "is_anonymous": false,
+  "is_sso_user": false,
+  "invited_at": null,
+  "last_sign_in_at": "2026-05-09 06:50:01.31137+00",
+  "phone": null,
+  "raw_app_meta_data": {
+    "provider": "email",
+    "providers": [
+      "email"
+    ]
+  },
+  "raw_user_meta_data": {
+    "sub": "5734243d-03d9-4e2c-83a5-8dcd4feced36",
+    "name": "ASM Shihavuddin",
+    "email": "shihav@eee.green.edu.bd",
+    "batch_year": "2020",
+    "department": "Electrical & Electronic Engineering (EEE)",
+    "email_verified": true,
+    "phone_verified": false
+  },
+  "updated_at": "2026-05-09 09:32:00.74145+00",
+  "providers": [
+    "email"
+  ]
+},{
+  "id": "279c0aa4-62dd-4bb2-a878-733921d72f91",
+  "email": "sonjoyshill1447ssc@gmail.com",
+  "banned_until": null,
+  "created_at": "2026-02-26 18:00:11.238404+00",
+  "confirmed_at": null,
+  "confirmation_sent_at": "2026-02-26 18:00:11.318753+00",
+  "is_anonymous": false,
+  "is_sso_user": false,
+  "invited_at": null,
+  "last_sign_in_at": null,
+  "phone": null,
+  "raw_app_meta_data": {
+    "provider": "email",
+    "providers": [
+      "email"
+    ]
+  },
+  "raw_user_meta_data": {
+    "sub": "279c0aa4-62dd-4bb2-a878-733921d72f91",
+    "name": "Sonjoy",
+    "email": "sonjoyshill1447ssc@gmail.com",
+    "batch_year": "2023",
+    "department": "Computer Science & Engineering (CSE)",
+    "email_verified": false,
+    "phone_verified": false
+  },
+  "updated_at": "2026-02-26 18:00:11.660993+00",
+  "providers": [
+    "email"
+  ]
+},{
+  "id": "fb45f413-a70b-4269-8d03-c90ed03ffd4f",
+  "email": "yasirarafatk29@gmail.com",
+  "banned_until": null,
+  "created_at": "2026-02-27 15:42:53.491691+00",
+  "confirmed_at": "2026-02-27 15:42:59.77177+00",
+  "confirmation_sent_at": "2026-02-27 15:42:53.508655+00",
+  "is_anonymous": false,
+  "is_sso_user": false,
+  "invited_at": null,
+  "last_sign_in_at": "2026-02-27 15:43:01.020693+00",
+  "phone": null,
+  "raw_app_meta_data": {
+    "provider": "email",
+    "providers": [
+      "email"
+    ]
+  },
+  "raw_user_meta_data": {
+    "sub": "fb45f413-a70b-4269-8d03-c90ed03ffd4f",
+    "name": "Yasir Arafat Khan",
+    "email": "yasirarafatk29@gmail.com",
+    "batch_year": "2024",
+    "department": "Business Administration (BBA)",
+    "email_verified": true,
+    "phone_verified": false
+  },
+  "updated_at": "2026-02-27 15:43:01.023709+00",
+  "providers": [
+    "email"
+  ]
+}
+]

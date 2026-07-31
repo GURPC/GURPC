@@ -3,6 +3,8 @@
 -- Run this in your Supabase SQL Editor (Dashboard → SQL Editor)
 -- ══════════════════════════════════════════════════════════════
 
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 -- ═══════════ PROFILES ═══════════
 CREATE TABLE IF NOT EXISTS profiles (
   -- Keep profiles import-friendly; app auth still uses the signed-in user's UUID.
@@ -282,3 +284,67 @@ CREATE POLICY "Users can upload their own papers" ON storage.objects
 
 CREATE POLICY "Users can delete their own papers" ON storage.objects
   FOR DELETE USING (bucket_id = 'papers' AND auth.uid()::text = (storage.foldername(name))[1]);
+
+-- ═══════════ BLOG POSTS ═══════════
+CREATE TABLE IF NOT EXISTS blogs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title TEXT NOT NULL,
+  slug TEXT NOT NULL UNIQUE,
+  content TEXT NOT NULL,
+  excerpt TEXT,
+  image_url TEXT,
+  author_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
+  published_at TIMESTAMPTZ DEFAULT now(),
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+ALTER TABLE blogs ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Blog posts are viewable by everyone" ON blogs;
+CREATE POLICY "Blog posts are viewable by everyone"
+  ON blogs
+  FOR SELECT
+  USING (true);
+
+DROP POLICY IF EXISTS "Users can insert their own blog posts" ON blogs;
+CREATE POLICY "Users can insert their own blog posts"
+  ON blogs
+  FOR INSERT
+  WITH CHECK (auth.uid() = author_id);
+
+DROP POLICY IF EXISTS "Users can update their own blog posts" ON blogs;
+CREATE POLICY "Users can update their own blog posts"
+  ON blogs
+  FOR UPDATE
+  USING (auth.uid() = author_id);
+
+DROP POLICY IF EXISTS "Users can delete their own blog posts" ON blogs;
+CREATE POLICY "Users can delete their own blog posts"
+  ON blogs
+  FOR DELETE
+  USING (auth.uid() = author_id);
+
+-- ══════════════════════════════════════════════════════════════
+-- STORAGE BUCKETS
+-- ══════════════════════════════════════════════════════════════
+
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('blog-images', 'blog-images', true)
+ON CONFLICT (id) DO NOTHING;
+
+CREATE POLICY "Blog images are publicly accessible" ON storage.objects
+  FOR SELECT
+  USING (bucket_id = 'blog-images');
+
+CREATE POLICY "Users can upload their own blog images" ON storage.objects
+  FOR INSERT
+  WITH CHECK (bucket_id = 'blog-images' AND auth.uid()::text = (storage.foldername(name))[1]);
+
+CREATE POLICY "Users can update their own blog images" ON storage.objects
+  FOR UPDATE
+  USING (bucket_id = 'blog-images' AND auth.uid()::text = (storage.foldername(name))[1]);
+
+CREATE POLICY "Users can delete their own blog images" ON storage.objects
+  FOR DELETE
+  USING (bucket_id = 'blog-images' AND auth.uid()::text = (storage.foldername(name))[1]);

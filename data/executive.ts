@@ -258,7 +258,7 @@ export const teamMembers: TeamMember[] = [
     category: "Executive Committee",
     department: "CSE",
     studentId: "232002256",
-    image: "https://lh3.googleusercontent.com/d/1Uu2JSPsOxwtX3p7qS3zm0xEHHOQKnkxt",
+    image: "/images/majharul-islam.png",
     email: "majharul.cs@gmail.com",
     linkedin: "https://www.linkedin.com/in/majharul-islam-68945326b/"
   },
@@ -279,7 +279,7 @@ export const teamMembers: TeamMember[] = [
     category: "Executive Committee",
     department: "CSE",
     studentId: "231902007",
-    image: "https://lh3.googleusercontent.com/d/1RFQ2WGHzOVGGAhM8DWubj3HIJmOMX9IP",
+    image: "/images/ahmad-jamil-jarif.png",
     email: "jamilcse2027@gmail.com",
     linkedin: "https://www.linkedin.com/in/ahmadjamil2001"
   },

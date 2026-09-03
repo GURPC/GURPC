@@ -1,9 +1,7 @@
 import { Metadata } from 'next';
-import { Mail, MapPin, Phone, Facebook, Linkedin, Youtube, Globe, Clock, ExternalLink } from 'lucide-react';
+import { Mail, MapPin, Facebook, Linkedin, Youtube, Globe, Clock, ExternalLink } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
+import ContactForm from '@/components/contact/ContactForm';
 
 export const metadata: Metadata = {
   title: 'Contact Us - GURPC',
@@ -22,7 +20,7 @@ export default function ContactPage() {
         </div>
 
         {/* Contact Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
           <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6 text-center hover:border-green-300 dark:hover:border-green-700 transition-colors">
             <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center mx-auto mb-4">
               <Mail className="h-6 w-6 text-green-600 dark:text-green-400" />
@@ -31,17 +29,6 @@ export default function ContactPage() {
             <a href="mailto:gurpc@green.edu.bd" className="text-sm text-green-600 dark:text-green-400 hover:underline break-all">
               gurpc@green.edu.bd
             </a>
-          </div>
-
-          <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6 text-center hover:border-green-300 dark:hover:border-green-700 transition-colors">
-            <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center mx-auto mb-4">
-              <Phone className="h-6 w-6 text-green-600 dark:text-green-400" />
-            </div>
-            <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Phone</h3>
-            <a href="tel:+8801531361741" className="text-sm text-green-600 dark:text-green-400 hover:underline">
-              +880 1531-361741
-            </a>
-            <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">Applied Research Coordinator</p>
           </div>
 
           <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6 text-center hover:border-green-300 dark:hover:border-green-700 transition-colors">
@@ -60,7 +47,7 @@ export default function ContactPage() {
             </div>
             <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Office Hours</h3>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Sat — Wed<br/>9:00 AM — 5:00 PM
+              Sat — Wed<br/>09:00 AM — 4:00 PM
             </p>
           </div>
         </div>
@@ -86,16 +73,6 @@ export default function ContactPage() {
                             <ExternalLink size={14} className="ml-auto text-gray-300 dark:text-gray-600 group-hover:text-green-500 transition-colors" />
                         </a>
 
-                        <a href="tel:+8801531361741" className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
-                            <div className="bg-green-100 dark:bg-green-900/30 p-2.5 rounded-lg text-green-600 dark:text-green-400">
-                                <Phone size={18} />
-                            </div>
-                            <div>
-                                <p className="text-sm font-medium text-gray-900 dark:text-white">+880 1531-361741</p>
-                                <p className="text-xs text-gray-400 dark:text-gray-500">Applied Research Coordinator</p>
-                            </div>
-                            <ExternalLink size={14} className="ml-auto text-gray-300 dark:text-gray-600 group-hover:text-green-500 transition-colors" />
-                        </a>
 
                         <div className="flex items-start gap-4 p-3 rounded-lg">
                             <div className="bg-green-100 dark:bg-green-900/30 p-2.5 rounded-lg text-green-600 dark:text-green-400">
@@ -151,27 +128,7 @@ export default function ContactPage() {
                 <CardContent className="p-6">
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">Send us a Message</h3>
                     <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">We&apos;ll get back to you within 24–48 hours.</p>
-                    <form className="space-y-4">
-                        <div className="space-y-2">
-                            <label htmlFor="name" className="text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
-                            <Input id="name" placeholder="Your name" />
-                        </div>
-                        <div className="space-y-2">
-                            <label htmlFor="email" className="text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
-                            <Input id="email" type="email" placeholder="Your email address" />
-                        </div>
-                        <div className="space-y-2">
-                            <label htmlFor="subject" className="text-sm font-medium text-gray-700 dark:text-gray-300">Subject</label>
-                            <Input id="subject" placeholder="What is this regarding?" />
-                        </div>
-                        <div className="space-y-2">
-                            <label htmlFor="message" className="text-sm font-medium text-gray-700 dark:text-gray-300">Message</label>
-                            <Textarea id="message" placeholder="Type your message here..." className="min-h-[120px]" />
-                        </div>
-                        <Button type="submit" className="w-full bg-green-600 hover:bg-green-500 text-white">
-                            Send Message
-                        </Button>
-                    </form>
+                    <ContactForm />
                 </CardContent>
             </Card>
         </div>

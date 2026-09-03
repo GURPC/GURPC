@@ -1,8 +1,20 @@
-import { createClient } from '@/lib/supabase/server';
+'use client';
 
-export default async function Notes() {
-  const supabase = await createClient();
-  const { data: notes } = await supabase.from("notes").select();
+import { useEffect, useState } from 'react';
+import { createClient } from '@/lib/supabase/client';
 
-  return <pre>{JSON.stringify(notes, null, 2)}</pre>
+export default function Notes() {
+  const [notes, setNotes] = useState<unknown[] | null>(null);
+
+  useEffect(() => {
+    const fetchNotes = async () => {
+      const supabase = createClient();
+      const { data } = await supabase.from('notes').select();
+      setNotes(data);
+    };
+
+    fetchNotes();
+  }, []);
+
+  return <pre>{JSON.stringify(notes, null, 2)}</pre>;
 }
